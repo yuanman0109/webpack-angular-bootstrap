@@ -1,4 +1,4 @@
-angular.module('app').config(function($urlRouterProvider,$stateProvider){
+var router=function($urlRouterProvider,$stateProvider){
     $urlRouterProvider.otherwise('/');
     $stateProvider.
     state('page1',{
@@ -9,4 +9,5 @@ angular.module('app').config(function($urlRouterProvider,$stateProvider){
         url:"/page2",
         templateUrl:'/app/views/page2.html'
     })
-});
+};
+export default router;

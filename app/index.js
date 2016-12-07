@@ -1,7 +1,7 @@
-require('../comm.scss');
-require('../comm.css');
-require('angular');
-require('angular-ui-router');
-require('angular-ui-bootstrap');
-angular.module('app',['ui.router','ui.bootstrap']);
-require('./js/routers/router.js');
+import '../comm.scss';
+import '../comm.css';
+import 'angular';
+import 'angular-ui-router';
+import 'angular-ui-bootstrap';
+import routerconfig from './js/routers/router.js';
+angular.module('app',['ui.router','ui.bootstrap']).config(routerconfig);
