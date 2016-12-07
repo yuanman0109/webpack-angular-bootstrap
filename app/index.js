@@ -1,5 +1,6 @@
-import '../comm.scss';
-import '../comm.css';
+import './style/dashboard.css';
+import './style/comm.scss';
+import './style/comm.css';
 import 'angular';
 import 'angular-ui-router';
 import 'angular-ui-bootstrap';
