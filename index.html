@@ -5,61 +5,107 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_hycapoiylul3di.css">
     </head>
-    <body ng-app="app">
+    <body ng-app="app" ng-controller="appCtrl">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Project name</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">后台管理</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" ui-sref="page1">Dashboard</a></li>
-                    <li><a href="#" ui-sref="page2">Settings</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Help</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
+                    <div class="formSel navbar-left">
+                        <select class="form-control">
+                            <option>全部模块</option>
+                            <option>全部模块</option>
+                            <option>全部模块</option>
+                            <option>全部模块</option>
+                            <option>全部模块</option>
+                        </select>
+                        <div class="selIcon">
+                            <i class="iconfont icon-xiala"></i>
+                        </div>
+                    </div>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                        <input type="text" class="form-control" placeholder="输入关键词......">
+                        </div>
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </form>
+                    <div class="userInfo  navbar-right">
+                        <div class="btn-group navbar-user pull-left" uib-dropdown>
+                            <button id="userinfo-button" type="button" class="btn btn-default" uib-dropdown-toggle>
+                                <span>李雷雷...<br/><small>超级管理员</small></span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="userinfo-button">
+                                <li role="menuitem"><a href="#">Action</a></li>
+                                <li role="menuitem"><a href="#">Another action</a></li>
+                                <li role="menuitem"><a href="#">Something else here</a></li>
+                                <li class="divider"></li>
+                                <li role="menuitem"><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <div class="userHead pull-left">
+                            <img src="./app/images/userdef.jpg" alt="李雷雷">
+                        </div>
+                    </div>
+                    <button type="button" class="navbar-right btn noticeBt"><i class="iconfont icon-xingzhuang5kaobei2"></i><span class="badge">6</span></button>
                 </div>
             </div>
         </nav>
         <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-                <li><a href="">More navigation</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-                <li><a href="">One more nav</a></li>
-                <li><a href="">Another nav item</a></li>
-            </ul>
+            <div class="sidebar">
+                <div class="nav-sidebar" >
+                    <h4 ng-class="{active: $state.includes('userLists')||$state.includes('form')}"><i class="iconfont icon-shenfenzheng"></i><span>账户管理</span></h4>
+                    <div class="list-group">
+                        <a ui-sref-active-eq="active" ui-sref="userLists" class="list-group-item">账户列表</a>
+                        <a href="#" ui-sref-active-eq="active" ui-sref="form" class="list-group-item">角色管理</a>
+                        <a href="#" class="list-group-item">操作记录</a>
+                    </div>
+                </div>
+                <div class="nav-sidebar">
+                    <h4><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">客户列表</a>
+                    </div>
+                </div>
+                <div class="nav-sidebar">
+                    <h4><i class="iconfont icon-naozhong1"></i><span>资产管理</span></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">资产列表</a>
+                    </div>
+                </div>
+                <div class="nav-sidebar">
+                    <h4><i class="iconfont icon-canyinHD"></i><span>餐厅设置</span></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">餐厅列表</a>
+                    </div>
+                </div>
+                <div class="nav-sidebar">
+                    <h4><i class="iconfont icon-diannao"></i><span>设备监控</span></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">设备列表</a>
+                    </div>
+                </div>
+                <div class="nav-sidebar">
+                    <h4><i class="iconfont icon-caiwu"></i><span>财务管理</span></h4>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">提现申请</a>
+                        <a href="#" class="list-group-item">采购审批</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <ui-view></ui-view>
+            <div class="main">
+                <ui-view></ui-view>
             </div>
         </div>
-        
-        <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="./bundle.js"></script>
     </body>
 </html>

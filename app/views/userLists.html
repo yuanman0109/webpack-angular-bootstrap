@@ -1,0 +1,171 @@
+<ul class="breadcrumb">
+    <li><a href="#">账户管理</a></li>
+    <li class="active">账户列表</li>
+</ul>
+<div class="mainContent" >
+    <div class="table-head form-inline">
+        <select class="form-control">
+            <option>按角色</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-control">
+            <option>按部门</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-control">
+            <option>按状态</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <form>
+            <div class="form-group">
+                <input type="text" name="" value="" class="form-control" placeholder="按姓名／账号／工号搜索...">
+            </div>
+            <button type="button" class="btn btn-default">搜索</button>
+        </form>
+    </div>
+    <div class="content-box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><div>　</div></th>
+                    <th><div>姓名</div></th>
+                    <th><div>工号</div></th>
+                    <th><div>角色</div></th>
+                    <th><div>部门</div></th>
+                    <th><div>账户</div></th>
+                    <th><div>状态</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="./app/images/userdef.jpg" alt="陈良" class="userImg">
+                    </td>
+                    <td>
+                        陈良
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        产品
+                    </td>
+                    <td>
+                        产品部
+                    </td>
+                    <td>
+                        chenliang4@51eparty.com
+                    </td>
+                    <td>
+                        正常
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./app/images/userdef.jpg" alt="陈良" class="userImg">
+                    </td>
+                    <td>
+                        陈良
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        产品
+                    </td>
+                    <td>
+                        产品部
+                    </td>
+                    <td>
+                        chenliang4@51eparty.com
+                    </td>
+                    <td>
+                        正常
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./app/images/userdef.jpg" alt="陈良" class="userImg">
+                    </td>
+                    <td>
+                        陈良
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        产品
+                    </td>
+                    <td>
+                        产品部
+                    </td>
+                    <td>
+                        chenliang4@51eparty.com
+                    </td>
+                    <td>
+                        正常
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./app/images/userdef.jpg" alt="陈良" class="userImg">
+                    </td>
+                    <td>
+                        陈良
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        产品
+                    </td>
+                    <td>
+                        产品部
+                    </td>
+                    <td>
+                        chenliang4@51eparty.com
+                    </td>
+                    <td>
+                        正常
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="./app/images/userdef.jpg" alt="陈良" class="userImg">
+                    </td>
+                    <td>
+                        陈良
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        产品
+                    </td>
+                    <td>
+                        产品部
+                    </td>
+                    <td>
+                        chenliang4@51eparty.com
+                    </td>
+                    <td>
+                        正常
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-controller="userListsCtrl as pages">
+            <button type="button" class="btn btn-primary">添加账号</button>
+            <ul uib-pagination total-items="pages.totalItems" ng-model="pages.currentPage" ng-change="pages.pageChanged" class="pull-right"></ul>
+        </div>
+    </div>
+</div>
