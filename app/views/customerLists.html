@@ -1,0 +1,129 @@
+<div class="clearfix">
+    <ul class="breadcrumb pull-left">
+        <li><a href="#">客户管理</a></li>
+        <li class="active">客户列表</li>
+    </ul>
+    <div class="pull-right">
+        <a href=""><i class="iconfont icon-nb-w10"></i>企业模式</a>
+        <a href=""><i class="iconfont icon-nb-w12"></i>地图模式</a>
+    </div>
+</div>
+<div class="mainContent">
+    <div class="table-head form-inline">
+        <select class="form-control">
+            <option>按区域</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-control">
+            <option>按菜系</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-control">
+            <option>按分类</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <select class="form-control">
+            <option>按客户状态</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <form>
+            <div class="form-group">
+                <input type="text" name="" value="" class="form-control" placeholder="按姓名／账号／工号搜索...">
+            </div>
+            <button type="button" class="btn btn-default">搜索</button>
+        </form>
+        <div class="form-control">按客户编号</div>
+    </div>
+    <div class="content-box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><div>客户状态</div></th>
+                    <th><div>门店</div></th>
+                    <th><div>编号</div></th>
+                    <th><div>品牌</div></th>
+                    <th><div>分类</div></th>
+                    <th><div>联系人</div></th>
+                    <th><div>电话</div></th>
+                    <th><div>所在区</div></th>
+                    <th><div>商圈</div></th>
+                    <th><div>地址</div></th>
+                    <th><div>BD</div></th>
+                    <th><div>运维</div></th>
+                    <th><div>操作</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <i class="iconfont icon-wifi-on"></i>
+                        <i class="iconfont icon-order-on"></i>
+                    </td>
+                    <td>
+                        绿茶(徐汇店)
+                    </td>
+                    <td>
+                        0411111
+                    </td>
+                    <td>
+                        肯德基
+                    </td>
+                    <td>
+                        杭帮菜
+                    </td>
+                    <td>
+                        韩梅梅
+                    </td>
+                    <td>
+                        13012345600
+                    </td>
+                    <td>
+                        徐汇区
+                    </td>
+                    <td>
+                        美罗城
+                    </td>
+                    <td>
+                        徐家汇美罗...
+                    </td>
+                    <td>
+                        李雷雷
+                    </td>
+                    <td>
+                        李雷雷
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-link-success">详情</button>
+                        <button type="button" class="btn btn-link">修改</button>
+                        <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-right">
+            <i class="iconfont icon-wifi-on"></i>设备正常
+            <i class="iconfont icon-wifi-on"></i>有设备离线
+            <i class="iconfont icon-wifi-on"></i>设备未安装
+            <i class="iconfont icon-order-on"></i>点餐正常
+            <i class="iconfont icon-order-on"></i>点餐故障
+            <i class="iconfont icon-order-on"></i>点餐未安装
+        </p>
+        <div ng-controller="userListsCtrl as pages">
+            <button type="button" class="btn btn-primary">添加门店</button>
+            <button type="button" class="btn btn-primary">添加企业</button>
+            <ul uib-pagination total-items="pages.totalItems" items-per-page="10" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
+        </div>
+    </div>
+</div>

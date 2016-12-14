@@ -1,0 +1,71 @@
+<ul class="breadcrumb">
+    <li><a href="#">账户管理</a></li>
+    <li class="active">角色管理</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box">
+        <table class="table table-text-center">
+            <thead>
+                <tr>
+                    <th><div>角色</div></th>
+                    <th><div>成员数</div></th>
+                    <th><div>操作</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        资产管理员
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link">修改</button>
+                        <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        资产管理员
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link">修改</button>
+                        <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        资产管理员
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link">修改</button>
+                        <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        资产管理员
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link">修改</button>
+                        <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-controller="userListsCtrl as pages">
+            <button type="button" class="btn btn-primary">添加角色</button>
+            <ul uib-pagination total-items="pages.totalItems" items-per-page="20" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
+        </div>
+    </div>
+</div>

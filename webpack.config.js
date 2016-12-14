@@ -21,6 +21,10 @@ module.exports={
                 query:{
                     presets:['es2015']
                 }
+            },
+            {
+                test:/.(png)|(jpg)$/, 
+                loader: "url?limit=50000"
             }
         ]
     }

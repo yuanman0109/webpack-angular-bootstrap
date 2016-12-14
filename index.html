@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//at.alicdn.com/t/font_hycapoiylul3di.css">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_4j4bkrcbb777rpb9.css">
     </head>
     <body ng-app="app" ng-controller="appCtrl">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -63,17 +63,17 @@
         <div class="row">
             <div class="sidebar">
                 <div class="nav-sidebar" >
-                    <h4 ng-class="{active: $state.includes('userLists')||$state.includes('form')}"><i class="iconfont icon-shenfenzheng"></i><span>账户管理</span></h4>
+                    <h4 ng-class="{active: $state.includes('userLists')||$state.includes('roleManagerLists')}"><i class="iconfont icon-shenfenzheng"></i><span>账户管理</span></h4>
                     <div class="list-group">
                         <a ui-sref-active-eq="active" ui-sref="userLists" class="list-group-item">账户列表</a>
-                        <a href="#" ui-sref-active-eq="active" ui-sref="form" class="list-group-item">角色管理</a>
+                        <a ui-sref-active-eq="active" ui-sref="roleManagerLists" class="list-group-item">角色管理</a>
                         <a href="#" class="list-group-item">操作记录</a>
                     </div>
                 </div>
                 <div class="nav-sidebar">
-                    <h4><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
+                    <h4 ng-class="{active: $state.includes('customerLists')||$state.includes('addStore')}"><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
                     <div class="list-group">
-                        <a href="#" class="list-group-item">客户列表</a>
+                        <a ui-sref-active-eq="active" ui-sref="customerLists" class="list-group-item">客户列表</a>
                     </div>
                 </div>
                 <div class="nav-sidebar">

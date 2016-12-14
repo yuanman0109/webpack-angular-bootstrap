@@ -5,13 +5,17 @@ var router=function($urlRouterProvider,$stateProvider){
         url:"/userLists",
         templateUrl:'/app/views/userLists.html'
     }).
-    state('page2',{
-        url:"/page2",
-        templateUrl:'/app/views/page2.html'
+    state('roleManagerLists',{
+        url:"/roleManagerLists",
+        templateUrl:'/app/views/roleManagerLists.html'
     }).
-    state('form',{
-        url:'/form',
-        templateUrl:'/app/views/form.html'
+    state('customerLists',{
+        url:'/customerLists',
+        templateUrl:'/app/views/customerLists.html'
+    }).
+    state('addStore',{
+        url:'/addStore',
+        templateUrl:'/app/views/addStore.html'
     })
 };
 export default router;
