@@ -89,9 +89,11 @@
                     </div>
                 </div>
                 <div class="nav-sidebar">
-                    <h4><i class="iconfont icon-diannao"></i><span>设备监控</span></h4>
+                    <h4 ng-class="{active: $state.includes('networkManager')}"><i class="iconfont icon-diannao"></i><span>WiFi管理</span></h4>
                     <div class="list-group">
-                        <a href="#" class="list-group-item">设备列表</a>
+                        <a href="#" class="list-group-item">设备监控</a>
+                        <a href="#" ui-sref="networkManager" class="list-group-item">网络管理</a>
+                        <a href="#" class="list-group-item">WiFi广告</a>
                     </div>
                 </div>
                 <div class="nav-sidebar">

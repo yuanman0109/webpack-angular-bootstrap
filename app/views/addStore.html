@@ -168,7 +168,207 @@
                     </div>
                 </form>
             </uib-tab>
-            <uib-tab index="1" heading="餐厅详情">餐厅详情</uib-tab>
+            <uib-tab index="1" heading="餐厅详情">
+                <form class="form-horizontal form-middle" role="form">
+                    <h5><strong>餐厅布局相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">餐厅层数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-xs-1 form-control-static">
+                                    层
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">餐厅面积：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-xs-1 form-control-static">
+                                    层
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">餐厅桌数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5><strong>餐厅布局相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有其他商业Wi-Fi：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="isWifi"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="isWifi"> 否
+                                </label>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">商业Wi-Fi品牌：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="输入该Wi-Fi运营商品牌名...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否已安装宽带：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="haveWifi"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="haveWifi"> 否
+                                </label>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">宽带运营商：</label>
+                                    <div class="col-sm-3">
+                                        <select name="" class="form-control">
+                                            <option value="">电信</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">带宽：</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" placeholder="请输入带宽">
+                                    </div>
+                                    <div class="col-sm-1 form-control-static">
+                                        M
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">宽带密码：</label>
+                                    <div class="col-sm-3">
+                                        <input type="password" class="form-control" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有电源接口：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="isPower"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="isPower"> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有LAN接口：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="isLan"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="isLan"> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">期望安装维护时间：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-2">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-xs-1 form-control-static">
+                                    到
+                                </div>
+                                <div class="col-xs-2">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">所需设置数量：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="col-xs-1 form-control-static">
+                                    台
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5><strong>餐厅系统相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有其他点餐系统：</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" value="1" name="otherOrder"> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" value="0" name="otherOrder"> 否
+                                </label>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">点餐系统品牌：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否已安装宽带：</label>
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">品牌：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="请输入该收银系统品牌">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">型号：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="请输入该收银系统型号">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">打印机信息：</label>
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">品牌：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="请输入该收银系统品牌">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">型号：</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" placeholder="请输入该收银系统型号">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label">备注说明：</label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" placeholder="请输入该打印机型号"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body text-center">
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </uib-tab>
             <uib-tab index="2" heading="业务信息">业务信息</uib-tab>
         </uib-tabset>
     </div>
