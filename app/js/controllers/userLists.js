@@ -1,16 +1,16 @@
 export default class UserListsCtrl{
     constructor($http){
-        this.totalItems =20;
+        this.totalItems =70;
         this.$http=$http;
     }
     addAccount(){
         this.$http({
             url:'http://10.15.111.5:8080/user/list.htm',
             method:'GET'
-        }).success(function(data){
+        }).then(function(data){
             console.log(data);
-        }).error(function(){
-            console.log('error');
+        },function(err){
+            console.log(err);
         })
     }
     pageChanged() {

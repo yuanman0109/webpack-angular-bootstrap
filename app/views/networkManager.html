@@ -20,12 +20,29 @@
         <h5>WiFi配置：</h5>
         <uib-tabset class="tabs-default">
             <uib-tab index="0" heading="网络控制">
-                <div class="row">
+                <div class="row" ng-controller="ModalDemoCtrl as $ctrl" class="modal-demo">
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <ul>
+                                <li ng-repeat="item in $ctrl.items">
+                                    <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
+                                </li>
+                            </ul>
+                            Selected: <b>{{ $ctrl.selected.item }}</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+                            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+                        </div>
+                    </script>
                     <div class="col-sm-4">
                         <div class="panel panel-default panel-network">
                             <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
                             <div class="panel-body">
-                                <ul>
+                                <ul class="list-unstyled">
                                     <li>上传限速：100kb/S</li>
                                     <li>下载限速：120kb/S</li>
                                     <li>上网时长：180分钟</li>
@@ -41,27 +58,71 @@
                                     <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
                                     <span class="toggle-btn"></span> 
                                 </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger" ng-click="$ctrl.open()">删除</button>
+                                    <button type="button" class="btn btn-primary">修改</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel panel-default panel-network">
+                            <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
                             <div class="panel-body">
-                                Panel content
+                                <ul class="list-unstyled">
+                                    <li>上传限速：100kb/S</li>
+                                    <li>下载限速：120kb/S</li>
+                                    <li>上网时长：180分钟</li>
+                                    <li>免认证时长：60分钟</li>
+                                    <li>主动漫游：开</li>
+                                    <li>2G信号：开</li>
+                                    <li>5G信号：开</li>
+                                </ul>
                             </div>
-                            <div class="panel-footer">Panel footer</div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                                    <button type="button" class="btn btn-primary">修改</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Panel heading without title</div>
+                        <div class="panel panel-default panel-network">
+                            <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
                             <div class="panel-body">
-                                Panel content
+                                <ul class="list-unstyled">
+                                    <li>上传限速：100kb/S</li>
+                                    <li>下载限速：120kb/S</li>
+                                    <li>上网时长：180分钟</li>
+                                    <li>免认证时长：60分钟</li>
+                                    <li>主动漫游：开</li>
+                                    <li>2G信号：开</li>
+                                    <li>5G信号：开</li>
+                                </ul>
                             </div>
-                            <div class="panel-footer">Panel footer</div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                                    <button type="button" class="btn btn-primary">修改</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div ng-controller="userListsCtrl as pages">
+                    <button type="button" class="btn btn-primary">添加SSID</button>
+                    <ul uib-pagination total-items="pages.totalItems" items-per-page="10" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
                 </div>
             </uib-tab>
             <uib-tab index="1" heading="Portal设置">Portal设置</uib-tab>

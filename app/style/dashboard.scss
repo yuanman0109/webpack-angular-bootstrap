@@ -16,6 +16,7 @@ body {
   background-color: #3CB6B0;
   box-shadow: 0 4px 0 #2AA19A;
   outline: none;
+  margin-top: -4px;
 }
 .btn-default{
   min-width: 92px;
@@ -97,8 +98,18 @@ input[type=radio]{
     content: "\e614";
   }
 }
+/****pagination***/
+.pagination>li>a{
+  background: #E4E7EA;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+.pagination>.active>a{
+  background-color: #3CB6AF;
+  border-color: #3CB6AF;
+}
 /*******switch style******/
-.switch-btn {position: relative; display: block; vertical-align: top; width: 80px; height: 30px; cursor: pointer; border-radius: 6px;}
+.switch-btn {position: relative;display: inline-block; vertical-align: top; width: 80px; height: 30px; cursor: pointer; border-radius: 6px;}
 .checked-switch {position: absolute; top: 0; left: 0; opacity: 0;}
 .text-switch {background-color: #fff; border: 1px solid #C0C0C0; border-radius: inherit; color: #999; display: block; font-size: 12px; height: inherit; position: relative; text-transform: uppercase;}
 .text-switch:before, .text-switch:after {position: absolute; top: 50%; margin-top: -.5em; line-height: 1; -webkit-transition: inherit; -moz-transition: inherit; -o-transition: inherit; transition: inherit;}
@@ -398,8 +409,8 @@ input[type=radio]{
     select.form-control{
       position: relative;
       appearance:none;
-      color: #fff;
       -moz-appearance:none;
+      color: #fff;
       -webkit-appearance:none;
       background:#9CABB4 url('../images/arrow.png') no-repeat right 10px center;
       background-size:16px 15px;
@@ -450,5 +461,13 @@ input[type=radio]{
     background-color: #E3E7E9;
     font-weight: bold;
     color: #666;
+    overflow: hidden;
+     .badge{
+       background-color: #fff;
+       color: #666;
+       float: right;
+       font-weight: normal;
+       padding: 5px 8px;
+     }
   }
 }
