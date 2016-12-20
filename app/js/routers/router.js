@@ -20,6 +20,10 @@ var router=function($urlRouterProvider,$stateProvider){
     state('networkManager',{
         url:'/networkManager',
         templateUrl:'/app/views/networkManager.html'
+    }).
+    state('customerManager',{
+        url:'/customerManager',
+        templateUrl:'/app/views/customerManager.html'
     })
 };
 export default router;

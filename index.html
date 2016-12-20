@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//at.alicdn.com/t/font_4j4bkrcbb777rpb9.css">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_jbm0zyecuxwp14i.css">
     </head>
     <body ng-app="app" ng-controller="appCtrl">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="nav-sidebar">
-                    <h4 ng-class="{active: $state.includes('customerLists')||$state.includes('addStore')}"><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
+                    <h4 ng-class="{active: $state.includes('customerLists')||$state.includes('addStore')||$state.includes('customerManager')}" ui-sref="customerManager"><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
                     <div class="list-group">
                         <a ui-sref-active-eq="active" ui-sref="customerLists" class="list-group-item">客户列表</a>
                     </div>

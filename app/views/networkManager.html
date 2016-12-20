@@ -20,24 +20,7 @@
         <h5>WiFi配置：</h5>
         <uib-tabset class="tabs-default">
             <uib-tab index="0" heading="网络控制">
-                <div class="row" ng-controller="ModalDemoCtrl as $ctrl" class="modal-demo">
-                    <script type="text/ng-template" id="myModalContent.html">
-                        <div class="modal-header">
-                            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-                        </div>
-                        <div class="modal-body" id="modal-body">
-                            <ul>
-                                <li ng-repeat="item in $ctrl.items">
-                                    <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
-                                </li>
-                            </ul>
-                            Selected: <b>{{ $ctrl.selected.item }}</b>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-                            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-                        </div>
-                    </script>
+                <div class="row" class="modal-demo">
                     <div class="col-sm-4">
                         <div class="panel panel-default panel-network">
                             <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
@@ -58,9 +41,9 @@
                                     <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
                                     <span class="toggle-btn"></span> 
                                 </label>
-                                <div class="pull-right">
-                                    <button type="button" class="btn btn-link btn-link-danger" ng-click="$ctrl.open()">删除</button>
-                                    <button type="button" class="btn btn-primary">修改</button>
+                                <div class="pull-right" ng-controller="ModalDemoCtrl as modal">
+                                    <button type="button" class="btn btn-link btn-link-danger" ng-click="modal.open()">删除</button>
+                                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">修改</button>
                                 </div>
                             </div>
                         </div>
@@ -130,3 +113,181 @@
         </uib-tabset>
     </div>
 </div>
+<script type="text/ng-template" id="deleteSSID.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">删除SSID</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p>确定要删除SSID：  GrennTea Free WiFi   吗？<br>删除后该品牌下所有门店此SSID都将被删除！</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>
+<script type="text/ng-template" id="modifySSID.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">修改SSID</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">SSID名称：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="" placeholder="lvcha-free wifi">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上传限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-5">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-5">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上网时长：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">分钟</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上网次数：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">次</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">主动漫游：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">2.4G和5G的SSID信号区分：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">2G信号：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">5G信号：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">信号内用户隔离：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">总带宽限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">SSID总带宽限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>

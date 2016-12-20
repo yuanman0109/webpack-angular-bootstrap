@@ -3,37 +3,51 @@ export default class ModalDemoCtrl{
         this.$uibModal =$uibModal;
         this.$log=$log;
         this.$document=$document;
-        
-        this.animationsEnabled = true;
-    };
+    }
+    //删除
+    open(){
+        let $log=this.$log;
+        this.$uibModal.open({
+            templateUrl: 'deleteSSID.html',
+            controller: function ($uibModalInstance) {
+                            var $ctrl = this;
+                            $ctrl.ok = function () {
+                                $uibModalInstance.close();
+                            };
 
-
-
-        open(size, parentSelector) {
-            var abc = ['item1', 'item2', 'item3'];
-            var parentElem = parentSelector ? 
-            angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined;
-            var modalInstance = this.$uibModal.open({
-            animation: this.animationsEnabled,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'myModalContent.html',
-            controller: 'ModalDemoCtrl',
+                            $ctrl.cancel = function () {
+                                $uibModalInstance.dismiss();
+                            };
+                        },
             controllerAs: '$ctrl',
-            size: size,
-            appendTo: parentElem,
-            resolve: {
-                items: function () {
-                return abc;
-                }
-            }
-            });
+        }).result.then(function () {
+            $log.info('ok');
+        }, function () {
+            $log.info('cancle');
+        });
+    }
+    //修改
+    modify(){
+        let $log=this.$log;
+        this.$uibModal.open({
+            templateUrl: 'modifySSID.html',
+            controller: function ($uibModalInstance) {
+                            var $ctrl = this;
+                            $ctrl.ok = function () {
+                                $uibModalInstance.close();
+                            };
 
-            modalInstance.result.then(function (selectedItem) {
-            this.selected = selectedItem;
-            }, function () {
-            this.$log.info('Modal dismissed at: ' + new Date());
-            });
-        };
+                            $ctrl.cancel = function () {
+                                $uibModalInstance.dismiss();
+                            };
+                        },
+            controllerAs: '$ctrl',
+        }).result.then(function () {
+            $log.info('ok');
+        }, function () {
+            $log.info('cancle');
+        });
 
+    }
 }
+ModalDemoCtrl.$inject=['$uibModal', '$log', '$document'];
