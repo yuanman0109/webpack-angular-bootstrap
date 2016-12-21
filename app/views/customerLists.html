@@ -121,7 +121,7 @@
             <i class="iconfont icon-order-on"></i>点餐未安装
         </p>
         <div ng-controller="userListsCtrl as pages">
-            <button type="button" class="btn btn-primary">添加门店</button>
+            <button type="button" ui-sref="addStore" class="btn btn-primary">添加门店</button>
             <button type="button" class="btn btn-primary">添加企业</button>
             <ul uib-pagination total-items="pages.totalItems" items-per-page="10" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
         </div>

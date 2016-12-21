@@ -24,6 +24,22 @@ var router=function($urlRouterProvider,$stateProvider){
     state('customerManager',{
         url:'/customerManager',
         templateUrl:'/app/views/customerManager.html'
+    }).
+    state('messageCenter',{
+        url:'/messageCenter',
+        templateUrl:'/app/views/messageCenter.html'
+    }).
+    state('addRole',{
+        url:'/addRole',
+        templateUrl:'/app/views/addRole.html'
+    }).
+    state('addUser',{
+        url:'/addUser',
+        templateUrl:'/app/views/addUser.html'
+    }).
+    state('userDetail',{
+        url:'/userDetail',
+        templateUrl:'/app/views/userDetail.html'
     })
 };
 export default router;

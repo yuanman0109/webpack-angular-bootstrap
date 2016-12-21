@@ -10,6 +10,10 @@ body {
   background: #f4f4f4;
   color: #666;
 }
+hr{ margin: 0}
+.box-pd{
+  padding: 10px 0;
+}
 .btn-primary{
   min-width: 102px;
   border-color: #3CB6B0;
@@ -112,9 +116,15 @@ form label{
 input[type=radio]{
   margin: 2px 0 0 -25px;
 }
-
+input[type=checkbox]{
+  margin:2px 0;
+}
+.checkbox-inline, .radio-inline{
+  min-width: 20px;
+  min-height: 20px;
+}
 .form-control-static,.form-horizontal .form-group{ text-align: left}
-.radio-inline input[type=radio]{
+.radio-inline input[type=radio],.checkbox-inline input[type=checkbox]{
   appearance: none;
   -webkit-appearance: none;
   outline: none;
@@ -219,7 +229,7 @@ input[type=radio]{
     .btn{
       position: absolute;
       right: 5px;
-      top: 0;
+      top: 4px;
       width: 100px;
     }
   }
@@ -423,7 +433,7 @@ input[type=radio]{
   overflow: hidden;
   .content-box{
     padding: 20px 20px 60px;
-    .table{
+    .table-theadbg{
       thead>tr>th{
         padding: 0;
         border: none;
@@ -449,6 +459,16 @@ input[type=radio]{
         vertical-align: middle;
         border-top: none ;
         border-bottom: 1px solid #ddd;
+      }
+    }
+    .table-theadbg-noRadius{
+      thead>tr>th{
+        &:first-child div{
+          border-radius: 0;
+        }
+        &:last-child div{
+          border-radius:0;
+        }
       }
     }
   }
@@ -486,7 +506,7 @@ input[type=radio]{
 }
 .tabs-default{
   .tab-content{
-    padding: 25px;
+    padding: 20px 0;
   }
   .nav-tabs{
     border-bottom: 2px solid #ECEFF0;
@@ -534,5 +554,97 @@ input[type=radio]{
        font-weight: normal;
        padding: 5px 8px;
      }
+  }
+}
+.panel-portal{
+  width: 250px;
+  margin: 0 auto;
+  .panel-body{ padding: 2px;}
+  img{ max-width: 100%}
+}
+/******messageList*******/
+.messageList{
+  list-style-type: none;
+  padding: 0;
+  margin-bottom:30px;
+  li{
+    position: relative;
+    padding: 10px 15px;
+    border-bottom: 1px solid #EDEDED;
+    color: #2a2a2a;
+    a{ color: #3CB6AF}
+    .mark{
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      margin-top: -4px;
+      width: 8px;
+      height: 8px;
+      background: #FF8888;
+      border-radius: 50%;
+    }
+  }
+}
+/******addRole******/
+.rolebox{
+  width: 500px;
+  margin: 60px auto;
+}
+.rightsbox{
+  background: #EFF3F4;
+  padding: 15px;
+  border-radius: 4px;
+  ul{
+    border-right: 1px dashed #fff;
+    padding:0 15px;
+    &:first-child{
+      padding-left: 0;
+    }
+    &:last-child{
+      border: none;
+    }
+  }
+  ul ul{
+    margin-left: 15px;
+    border: none;
+    padding-right: 0;
+  }
+}
+/***addUser***/
+.userDetail-left{
+  width: 40%;
+  padding-right: 30px;
+}
+.userDetail-right{
+  width: 60%;
+  padding-left: 30px;
+  border-left: 1px solid #ECECEC;
+}
+/******userdetail*******/
+.userdetail-box{
+  h4{
+    margin-top:25px;
+  }
+}
+.list-userdetail{
+  li{
+    width: 20%;
+    float: left;
+    padding: 10px 0;
+  }
+}
+.table-userdetail{
+  margin-top: 10px;
+  thead>tr>th{
+    background: #EFF3F4;
+    border-bottom: 1px dashed #fff;
+    padding: 10px;
+    color: #99A4AA;
+  }
+  tbody>tr>td{
+    background: #EFF3F4;
+    border: none;
+    color: #98A4AA;
+    padding: 10px;
   }
 }

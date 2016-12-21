@@ -33,10 +33,10 @@
         </form>
     </div>
     <div class="content-box">
-        <table class="table">
+        <table class="table table-theadbg">
             <thead>
                 <tr>
-                    <th><div>　</div></th>
+                    <th><div>&nbsp;</div></th>
                     <th><div>姓名</div></th>
                     <th><div>工号</div></th>
                     <th><div>角色</div></th>
@@ -164,7 +164,7 @@
             </tbody>
         </table>
         <div ng-controller="userListsCtrl as pages">
-            <button type="button" class="btn btn-primary" ng-click='pages.addAccount()'>添加账号</button>
+            <button type="button" class="btn btn-primary" ui-sref="addUser">添加账号</button>
             <ul uib-pagination total-items="pages.totalItems" items-per-page="20" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
         </div>
     </div>

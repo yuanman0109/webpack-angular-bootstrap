@@ -49,5 +49,48 @@ export default class ModalDemoCtrl{
         });
 
     }
+    //增加名单
+    addlist(){
+        let $log=this.$log;
+        this.$uibModal.open({
+            templateUrl: 'addlist.html',
+            controller: function ($uibModalInstance) {
+                            var $ctrl = this;
+                            $ctrl.ok = function () {
+                                $uibModalInstance.close();
+                            };
+                            $ctrl.cancel = function () {
+                                $uibModalInstance.dismiss();
+                            };
+                        },
+            controllerAs: '$ctrl',
+        }).result.then(function () {
+            $log.info('ok');
+        }, function () {
+            $log.info('cancle');
+        });
+    }
+    //删除名单
+    deletelist(){
+        let $log=this.$log;
+        this.$uibModal.open({
+            templateUrl: 'deletelist.html',
+            controller: function ($uibModalInstance) {
+                            var $ctrl = this;
+                            $ctrl.ok = function () {
+                                $uibModalInstance.close();
+                            };
+
+                            $ctrl.cancel = function () {
+                                $uibModalInstance.dismiss();
+                            };
+                        },
+            controllerAs: '$ctrl',
+        }).result.then(function () {
+            $log.info('ok');
+        }, function () {
+            $log.info('cancle');
+        });
+    }
 }
 ModalDemoCtrl.$inject=['$uibModal', '$log', '$document'];
