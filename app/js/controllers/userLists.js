@@ -2,6 +2,44 @@ export default class UserListsCtrl{
     constructor($http){
         this.totalItems =70;
         this.$http=$http;
+        this.userLists=[
+            {
+                id:1,
+                name:"程良",
+                jnumber:"0411111",
+                role:"产品",
+                department:"产品部们",
+                account:"chenliang4@51eparty.com",
+                state:"正常"
+            },
+            {
+                id:1,
+                name:"程良",
+                jnumber:"0411111",
+                role:"产品",
+                department:"产品部",
+                account:"chenliang4@51eparty.com",
+                state:"正常"
+            },
+            {
+                id:1,
+                name:"程良",
+                jnumber:"0411111",
+                role:"产品",
+                department:"产品部",
+                account:"chenliang4@51eparty.com",
+                state:"正常"
+            },
+            {
+                id:1,
+                name:"程良",
+                jnumber:"0411111",
+                role:"产品",
+                department:"产品部",
+                account:"chenliang4@51eparty.com",
+                state:"正常"
+            }
+        ]
     }
     addAccount(){
         this.$http({

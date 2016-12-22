@@ -9,7 +9,7 @@ export default angular.module('echartDirective',[])
             source:'='
         },
         replace: true,
-        template:'<div></div>',
+        template:'<div style="width:100%;height:100%;"></div>',
         link:function(scope,element,attr){
              // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(element[0]);
@@ -172,7 +172,7 @@ export default angular.module('echartDirective',[])
             source:'='
         },
         replace: true,
-        template:'<div></div>',
+        template:'<div style="width:100%;height:100%;"></div>',
         link:function(scope,element,attr){
              // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(element[0]);
