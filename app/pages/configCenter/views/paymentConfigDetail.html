@@ -1,0 +1,97 @@
+<div class="page-paymentDetail">
+  <ul class="breadcrumb">
+    <li>配置中心</li>
+    <li class="active"><a  ui-sref="configCenter.restaurantList()">餐厅列表</a></li>
+    <li><a href="" ui-sref="configCenter.paymentConfigList({storeId:ctrl.storeId})">支付配置</a></li>
+    <li ng-if="ctrl.id">支付配置详情</li>
+    <li ng-if="!ctrl.id">新增支付配置</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <p>
+        <span class="storename">门店名称：{{ctrl.details.storeName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="brand">所属品牌 : {{ctrl.details.brandName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="company">所属企业：{{ctrl.details.companyName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      </p>
+
+      <form class="paymentContent" name="form">
+        <div class="zhifubao" ng-class="{'single':ctrl.id}" ng-if="ctrl.details.payMode == 'ALIPAY'  ||  !ctrl.id" >
+            <p class="title zhifubaoColor">支付宝</p>
+              <div class="form-group row" ng-class="{'has-success': (form.zhifubao_status.$dirty && form.zhifubao_status.$valid) || form.zhifubao_status.$valid,'has-error': form.zhifubao_status.$dirty && form.zhifubao_status.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3"><strong class="text-danger">*</strong>状态：</label>
+                <select  class="form-control bss-inline-block" name="zhifubao_status" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.zhifubao.status" required>
+                  <option value="ENABLED">使用中</option>
+                  <option value="DISABLED">已停用</option>
+                </select>
+              </div>
+              <div class="form-group row" ng-class="{'has-success': (form.zhifubao_connectionMode.$dirty && form.zhifubao_connectionMode.$valid) || form.zhifubao_connectionMode.$valid,'has-error': form.zhifubao_connectionMode.$dirty && form.zhifubao_connectionMode.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="exampleInputName2"><strong class="text-danger">*</strong>连接方式：</label>
+                <select class="form-control bss-inline-block" name="zhifubao_connectionMode" ng-disabled="ctrl.id" ng-model="ctrl.zhifubao.connectionMode" ng-change="ctrl.initOrg(ctrl.zhifubao.connectionMode,'zhifubao')"  required>
+                  <!--<option value="DIRECT">直连</option>-->
+                  <option value="INDIRECT">间连</option>
+                </select>
+                <span ng-if="ctrl.zhifubao.connectionMode == 'DIRECT'" ng-init="ctrl.zhifubao.connectionOrg = 'ALIPAY'"></span>
+              </div>
+              <div class="form-group row" ng-if="ctrl.zhifubao.connectionMode == 'INDIRECT'" ng-class="{'has-success': (form.weixin_connectionOrg.$dirty && form.weixin_connectionOrg.$valid) || form.weixin_connectionOrg.$valid,'has-error': form.weixin_connectionOrg.$dirty && form.weixin_connectionOrg.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="exampleInputName2"><strong class="text-danger">*</strong>连接机构：</label>
+                <select class="form-control bss-inline-block" name="weixin_connectionOrg" ng-disabled="ctrl.id" ng-model="ctrl.zhifubao.connectionOrg"  required>
+                  <!--<option value="ZHIFUTONG">支付通</option>-->
+                  <option value="LAKALA">拉卡拉</option>
+                  <option value="FUYOU">富友</option>
+                  <option value="EASYPAY">易生支付</option>
+                </select>
+              </div>
+              <div class="form-group row"  ng-class="{'has-success': (form.zhifubao_storeNo.$dirty && form.zhifubao_storeNo.$valid) || form.zhifubao_storeNo.$valid,'has-error': form.zhifubao_storeNo.$dirty && form.zhifubao_storeNo.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="storeNo"><strong class="text-danger">*</strong>商户号：</label>
+                <input  type="text" class="form-control col-md-8  col-sm-8  col-xs-8" id="storeNo" name="zhifubao_storeNo" ng-maxlength="200"  maxlength ='200' placeholder="请填写商户号" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.zhifubao.storeNo"   required />
+              </div>
+              <div class="form-group row" ng-class="{'has-success': (form.zhifubao_storeNo.$dirty && form.zhifubao_sterminalNo.$valid) || form.zhifubao_sterminalNo.$valid,'has-error': form.zhifubao_sterminalNo.$dirty && form.zhifubao_sterminalNo.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="terminalNo"><strong class="text-danger">*</strong>终端号：</label>
+                <input  type="text" class="form-control col-md-8  col-sm-8  col-xs-8" id="terminalNo" name="zhifubao_sterminalNo" ng-maxlength="100"  maxlength ='100' placeholder="请填写终端号" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.zhifubao.terminalNo" required>
+              </div>
+          </div>
+          <div class="weixin" ng-class="{'single':ctrl.id}"  ng-if="ctrl.details.payMode == 'WEIXIN' || !ctrl.id">
+            <p class="title weixinColor">微信</p>
+              <div class="form-group row" ng-class="{'has-success': (form.weixin_status.$dirty && form.weixin_status.$valid) || form.weixin_status.$valid,'has-error': form.weixin_status.$dirty && form.weixin_status.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="weixin.status"><strong class="text-danger">*</strong>状态：</label>
+                <select class="form-control bss-inline-block" name="weixin_status" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.weixin.status" required>
+                  <option value="ENABLED">使用中</option>
+                  <option value="DISABLED">已停用</option>
+                </select>
+              </div>
+              <div class="form-group row" ng-class="{'has-success': (form.weixin_connectionMode.$dirty && form.weixin_connectionMode.$valid) || form.weixin_connectionMode.$valid,'has-error': form.weixin_connectionMode.$dirty && form.weixin_connectionMode.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="weixin.connectionMode"><strong class="text-danger">*</strong>连接方式：</label>
+                <select class="form-control bss-inline-block"  name="weixin_connectionMode" ng-disabled="ctrl.id" ng-model="ctrl.weixin.connectionMode"  ng-change="ctrl.initOrg(ctrl.weixin.connectionMode,'weixin')" required>
+                  <!--<option value="DIRECT">直连</option>-->
+                  <option value="INDIRECT">间连</option>
+                </select>
+                <span ng-if="ctrl.weixin.connectionMode == 'DIRECT'" ng-init="ctrl.weixin.connectionOrg = 'WEIXIN'"></span>
+              </div>
+              <div class="form-group row" ng-if="ctrl.weixin.connectionMode == 'INDIRECT'" ng-class="{'has-success': (form.weixin_connectionOrg.$dirty && form.weixin_connectionOrg.$valid) || form.weixin_connectionOrg.$valid,'has-error': form.weixin_connectionOrg.$dirty && form.weixin_connectionOrg.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="weixin.connectionOrg" ><strong class="text-danger">*</strong>连接机构：</label>
+                <select class="form-control bss-inline-block" name="weixin_connectionOrg" ng-disabled="ctrl.id" ng-model="ctrl.weixin.connectionOrg"  required>
+                  <!--<option value="ZHIFUTONG">支付通</option>-->
+                  <option value="LAKALA">拉卡拉</option>
+                  <option value="FUYOU">富友</option>
+                  <option value="EASYPAY">易生支付</option>
+                </select>
+              </div>
+              <div class="form-group row" ng-class="{'has-success': (form.weixin_storeNo.$dirty && form.weixin_storeNo.$valid) || form.weixin_storeNo.$valid,'has-error': form.weixin_storeNo.$dirty && form.weixin_storeNo.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="storeNo2"><strong class="text-danger">*</strong>商户号：</label>
+                <input  type="text" class="form-control col-md-8  col-sm-8  col-xs-8 " id="storeNo2" name="weixin_storeNo" ng-maxlength="200"   maxlength ='200' placeholder="请填写商户号" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.weixin.storeNo" required>
+              </div>
+              <div class="form-group row" ng-class="{'has-success': (form.weixin_terminalNo.$dirty && form.weixin_terminalNo.$valid) || form.weixin_terminalNo.$valid,'has-error': form.weixin_terminalNo.$dirty && form.weixin_terminalNo.$invalid}" >
+                <label class="col-md-3 col-sm-3 col-xs-3" for="terminalNo2" ><strong class="text-danger">*</strong>终端号：</label>
+                <input  type="text" class="form-control col-md-8  col-sm-8  col-xs-8" id="terminalNo2" name="weixin_terminalNo" ng-maxlength="100"  maxlength ='100' placeholder="请填写终端号" ng-disabled="ctrl.id && !ctrl.isEdit" ng-model="ctrl.weixin.terminalNo" required>
+              </div>
+          </div>
+     
+        <div class="btns-wrap"> 
+          <button  class="btn btn-primary" ng-if="btnlist.CONFIG_050305 && ctrl.id && !ctrl.isEdit"  ng-click="ctrl.edit()">编辑</button>
+          <button  class="btn btn-primary" ng-if="btnlist.CONFIG_050305 && ctrl.isEdit" ng-disabled="form.$invalid"  ng-click="ctrl.save()">提交</button>
+          <button  class="btn btn-primary" ng-if="btnlist.CONFIG_050302 && !ctrl.id" ng-disabled="form.$invalid"   ng-click="ctrl.add()">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

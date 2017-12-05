@@ -1,0 +1,96 @@
+<ul class="breadcrumb">
+    <li><a>客户管理</a></li>
+    <li><a ui-sref='customer.customerLists'>客户列表</a></li>
+    <li class="active">门店详情</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box customerDetail-box" ng-controller="customerDetailCtrl as customer">
+        <h4>基本信息</h4>
+        <div class="clearfix border-radius-box padding20">
+            <div class="pull-left customerDetail-basic-img">
+                <img ng-src='{{(customer.customerDetail.logo|imgUrl)|| customer.normalImg}}' alt="绿茶餐厅">
+            </div>
+
+            <div class="container-fluid customerDetail-basic-text">
+                <div class="row">
+                    <p class="col-md-6">门店名称：{{customer.customerDetail.name}}</p><p class="col-md-6">所属品牌：{{customer.customerDetail.brand.name}}</p>
+                    <p class="col-md-6">所属企业：{{customer.customerDetail.companyName}}</p><p class="col-md-6">所在楼层：{{customer.customerDetail.floor}}</p>
+                    <!--<p class="col-md-6">所属商圈：{{customer.customerDetail.businessAreaName}}</p>-->
+                    <p class="col-md-6">营业时间：{{customer.customerDetail.openingTime}}-{{customer.customerDetail.closingTime}}</p>
+                    <p class="col-md-6">门店编号：{{customer.customerDetail.code}}</p><p class="col-md-6">门店地址：{{customer.customerDetail.address}}<img ng-click="customer.openMap()" src="../../../images/positiion.png" alt="位置"></p>
+                </div>
+            </div>
+        </div>
+        <h4>联系人信息：</h4>
+        <div class="container-fluid border-radius-box padding20">
+            <div class="row">
+                <p class="col-md-4">门店联系人：{{customer.customerDetail.linkman}}</p>
+                <p class="col-md-8">联系人职务：{{customer.customerDetail.linkmanPosition}}</p>
+                <p class="col-md-4">联系人手机：{{customer.customerDetail.linkmanMobile}}</p>
+                <p class="col-md-8">联系人电话：{{customer.customerDetail.linkmanTel}}</p>
+                <p class="col-md-4">联系人邮箱：{{customer.customerDetail.linkmanEmail}}</p>
+                <p class="col-md-8">联系人微信：{{customer.customerDetail.linkmanWechart}}</p>
+            </div>  
+        </div>
+        <h4>负责人信息：</h4>
+        <div class="container-fluid border-radius-box padding20">
+            <div class="row">
+                <p class="col-md-4">BD：{{customer.customerDetail.bdUserName||'暂无'}}（{{customer.customerDetail.bdUserMobile||'暂无'}}）</p>
+                <p class="col-md-8">BD区域负责人：<span ng-repeat="bdAreaUsers in customer.customerDetail.bdUserAreas">{{bdAreaUsers.userArea}}-{{bdAreaUsers.userName}}（{{bdAreaUsers.userMobile}}）<small ng-if="!$last">、</small></span></p>
+                <p class="col-md-4">FAE：{{customer.customerDetail.faeUserName||'暂无'}}（{{customer.customerDetail.faeUserMobile||'暂无'}}）</p>
+                <p class="col-md-8">FAE区域负责人：<span ng-repeat="faeAreaUsers in customer.customerDetail.faeUserAreas">{{faeAreaUsers.userArea}}-{{faeAreaUsers.userName}}（{{faeAreaUsers.userMobile}}）<small ng-if="!$last">、</small></span></p>
+                <p class="col-md-4">录审：{{customer.customerDetail.lsUserName||'暂无'}}（{{customer.customerDetail.lsUserMobile||'暂无'}}）</p>
+                <p class="col-md-8">录审区域负责人：<span ng-repeat="lsAreaUsers in customer.customerDetail.lsUserAreas">{{lsAreaUsers.userArea}}-{{lsAreaUsers.userName}}（{{lsAreaUsers.userMobile}}）<small ng-if="!$last">、</small></span></p>
+            </div> 
+        </div>
+        <h4>餐厅详情：</h4>
+        <div class="border-radius-box">
+            <div class="container-fluid padding20">
+                <h5>餐厅布局相关信息：</h5>
+                <div class="row">
+                    <p class="col-md-4">餐厅层数：{{customer.customerDetail.storeDetail.hallFloors==null ? '未知':(customer.customerDetail.storeDetail.hallFloors+'层')}}</p>
+                    <p class="col-md-4">餐厅面积：{{customer.customerDetail.storeDetail.hallArea==null ? '未知':(customer.customerDetail.storeDetail.hallArea+'平')}}</p>
+                    <p class="col-md-4">餐厅桌数：{{customer.customerDetail.storeDetail.hallTables==null ? '未知':(customer.customerDetail.storeDetail.hallTables+'桌')}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="container-fluid padding20">
+                <h5>WiFi 相关信息：</h5>
+                <div class="row">
+                    <p class="col-md-6">其他商业WiFi：<span ng-if="!hasOtherWifi">无</span><span ng-if="hasOtherWifi && customer.customerDetail.storeDetail.otherWifiBrands.length>0" ng-repeat="otherWifi in customer.customerDetail.storeDetail.otherWifiBrands">【{{otherWifi.name}}】<small ng-if="!$last">、</small></span></p>
+                    <p class="col-md-6">宽带信息：<span ng-if="!customer.customerDetail.storeDetail.hasBroadband">无</span><span ng-if="customer.customerDetail.storeDetail.hasBroadband">{{customer.customerDetail.storeDetail.broadbandIspName}}  {{customer.customerDetail.storeDetail.broadbandWidth}}M  账号-{{customer.customerDetail.storeDetail.broadbandUsername}}  密码-{{customer.customerDetail.storeDetail.broadbandPassword}}</span></p>
+                    <p class="col-md-4">电源接口：{{customer.customerDetail.storeDetail.hasPowerPort ? '有':'无'}}</p>
+                    <p class="col-md-4">LAN接口：{{customer.customerDetail.storeDetail.hasLanPor ? '有':'无'}}</p>
+                    <p class="col-md-4">期望安装维护时间：{{customer.customerDetail.storeDetail.hopeSeviceTime}}</p><p></p>
+                    <p class="col-md-6">所需设备数量：{{customer.customerDetail.storeDetail.setupCount ? (customer.customerDetail.storeDetail.setupCount+'台') : '未知'}}</p>
+                    <p class="col-md-6">现场实施联系人：{{customer.customerDetail.storeDetail.localeLinkman||'暂无'}}-{{customer.customerDetail.storeDetail.localeLinkmanPosition||'暂无'}}    {{customer.customerDetail.storeDetail.localeLinkmanTel}}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="container-fluid padding20">
+                <h5>餐厅系统相关信息：</h5>
+                <div class="row">
+                    <p class="col-md-12">其他点餐系统：<span ng-if="!customer.customerDetail.storeDetail.hasOrderSystem">无</span><span ng-if="hasOrderSystem" ng-repeat="otherorder in customer.customerDetail.storeDetail.orderSystemBrands">【{{otherorder.name}}】<small ng-if="!$last">、</small></span></p>
+                    <p class="col-md-12">收银系统信息：<span ng-if="!customer.customerDetail.storeDetail.hasPosSystem">无</span><span ng-if="hasPosSystem" ng-repeat="otherpos in customer.customerDetail.storeDetail.posSystemBrands">{{otherpos.name}}  {{otherpos.model}}<small ng-if="!$last">、</small></span></p>
+                    <p class="col-md-12">打印机信息：<span ng-if="!customer.customerDetail.storeDetail.hasPrinter">无</span><span  ng-if="hasPrinter"ng-repeat="otherpri in customer.customerDetail.storeDetail.printerBrands">{{otherpri.name}}  {{otherpri.model}}<small ng-if="!$last">、</small></span></p>
+                </div> 
+            </div>
+            <hr>
+            <div class="padding20">
+                <h5>备注说明：</h5>
+                <p>{{customer.customerDetail.storeDetail.remark || '暂无'}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">地图</h4>
+        <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="mapContainer">
+            <address addxy="$ctrl.addXY"></address>
+        </div>
+    </div>
+</script>

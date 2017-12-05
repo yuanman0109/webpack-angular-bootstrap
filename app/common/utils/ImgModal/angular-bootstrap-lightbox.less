@@ -1,0 +1,80 @@
+.imglightbox-modal{
+  overflow: auto;
+  .modal-body{
+    
+    padding: 0
+  }
+  .imglightbox-modal img{
+      margin:  0 auto;
+  }
+  .modal-content{
+    background: none;
+    
+  }
+  .lightbox-nav {
+    position: relative;
+    margin-bottom: 12px; /* the font-size of .btn-xs */
+    height: 22px;
+    text-align: center;
+    font-size: 0; /* prevent the otherwise inherited font-size and line-height from adding extra space to the bottom of this div */
+  }
+
+  .lightbox-nav .btn-group {
+    vertical-align: top;
+    z-index: 33;
+    position: relative;
+    opacity: 1;
+    top:10px;
+  }
+
+  .lightbox-nav .close {
+    /* absolutely position this in order to center the nav buttons */
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    margin-right: 10px;
+    opacity: 1
+  }
+
+  .lightbox-image-container {
+    position: relative;
+    top: -34px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    
+  }
+
+  /* the caption overlays the top left corner of the image */
+  .lightbox-image-caption {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    margin: 0.5em 0.9em; /* the left and right margins are offset by 0.4em for the span box-shadow */
+    color: #000;
+    text-align: left;
+    text-shadow: 0.1em 0.1em 0.2em rgba(255, 255, 255, 0.5);
+    font-weight: normal;
+    font-size: 14px;
+    z-index: 999;
+    background: none;
+    opacity: 0;
+  }
+
+  .lightbox-image-caption span {
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    background-color: rgba(255, 255, 255, 0.75);
+    /* pad the left and right of each line of text */
+    box-shadow: 0.4em 0 0 rgba(255, 255, 255, 0.75),
+      -0.4em 0 0 rgba(255, 255, 255, 0.75);
+  }
+  .loadfail{
+    position: absolute;
+    top: 60px;
+    color: #fff;
+  }
+
+ 
+}

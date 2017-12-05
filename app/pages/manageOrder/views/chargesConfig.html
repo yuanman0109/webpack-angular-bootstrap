@@ -1,0 +1,103 @@
+<ul class="breadcrumb">
+  <li>订单管理</li>
+  <li class="active">基础服务费设置</li>
+</ul>
+<div class="mainContent chargesConfigContent">
+  <div class="table-head form-inline">
+    <form class="form-inline">
+      <div class="form-group">
+        <select class="form-control" ng-model="ctrl.params.businessId" ng-options="type.dataCode as type.dataName for type in ctrl.businessTypes">
+          <option value="">选择业务</option>
+        </select>        
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control searchBox" placeholder="按服务费名搜索..." ng-model="ctrl.params.name" ng-keyup="ctrl.enterKeyup($event)">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-white" ng-click="ctrl.searchData()">搜索</button>
+      </div>
+    </form>    
+  </div>
+  <div class="content-box content-table-manage-order">
+    <div class="table-overflow">
+      <table class="table table-hover table-theadbg">
+        <thead>
+          <tr>
+            <th width="198">
+              <div>服务有效期</div>
+            </th>
+            <th width="166">
+              <div>销售单价</div>
+            </th>
+            <th width="140">
+              <div>原价</div>
+            </th>
+            <th width="140">
+              <div>试用期</div>
+            </th>
+            <th width="166">
+              <div>到期延期</div>
+            </th>
+            <th width="146">
+              <div>状态</div>
+            </th>
+            <th width="94">
+              <div>操作</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+      <div class="chargeMoudleSection" ng-repeat="charge in ctrl.chargesLists">
+        <div class="theTableHead">
+          <span class="title">服务费名：</span>
+          <span class="content">{{charge.name}}</span>
+          <span class="title">业务类型：</span>
+          <span class="content">{{charge.businessId | businessTypeFilter}}</span>
+          <a ng-if="btnlist.ORDER_MGR_0103" class="btn btn-link pull-right btn-link-success right-link-btn" ui-sref="manageOrder.addCharges({chargeId:charge.id,pageType:'detail'})">详情</a>
+        </div>
+        <table class="table table-bordered text-center sectionTable">
+          <tr ng-repeat="period in charge.periodConfigs">
+            <td  width="160">{{period.validPeriod | validPeriodFilter}}</td>
+            <td  width="150">{{period.unitPrice || '--'}}</td>
+            <td  width="150">{{period.originPrice || '--'}}</td>
+            <td  width="150">{{period.freePeriod || '--'}}</td>
+            <td  width="150">{{period.delayPeriod || '--'}}</td>
+            <td ng-class="{'text-danger':!period.status}" width="145">{{period.status===true?'上架':'下架'}}</td>
+            <td class="haveOneBtn" width="145">
+              <a ng-if="btnlist.ORDER_MGR_0104 && !period.status" class="btn btn-link" ng-click="ctrl.goDownCharges(charge,period,true)">上架</a>
+              <a ng-if="btnlist.ORDER_MGR_0104 && period.status" class="btn btn-link btn-link-danger" ng-click="ctrl.goDownCharges(charge,period,false)">下架</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p ng-if="ctrl.chargesLists.length===0" class="text-center text-danger">没有找到符合条件的数据！</p>
+    </div>
+    
+    <div class="btnMouleCharges">
+      <button ng-if="btnlist.ORDER_MGR_0101" type="button" class="btn btn-primary" ui-sref="manageOrder.addCharges({chargeId:0,pageType:'addNew'})">新增服务费类目</button>
+      <button ng-if="btnlist.ORDER_MGR_0105" type="button" class="btn btn-primary" ui-sref="manageOrder.trialFee">基础服务费设置</button>
+      <ul uib-pagination total-items="ctrl.total" items-per-page="ctrl.params.pageSize" ng-if="ctrl.total>ctrl.params.pageSize"
+        previous-text="<" next-text=">" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/ng-template" id="goDownCharges.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">下架</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>确定要{{$ctrl.do}}【{{$ctrl.name}} - {{$ctrl.validPeriod | validPeriodFilter}}】的服务?</p>
+    <p>{{$ctrl.do}}后，商户将{{$ctrl.can}}购买此服务</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+  </div>
+</script>

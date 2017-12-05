@@ -1,0 +1,26 @@
+<div class=" paymentChannel modal-payment-modal">
+  <form class="form-horizontal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">切换通道</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body" ng-repeat="item in ctrl.list track by $index" >
+        <div ng-class="{'zhifubao':'ALIPAY','weixin':'WEIXIN'}[item.payMode]"  ng-init="ctrl.data[$index].payMode = item.payMode"  >
+          <p class="title zhifubaoColor" ng-if="item.payMode == 'ALIPAY'" >支付宝</p>
+          <p class="title weixinColor" ng-if="item.payMode == 'WEIXIN'">微信</p>
+          <div>
+              <p>使用中的支付通道：{{item.enabledConnectionOrg|PaymentConnectionOrg}}</p>
+              <div>切换后的支付通道：
+                <select class="form-control bss-inline-block"  ng-model="ctrl.data[$index].connectionOrg"  ng-init="ctrl.data[$index].connectionOrg = item.enabledConnectionOrg | PaymentConnectionOrg">
+                    <option ng-repeat="opt in item.disabledConnectionOrgs track by $index" value="{{opt}}">{{opt|PaymentConnectionOrg}}</option>
+                </select>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

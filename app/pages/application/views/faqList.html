@@ -1,0 +1,84 @@
+<div class="page-application-faqList">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li>FAQ管理</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <div class="form-group">
+          <select class="form-control" ng-model="ctrl.getParame.status">
+              <option value="1">使用中</option>
+              <option value="0">已删除</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <sel-allapp ng-model="ctrl.getParame.ownerProduct" holder="请选择产品名称" type="product_name" callback="ctrl.getFaqTypeList(ctrl.getParame.ownerProduct)"></sel-allapp>
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-options="item.id as item.questionType for item in ctrl.faqTypeList" ng-model="ctrl.getParame.questionType">
+              <option value="">请选择问题类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="请输入标题搜索" ng-keyup="ctrl.enterKeyup($event)" ng-model="ctrl.getParame.title">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-white" type="button" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-common-theme text-center table-hover table-striped">
+          <thead>
+            <tr>
+              <th width="150">产品名称</th>
+              <th width="">问题类型</th>
+              <th width="">标题</th>
+              <th width="100">已解决点击数</th>
+              <th width="100">未解决点击数</th>
+              <th width="100">状态</th>
+              <th width="190">操作</th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.faqList.length === 0">
+            <tr class="empty-tr">
+              <td colspan="7" class="empty-box">没有您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.faqList">
+              <td class="text-overflow" title="{{item.ownerProductName || '--'}}">{{item.ownerProductName || '--'}}</td>
+              <td class="text-overflow" title="{{item.questionType || '--'}}">{{item.questionType || '--'}}</td>
+              <td class="text-overflow" title="{{item.title || '--'}}">{{item.title || '--'}}</td>
+              <td class="text-overflow" title="{{item.resolvedNum || '--'}}">{{item.resolvedNum || '--'}}</td>
+              <td class="text-overflow" title="{{item.unresolvedNum || '--'}}">{{item.unresolvedNum || '--'}}</td>
+              <td class="text-overflow" title="{{item.status === '1' ? '使用中':'已删除';}}">{{item.status === '1' ? '使用中':'已删除';}}</td>
+              <td style="text-align:left;">
+                <button type="btn" ng-if="btnlist.APP_MGR_0404" ng-click="ctrl.getFaqDetail(item.id)" class="btn btn-link">查看</button>
+                <button type="btn" ng-if="btnlist.APP_MGR_0402 && item.status === '1'" class="btn btn-link" ui-sref="application.addFaq({faqId:item.id,pageType:'editFaq'})">编辑</button>
+                <button type="btn" ng-if="btnlist.APP_MGR_0403 && item.status === '1'" class="btn btn-link btn-link-danger" ng-click="ctrl.deleteFaq(item)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group">
+            <button type="button" ng-if="btnlist.APP_MGR_0401" class="btn btn-primary" ui-sref="application.addFaq({faqId:0,pageType:'addFaq'})">新增FAQ</button>
+          </div>
+          <div class="form-group">
+            <button type="button" ng-if="btnlist.APP_MGR_0405" class="btn btn-primary" ng-click="ctrl.export()">导出</button>
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

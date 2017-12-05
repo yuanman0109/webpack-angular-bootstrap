@@ -1,0 +1,81 @@
+<ul class="breadcrumb">
+    <li>账户管理</li>
+    <li><a ui-sref="account.userLists">账户列表</a></li>
+    <li class="active">账号详情</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box userdetail-box" ng-controller="userDetailCtrl as User">
+        <h4>基本信息</h4>
+        <hr>
+        <ul class="list-unstyled clearfix list-userdetail">
+            <li>姓名：{{User.userDetail.realName}}</li>
+            <li>工号：{{User.userDetail.userNo}}</li>
+            <li>部门：{{User.userDetail.deptName}}</li>
+            <li>状态：{{User.userDetail.status}}</li>
+            <li>账号：{{User.userDetail.userName}}</li>
+            <li>邮箱：{{User.userDetail.email}}</li>
+            <li>手机：{{User.userDetail.mobilePhone}}</li>
+            <li>办公所在地：{{User.userDetail.officeProvinceName+'-'+User.userDetail.officeCityName}}</li>
+            <li>初始密码：{{User.userDetail.password}}</li>
+            <li>创建时间：{{User.userDetail.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</li>
+        </ul>
+        <h4>权限信息</h4>
+        <hr>
+        <ul class="userdetail-info">
+            <li ng-repeat="roles in User.userDetail.rolePermissions">
+                <p>角色名称：【{{roles.role.name}}】</span></p>
+                <!--<p ng-repeat="permissions in roles.permissions">
+                    {{permissions.name}}：
+                    <span ng-repeat="perm in permissions.children">【{{perm.name}}】<small ng-if="!$last">、</small></span>
+                </p>-->
+                <div ivh-treeview="roles.permissions" ivh-treeview-options="User.detailOpts" class="detail-lists clearfix">
+                    <script type="text/ng-template">
+                        <div title="{{trvw.label(node)}}">
+                            <label>{{trvw.label(node)}}</label>
+                            <div ivh-treeview-children></div>
+                        </div>
+                    </script>
+                </div>
+            </li>
+        </ul>
+        <h4>业务范围</h4>
+        <hr>
+        <ul class="userdetail-info">
+        <li><p ng-repeat="busin in User.userDetail.businessScope">
+            {{busin.name}}<span ng-if="busin.name!='全国'">：</span>
+            <span ng-if='busin.children.length>0' ng-repeat="buson in busin.children">
+                【{{buson.name}}- <span ng-repeat="area in buson.children">{{area.name}}<small ng-if="!$last">、</small></span><span ng-if="buson.children.length==0">全部区</span> 】
+                <small ng-if="!$last">、</small>
+            </span>
+            <span ng-if="busin.children.length==0 && busin.name!='全国'">全部市</span>
+        </p>
+        </li>
+        </ul>
+        <!--<h4>操作记录</h4>
+        <hr>
+        <table class="table table-userdetail">
+            <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>业务板块</th>
+                    <th>操作记录</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2016.11.21 31:20:10</td>
+                    <td>设备管理</td>
+                    <td>修改设备、删除设备</td>
+                </tr>
+                <tr>
+                    <td>2016.11.21 31:20:10</td>
+                    <td>设备管理</td>
+                    <td>修改设备、删除设备</td>
+                </tr>
+            </tbody>
+        </table>-->
+        <div class="box-pd">
+            <button type="button" class="btn btn-primary" ui-sref="account.modifyUser({userId:User.userId})">修改</button>
+        </div>
+    </div>
+</div>

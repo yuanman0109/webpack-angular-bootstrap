@@ -1,0 +1,50 @@
+<div class="modal-payment-modal">
+  <form class="form-horizontal" name="verify_form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">审核结果</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>审核结果：</label>
+        <div class="col-md-7 col-sm-7 col-xs-7 row">
+          
+          <label class="radio-inline">
+            <input type="radio" name="isVerify" ng-checked="ctrl.data.auditResult=='REJECTED'" ng-click="ctrl.switch('REJECTED')" ng-required="true" /><i class="iconfont"></i> 驳回
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-checked="ctrl.data.auditResult=='PASSED'" ng-click="ctrl.switch('PASSED')" name="isVerify" ng-required="true" ><i class="iconfont"></i> 通过
+          </label>
+        </div>
+      </div>
+      <div class="form-group" ng-if="(ctrl.data.status==='THIRD_AUDIT' && ctrl.data.auditResult!=='REJECTED' && ctrl.payConfig.connectionMode === 'INDIRECT' ) || (ctrl.data.status==='THIRD_AUDIT' && ctrl.data.auditResult!=='REJECTED' && ctrl.payConfig.connectionMode === 'DIRECT' && ctrl.payConfig.connectionOrg === 'WEIXIN' )">
+        <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>商户号：</label>
+        <div class="col-md-9 col-sm-9 col-xs-9 row" ng-class="{'has-success':verify_form.storeNo.$valid && verify_form.storeNo.$dirty,'has-error':verify_form.storeNo.$invalid && verify_form.storeNo.$dirty}">
+          <div class="col-md-11 col-sm-11 col-xs-11 row">
+            <input class="form-control" name="storeNo" placeholder="必须为字母或数字" ng-model="ctrl.data.storeNo" type="text" maxlength="200" ng-maxlength='200' ng-pattern="ctrl.regex" ng-trim="true" ng-required="ctrl.data.isStoreNoRequired" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="ctrl.data.status==='THIRD_AUDIT' && ctrl.data.auditResult!=='REJECTED' && ctrl.payConfig.connectionMode === 'INDIRECT'">
+        <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>终端号：</label>
+        <div class="col-md-9 col-sm-9 col-xs-9 row">
+          <div class="col-md-11 col-sm-11 col-xs-11 row" ng-class="{'has-success':verify_form.terminalNo.$valid && verify_form.terminalNo.$dirty,'has-error':verify_form.terminalNo.$invalid && verify_form.terminalNo.$dirty}">
+            <input class="form-control" name="terminalNo" placeholder="必须为字母或数字" maxlength="100" ng-model="ctrl.data.terminalNo" type="text" ng-trim="true" ng-pattern="ctrl.regex" ng-required="ctrl.data.isTerminalNoRequired" />
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>审核内容：</label>
+        <div class="col-md-9 col-sm-9 col-xs-9 row">
+        <div class="col-md-11 col-sm-11 col-xs-11 row" ng-class="{'has-success':verify_form.auditRemark.$valid && verify_form.auditRemark.$dirty,'has-error':verify_form.auditRemark.$invalid && verify_form.auditRemark.$dirty}">
+          <textarea class="form-control" rows="3" placeholder="请填写审核内容"  name="auditRemark"  ng-model="ctrl.data.auditRemark" maxlength="500"  ng-required="true" ></textarea>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-disabled="verify_form.$invalid || ctrl.subBtnDisabled || (ctrl.data.rejected && !ctrl.data.auditRemark)" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

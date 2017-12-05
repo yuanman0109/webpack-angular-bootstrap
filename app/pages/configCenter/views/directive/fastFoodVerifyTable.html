@@ -1,0 +1,56 @@
+<div class="table-overflow">
+  <table class="table table-hover text-center table-common-theme">
+    <thead>
+      <tr>
+        <th>门店</th>
+        <th >所属品牌</th>
+        <th>城市-区/县</th>
+        <th>申请人</th>
+        <th >申请时间</th>
+        <th  ng-if="ctrl.status!==''">停留时间</th>
+        <th ng-if="ctrl.status==''">状态</th>
+        <th ng-if="ctrl.status==''">审核人</th>
+        <th ng-if="ctrl.status==''">最后审核时间</th>
+        <th ng-if="btnlist.CONFIG_0601" class="col-md-1">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in ctrl.list track by $index">
+        <td class="text-overflow">
+          <span title="{{item.storeName}}">{{item.storeName | maxString:true:20:' ...'}}
+          </span>
+        </td>
+        <td class="text-overflow">
+          <span title="{{item.brandName}}">
+                {{item.brandName | maxString:true:20:' ...'}}
+          </span>
+        </td>
+        <td class="text-overflow">
+          <span title="{{item.provinceName}}-{{item.cityName}}-{{item.districtName}}">
+              {{item.provinceName}}-{{item.cityName}}-{{item.districtName}}</span>
+        </td>
+        <td class="text-overflow"><span title="{{item.applicatName}}">{{item.applicatName}}</span></td>
+        <td  class="text-overflow"><span title="{{item.applicationTime | date:'yyyy-MM-dd HH:mm:ss'}}">{{item.applicationTime | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+        <td class="text-overflow" ng-if="ctrl.status!==''">{{item.residenceTime}}小时</td>
+        
+        <td ng-if="ctrl.status==''"><span ng-if="item.status">{{item.status | FastFoodStatus}}</span><span ng-if="!item.status ">-</span></td>
+        <td ng-if="ctrl.status==''"><span title="{{item.auditName}}">{{item.auditName}}</span></td>
+        <td ng-if="ctrl.status==''"><span ng-if="item.auditTime" title="{{item.auditTime | date:'yyyy-MM-dd HH:mm:ss'}}">{{item.auditTime | date:'yyyy-MM-dd HH:mm:ss'}} </span><span ng-if="!item.auditTime">-</span></td>
+        <td ng-if="btnlist.CONFIG_0601">
+          <a ui-sref="configCenter.fastFoodDetails({ id: item.id,tabIndex:ctrl.tabIndex })">详情</a>
+        </td>
+      </tr>
+      <tr ng-if="ctrl.list.length == 0" class="empty-tr">
+        <td ng-if="ctrl.status==''" colspan="{{btnlist.CONFIG_0601?9:8}}" class="empty-box">暂无任何快餐进件</td>
+        <td ng-if="ctrl.status!=''" colspan="{{btnlist.CONFIG_0601?7:6}}" class="empty-box">暂无任何待审核快餐进件</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="clearfix"  ng-if="ctrl.total > ctrl.params.pageSize" >
+  <ul uib-pagination total-items="ctrl.total" items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+  <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+</div>
+<div class="btns-wrap" ng-if="ctrl.status==''">
+  <button ng-if="btnlist.CONFIG_0603 && ctrl.status=='' &&  ctrl.total>0" class="btn btn-primary"  ng-click="ctrl.export()">导出</button>
+</div>

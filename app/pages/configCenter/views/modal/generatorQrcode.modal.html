@@ -1,0 +1,21 @@
+<div class="modal-payment-modal">
+  <form class="form-horizontal" name="form_generator">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">批量生成二维码</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group" ng-if="true">
+        <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label">生成数量：</label>
+        <div class="col-md-9 col-sm-9 col-xs-9 row">
+          <div class="col-md-11 col-sm-11 col-xs-11 row" ng-class="{'has-success':form_generator.number.$dirty && form_generator.number.$valid,'has-error': form_generator.number.$dirty && form_generator.number.$invalid}"> 
+            <input type="number" placeholder="请输入1~30000 的 整数" class="form-control" ng-model="ctrl.count" name="number" ng-pattern="/(^[1-9]\d{0,3}$)|(^[1-2]\d{0,4}$)|^30000$/"  required/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-disabled="!ctrl.count || !isgeneratorQrcode" ng-click="ctrl.confirm()">生成</button>
+    </div>
+  </form>
+</div>

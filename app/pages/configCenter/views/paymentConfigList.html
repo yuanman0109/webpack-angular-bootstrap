@@ -1,0 +1,118 @@
+<div class="page-paymentConfigList">
+  <ul class="breadcrumb">
+    <li>配置中心</li>
+    <li class="active"><a href=""  ui-sref="configCenter.restaurantList()">餐厅列表</a></li>
+    <li>支付配置</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+    <form class="form-inline">
+        <div class="form-group">
+          <select class="form-control" ng-model="ctrl.params.connectionMode">
+              <option value="">按连接方式</option>
+              <option value="DIRECT">直连</option>
+              <option value="INDIRECT">间连</option>
+          </select>
+         
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-model="ctrl.params.connectionOrg">
+              <option value="">按连接机构</option>
+              <option value="LAKALA">拉卡拉</option>
+              <option value="EASYPAY">易生支付</option>
+              <!--<option value="ZHIFUTONG">支付通</option>-->
+              <option value="FUYOU">富友</option>
+              
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-model="ctrl.params.status">
+              <option value="">按状态</option>
+              <option value="ENABLED">可用</option>
+              <option value="DISABLED">不可用</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.getList()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <p>
+        <span class="storename">门店名称：{{ctrl.storeName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="brand">所属品牌：{{ctrl.brandName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="company">所属企业：{{ctrl.companyName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      </p>
+      <div class="table-overflow">
+        <table class="table table-hover table-theadbg text-center">
+          <thead>
+            <tr>
+              <th>
+                <div>C端入口</div>
+              </th>
+              <th>
+                <div>连接方式</div>
+              </th>
+              <th>
+                <div>连接机构</div>
+              </th>
+              <th>
+                <div>商户号</div>
+              </th>
+              <th>
+                <div>终端号</div>
+              </th>
+              <th>
+                <div>状态</div>
+              </th>
+              <th ng-if="btnlist.CONFIG_050301 || btnlist.CONFIG_050304">
+                <div>操作</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrl.List">
+              <td class="text-overflow">
+                {{item.payMode|PaymentPayMode}}
+              </td>
+              <td class="text-overflow">
+                {{item.connectionMode|PaymentConnectionMode}}
+              </td>
+              <td class="text-overflow">
+                <span ng-if="item.connectionMode === 'DIRECT'">-</span>
+                <span ng-if="item.connectionMode !== 'DIRECT'"> {{item.connectionOrg|PaymentConnectionOrg}} </span>
+               
+              </td>
+              <td class="text-overflow">
+                {{item.storeNo}}
+              </td>
+              <td class="text-overflow">
+                <span ng-if="!item.terminalNo">-</span>
+                <span ng-if="item.terminalNo"> {{item.terminalNo}}</span>
+               
+              </td>
+              <td class="text-overflow">
+                {{item.status == 'ENABLED'? '可用' : '不可用'}}
+              </td>
+              <td class="text-left" ng-if="btnlist.CONFIG_050301 || btnlist.CONFIG_050304">
+                <button ng-if="btnlist.CONFIG_050301" type="button" class="btn btn-link bss-text-warning" ui-sref="configCenter.paymentConfigDetail({storeId:ctrl.params.storeId,id:item.id})">详情</button>
+                <button ng-if="btnlist.CONFIG_050304 && item.status == 'ENABLED'" type="button" class="btn btn-link bss-text-primary pull-right" ng-click="ctrl.disable(item)">停用</button>
+              </td>
+            </tr>
+            <tr ng-if="!ctrl.List || ctrl.List.length == 0" class="empty-tr">
+              <td colspan="{{btnlist.CONFIG_050301 || btnlist.CONFIG_050304 ? 7 : 6}}" class="empty-box">暂无任何内容</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.params.pageSize" items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+        <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+      </div>
+      <div class="btns-wrap">
+          <button ng-if="btnlist.CONFIG_050302" class="btn btn-primary"  ui-sref="configCenter.paymentConfigDetail({storeId:ctrl.params.storeId,id:null})">新增支付配置</button>
+          <button ng-if="btnlist.CONFIG_050303 && ctrl.total>1" class="btn btn-primary"  ng-click="ctrl.channelSwitch()">切换通道</button>
+        </div>
+    </div>
+  </div>
+</div>

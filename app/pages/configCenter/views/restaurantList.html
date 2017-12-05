@@ -1,0 +1,86 @@
+<div class="page-restaurantList">
+  <ul class="breadcrumb">
+    <li>配置中心</li>
+    <li class="active">餐厅列表</li>
+  </ul>
+  <div class="mainContent restaurantList">
+    <div class="table-head form-inline">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入门店名称" ng-model="ctrl.params.searchStr" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+         <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入品牌名称" ng-model="ctrl.params.brandName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group ">
+          <button type="button" class="btn btn-white" ng-click="ctrl.search()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-theadbg">
+          <thead>
+            <tr>
+              <th>
+                <div>门店</div>
+              </th>
+              <th>
+                <div>业务类型</div>
+              </th>
+              <th>
+                <div>所属品牌</div>
+              </th>
+              <th>
+                <div>城市-区/县</div>
+              </th>
+              <th ng-if="btnlist.CONFIG_0503 || btnlist.CONFIG_0504">
+                <div>操作</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrl.list">
+              <td class="text-overflow">
+                <span  title="{{item.name}}">
+                  {{item.name | maxString:true:20:' ...'}}
+                </span>
+                
+              </td>
+              <td class="text-overflow">
+                <busin-label business="item.business"></busin-label>
+              </td>
+              <td class="text-overflow">
+                 <span  title="{{item.brandName}}">
+                  {{item.brandName | maxString:true:20:' ...'}}
+                </span>
+              </td>
+              <td class="text-overflow">
+                <span  title="{{item.provinceName}} - {{item.cityName}} - {{item.districtName}}">
+                   {{item.provinceName}} - {{item.cityName}} - {{item.districtName}}
+                </span>
+               
+              </td>
+              <td ng-if="btnlist.CONFIG_0503 || btnlist.CONFIG_0504">
+                <button ng-if="btnlist.CONFIG_0503" type="button" class="btn btn-link bss-text-warning" ui-sref="configCenter.paymentConfigList({storeId:item.id})">支付</button>
+                <button ng-if="btnlist.CONFIG_0504" type="button" class="btn btn-link bss-text-primary">餐台</button>
+                <!--<a ng-href=""  target="_black"> 桌位 </a>
+                <a ng-href=""  target="_black"> 餐区 </a>-->
+              </td>
+            </tr>
+            <tr ng-if="!ctrl.list || ctrl.list.length == 0" class="empty-tr">
+              <td colspan="{{(btnlist.CONFIG_0503 || btnlist.CONFIG_0504)?5:4}}" class="empty-box">暂无任何内容</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total > ctrl.params.pageSize" items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+        <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+      </div>
+      <div class="btns-wrap">
+          <button ng-if="btnlist.CONFIG_0501" class="btn btn-primary"  ng-click="ctrl.checkAccount()">查看云餐厅账号</button>
+        </div>
+    </div>
+  </div>
+</div>

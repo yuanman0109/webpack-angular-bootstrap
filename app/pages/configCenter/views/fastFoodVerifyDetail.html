@@ -1,0 +1,114 @@
+<div class="page-fastFood-verify-detail">
+  <ul class="breadcrumb">
+    <li>配置中心</li>
+    <li class="active"><a href="" ui-sref="configCenter.fastFoodList()">快餐进件审核</a></li>
+    <li>{{ctrl.details.status| FastFoodStatus}}详情</li>
+  </ul>
+  <div class="mainContent">
+    <div class="alert alert-success" ng-if="ctrl.details.caseStatus || ctrl.details.caseStatus === null" ng-class="{'alert-info':ctrl.details.caseStatus == null,'alert-danger':ctrl.details.caseStatus=='THIRD_REJECTED'||ctrl.details.caseStatus=='REJECTED' ,'alert-warning':ctrl.details.caseStatus=='THIRD_AUDIT'|| ctrl.details.caseStatus=='AUDIT'}" role="alert">
+      <i class="iconfont " ng-class="{'icon-nb-w1':ctrl.details.caseStatus=='PASSED','icon-nb-w2':ctrl.details.caseStatus=='THIRD_REJECTED'||ctrl.details.caseStatus=='REJECTED','icon-icon116':ctrl.details.caseStatus=='THIRD_AUDIT'|| ctrl.details.caseStatus=='AUDIT'}"> </i>
+       &nbsp;该门店的支付进件状态为【{{ctrl.details.caseStatus | FastFoodCaseStatus}}】
+    </div>
+    <div class="content-box">
+       <form class="form-horizontal clearfix" name="roleform" role="form">
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3  col-sm-3 col-xs-3  control-label">门店名称：</label>
+          <div class="col-md-5 col-sm-5  col-xs-5">
+            <span uib-tooltip="{{ctrl.details.storeName}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true"> 
+                <input   type="text" name="storeName" class="form-control" ng-disabled="true"  ng-model="ctrl.details.storeName" />
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">所属品牌：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+             <span uib-tooltip="{{ctrl.details.brandName}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true">
+                 <input type="text" name="brandName" class="form-control" ng-disabled="true"  ng-model="ctrl.details.brandName">
+             </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">所属企业：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+             <span uib-tooltip="{{ctrl.details.companyName}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true">
+                <input type="text" name="companyName" class="form-control" ng-disabled="true"  ng-model="ctrl.details.companyName">
+             </span>
+            
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">城市：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5" >
+             <span uib-tooltip="{{ctrl.details.provinceName}}-{{ ctrl.details.cityName}}-{{ ctrl.details.districtName}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true">
+                <input type="text" name="rolename" class="form-control"  ng-disabled="true" title="" value="{{ctrl.details.provinceName}}-{{ ctrl.details.cityName}}-{{ ctrl.details.districtName}}"  >
+             </span>
+            
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">菜单参考：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5 clearfix">
+           <ul class="menuReference pull-left">
+             <li ng-repeat="item in ctrl.details.menuReferencesUrl track by $index">
+             <a  ng-click="ctrl.openLightboxModal(ctrl.menuReferencesUrlList, $index)"  target="_black" class="text-success" > 图片{{$index+1}} </a>
+             </li>
+           </ul>
+           <a ng-if="false" ng-href=""  class="marginTop pull-left"  target="_blank"> 跳转至云餐厅设置菜品 </a>
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">餐台参考：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5 marginTop clearfix ">
+             <a ng-if="ctrl.details.tableReferenceUrl" ng-click="ctrl.openLightboxModal(ctrl.tableReferenceUrlList, 0)"  target="_black" class="text-success pull-left">查看</a><span class=" pull-left">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+             <a  ng-if="false"  ng-href="" class=" pull-left"  target="_black"> 跳转至云餐厅设置餐台 </a>
+             <!--{{loginInfo.userNo}}-->
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">是否支持预点：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5 marginTop">
+            <span ng-if="ctrl.details.supportPreOrder == 1">支持</span>
+            <span ng-if="ctrl.details.supportPreOrder == 0">不支持</span>
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">业务协议书：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5 marginTop">
+            <a ng-if="ctrl.details.businessAgreementUrl" ng-click="ctrl.openLightboxModal(ctrl.businessAgreementUrlList, 0)" target="_black" class="text-success">查看</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        </div>
+        <div class="form-group" >
+          <label for="inputEmail3" class="col-md-3 col-sm-3 col-xs-3 control-label">备注：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5 marginTop">
+            <span ng-if="ctrl.details.remark">{{ctrl.details.remark}}</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-3 col-sm-offset-3  col-xs-offset-3  col-md-9 col-sm-9 col-xs-9">
+            <button type="button" class="btn btn-primary" ng-if="ctrl.details.status == 'SUBMIT' && btnlist.CONFIG_0602"  ng-click="ctrl.verify()">审核</button>
+          </div>
+        </div>
+        <div class="log-wrapper">
+          <ul>
+            <li ng-repeat="item in ctrl.verifyLog" ng-class="{'first-ok':$index==$first}">
+              <p ng-class="{'text-success': item.auditResult=='ONLINE','text-error':item.auditResult=='REJECT'}">{{item.auditUser}}在{{item.auditTime | date:'yyyy-MM-dd HH:mm:ss'}}{{item.auditResult | FastFoodLogStatus}}了申请</p>
+              <p ng-class="{'text-success': item.auditResult=='ONLINE','text-error':item.auditResult=='REJECT'}">{{item.auditRemark}}</p>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

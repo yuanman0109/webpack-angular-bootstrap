@@ -1,0 +1,72 @@
+<div class="page-qrcode-list">
+  <ul class="breadcrumb">
+    <li class="active">配置中心</li>
+    <li class="active">二维码</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <uib-tabset class="tabs-default" active="ctrl.tabIndex" >
+        <!--tab切换开始-->
+        <uib-tab ng-repeat="tab in ctrl.tabs track by $index" index="$index" heading="{{tab.heading}}" select="ctrl.getQrcodeList($index,tab.status,tab.pageNo)">
+          <qrcode-tab-ul ></qrcode-tab-ul>
+        </uib-tab>
+        <!--tab切换结束-->
+        <!--搜索开始-->
+        <div class="search-wrap form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="ctrl.param.store" placeholder="输入客户名称、客户ID..."  ng-keyup="ctrl.enterKeyup($event)">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-normal" ng-click="ctrl.getQrcodeList(2,'USED',1)">搜索</button>
+          </div>
+        </div>
+        <!--搜索结束-->
+      </uib-tabset>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+            <div class="form-group" ng-if="btnlist.CONFIG_0202 && ctrl.batchDownload">
+              <button class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.downloadEvent()"> 取消批量</button>
+            </div>
+            <div class="form-group"  ng-if="btnlist.CONFIG_0201">
+             <button class="btn btn-primary" ng-click="ctrl.generatorQrcode()">批量生成二维码</button>
+            </div>
+            <div class="form-group" ng-if="btnlist.CONFIG_0202 && !ctrl.batchDownload">
+              <button ng-disabled="ctrl.qrcodeList.noList"  class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.downloadEvent('qrcodeIMG')">批量下载二维码图片</button>
+            </div>
+            <div class="form-group" ng-if="ctrl.batchDownload">
+             <button ng-disabled="ctrl.choseArr.length==0 || isdownloadQrcode ==='being'" class="btn btn-orange" ng-click="ctrl.downloadTemplate()">下载（{{ctrl.choseArr.length}}）</button>
+            </div>
+            <div class="form-group" ng-if="btnlist.CONFIG_0203 && !ctrl.batchDownload">
+               <button ng-disabled="ctrl.qrcodeList.noList" class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.downloadEvent('qrcodeUrl')">批量下载二维码内容</button>
+            </div>
+            <div class="form-group"  ng-if="btnlist.CONFIG_0204 && !ctrl.batchDownload">
+              <button ng-disabled="ctrl.qrcodeList.noList" class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.qrcodeUrlDownloadAll()">全部下载二维码图片</button>
+            </div>
+            <div class="form-group"  ng-if="btnlist.CONFIG_0204 && !ctrl.batchDownload">
+              <button ng-disabled="ctrl.qrcodeList.noList" class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.qrcodeUrlDownloadAll()">全部下载二维码内容</button>
+            </div>
+            <div class="form-group" ng-if="btnlist.CONFIG_0205 &&!ctrl.batchDownload">
+              <button ng-disabled="ctrl.qrcodeList.noList || ctrl.tabIndex != 2 " class="btn btn-primary" ng-class="{true: 'btn-gray', false: 'btn-primary'}[ctrl.batchDownload]" ng-click="ctrl.downloadUsedBarcodes()">导出二维码使用情况</button>
+            </div>
+            <div class="form-group" ng-if="ctrl.batchDownload">
+              <label class="checkbox-inline">
+                    <input type="checkbox" name="qrcodechecked" ng-disabled="ctrl.qrcodeList=='' || isdownloadQrcode =='being'"  ng-model="ctrl.allCheck"  ng-click="ctrl.all(ctrl.allCheck,ctrl.qrcodeList[ctrl.tabIndex])"><i class="iconfont"></i>当前页全选
+              </label>
+            </div>
+
+        </div>
+        
+      </div>
+      <div class="btns-wrap">
+
+        
+        
+        
+       
+         
+        
+        
+      </div>
+    </div>
+  </div>
+</div>

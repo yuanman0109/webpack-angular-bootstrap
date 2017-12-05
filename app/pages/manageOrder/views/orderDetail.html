@@ -1,0 +1,149 @@
+<ul class="breadcrumb">
+  <li>订单管理</li>
+  <li><a ui-sref="manageOrder.chargesOrder">服务费订单</a></li>
+  <li>服务费订单详情</li>
+  <!-- <li class="active">{{ctrl.pageType | topMenuFilter}}</li> -->
+</ul>
+<div class="mainContent chargesOrderDetail">
+  <div class="content-box">
+    <form name="chargesChangeForm" novalidate>
+      <div class="charges-content-list">
+        <dl class="dl-horizontal">
+          <dt>服务费订单号</dt>
+          <dd>{{ctrl.orderInfo.no}}</dd>
+        </dl>
+        <dl class="dl-horizontal" ng-if="ctrl.orderInfo.status === 'PAYED'">
+          <dt>富友订单号</dt>
+          <dd>{{ctrl.orderInfo.payOrder2}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>门店名称</dt>
+          <dd>{{ctrl.orderInfo.storeName}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>所属品牌</dt>
+          <dd>{{ctrl.orderInfo.brandName}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>订单创建时间</dt>
+          <dd>{{(ctrl.orderInfo.createTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>支付状态</dt>
+          <dd ng-class="{'warmColor':ctrl.orderInfo.status==='PAYED','noPay':ctrl.orderInfo.status==='NOT_PAY'}">{{ctrl.orderInfo.status | statusFilter}}</dd>
+        </dl>
+        <div ng-if="ctrl.orderInfo.payType==='ALIPAY'">
+          <dl class="dl-horizontal">
+            <dt>支付方式</dt>
+            <dd>{{ctrl.orderInfo.payType | payTypeFilter}}</dd>
+          </dl>
+          <dl class="dl-horizontal">
+            <dt>支付成功时间</dt>
+            <dd>{{(ctrl.orderInfo.payedTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</dd>
+          </dl>
+        </div>
+        <dl class="dl-horizontal">
+          <dt>订单详情</dt>
+          <dd>
+            <table class="table table-bordered text-center chargesTable-detail">
+              <thead>
+              <tr>
+                <th>服务费名</th>
+                <th>业务类型</th>
+                <th>服务有效期</th>
+                <th>销售单价</th>
+                <th>数量</th>
+                <th>销售总价</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="orderDetail in ctrl.orderInfo.orderDetails">
+                  <td>{{orderDetail.serviceChargeName}}</td>
+                  <td>{{orderDetail.businessType}}</td>
+                  <td>{{orderDetail.serviceValidPeriodValue}}</td>
+                  <td>{{orderDetail.unitPrice}}</td>
+                  <td>{{orderDetail.mount}}</td>
+                  <td class="warmColor">{{orderDetail.totalPrice}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </dd>
+        </dl>
+        <!-- <dl class="dl-horizontal">
+          <dt>订单金额</dt>
+          <dd class="">{{ctrl.orderInfo.orderAmount || '--'}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>应付金额</dt>
+          <dd class="warmColor">{{ctrl.orderInfo.payedAmount || '--'}}</dd>
+        </dl> -->
+        <dl class="dl-horizontal">
+          <dt>订单说明</dt>
+          <dd>{{ctrl.orderInfo.description || '--'}}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>服务费金额</dt>
+          <dd>{{ctrl.orderInfo.payedAmount || '--'}}</dd>
+        </dl>
+        <div ng-if="ctrl.trialOrder.length !== 0 && ctrl.trialOrder !== null">
+          <dl class="dl-horizontal">
+            <dt>试用费订单号</dt>
+            <dd>{{ctrl.trialOrder[0].no || ''}}</dd>
+          </dl>
+          <dl class="dl-horizontal">
+            <dt>试用费金额</dt>
+            <dd>{{ctrl.trialOrder[0].payedAmount || ''}}</dd>
+          </dl>
+        </div>
+        <dl ng-if="ctrl.orderInfo.payType !== null" class="dl-horizontal">
+          <dt>实付金额</dt>
+          <dd>{{ctrl.orderInfo.realAmount || '--'}}</dd>
+        </dl>
+        <dl class="dl-horizontal" ng-if="ctrl.pageType==='changePrice'">
+          <dt class="changeFeeTitle"><strong class="text-danger">*</strong>调整后服务费金额</dt>
+          <dd ng-class="{'has-success':chargesChangeForm.newPriceInput.$valid && chargesChangeForm.newPriceInput.$dirty,'has-error':chargesChangeForm.newPriceInput.$invalid && chargesChangeForm.newPriceInput.$dirty}">
+            <input type="number" name="newPriceInput" ng-model="ctrl.newPriceInput" class="change-order-fee form-control" placeholder="请输入金额(0~999999.99)" ng-pattern="/^([1-9]\d{0,5}(\.\d{0,2})?|0\.(([1-9]\d?)|(\d[1-9])))$/" required>        
+              <!-- <span class="waitColor" ng-show="chargesChangeForm.newPriceInput.$dirty && (chargesChangeForm.newPriceInput.$error.required || chargesChangeForm.newPriceInput.$invalid)">请输入正确的金额(最多允许保留两位小数,大于0，最大不能超过999999.99)</span> -->
+          </dd>
+        </dl>
+        <dl class="dl-horizontal" ng-if="ctrl.pageType==='changePrice'">
+          <dt>试用费金额	</dt>
+          <dd>{{ctrl.orderInfo.chargeAmount === 0 ? 0 :(ctrl.orderInfo.chargeAmount || '--') }}</dd>
+        </dl>
+      </div>     
+      <div class="text-center">
+        <button ng-if="btnlist.ORDER_MGR_0203 && ctrl.orderInfo.status==='NOT_PAY' && ctrl.pageType==='noPay'" type="button" class="btn btn-primary" ng-click="ctrl.calcelOrder()">取消订单</button>
+        <button ng-if="ctrl.pageType==='changePrice'" type="button" class="btn btn-primary" ng-click="ctrl.changeCharge()" ng-disabled="chargesChangeForm.$invalid">改价</button>
+      </div>
+    </form>   
+  </div>  
+</div>
+
+<!-- <script type="text/ng-template" id="calcelOrder.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">取消订单</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>确定要取消【{{$ctrl.name}}】的订单吗？</p>
+    <p>请仔细核对后确认！</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+  </div>
+</script> -->
+
+<!-- <script type="text/ng-template" id="changeCharge.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">改价</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>确定将【{{$ctrl.name}}】的该笔订单的金额【{{$ctrl.oldPrice}}】修改为【{{$ctrl.newPrice}}】吗？请仔细核对后确认！</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+  </div>
+</script> -->

@@ -1,0 +1,50 @@
+<div class="modal-restaurantAccount-modal">
+  <form class="form-horizontal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">查看云餐厅账号</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group" ng-class="{'has-success':addUser.realName.$valid,'has-error':addUser.realName.$invalid && addUser.realName.$dirty}">
+          <label for="" class="col-sm-3 control-label">企业名称：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+            <ui-select ng-model="user.userData.realName" name="realName" required theme="bootstrap" ng-disabled="user.isModify" on-select="user.selCallback($select.selected)"
+              reset-search-input="false" title="选择企业">
+              <ui-select-match placeholder="请搜选企业名称...">{{$select.selected.realName || user.userData.realName}}</ui-select-match>
+              <ui-select-choices repeat="user.realName as user in user.userList track by $index" refresh="user.getInfoFormName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.realName | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+      </div>
+       <div class="form-group" >
+          <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label">品牌信息：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+           <ul>
+             <li>
+                <div class="left">
+                  <img  src="" />
+                </div>
+                <div class="right">
+                  <p class="name"></p>
+                  <p class="type"></p>    
+                </div>
+             </li>
+           </ul>
+          </div>
+      </div>
+      <div class="form-group" >
+          <label for="" class="col-sm-3 control-label">企业云餐厅登录账号：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row" ng-if="btnlist.CONFIG_050101">
+            <button type="button" class="btn btn-primary pull-right" ng-click="ctrl.resetPWD()">重置密码</button>
+          </div>
+      </div>
+      <div class="form-group" >
+          <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label">密码：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row"> </div>
+      </div>
+      <p class="text-danger" ng-if="ctrl.isResetPwd">该企业的登陆账号密码重置成功！</p>
+    </div>
+  </form>
+</div>

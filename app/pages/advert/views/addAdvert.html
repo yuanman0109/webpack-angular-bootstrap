@@ -1,0 +1,234 @@
+<ul class="breadcrumb">
+  <li>广告管理</li>
+  <li><a ui-sref="advert.advertList">广告列表</a></li>
+  <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent advert_details " ng-controller="AddAdvertCtrl as adv">
+  <div class="content-box addAdv-box">
+    <div class="row">
+      <div class="col-md-5 col-sm-5 col-xs-5">
+        <select class="form-control advSelect" ng-model="adv.addData.adPosition">
+            <option value="ORDER_DETAIL">订单详情页</option>
+            <option value="PAY_SUCCESS">支付成功页</option>
+            <option value="SUCCESS_UP">wifi成功页一</option>
+            <option value="SUCCESS_DOWN">wifi成功页二</option>
+            <!--<option value="SUCCESS">wifi成功页</option>
+            <option value="PORTAL">wifi-portal页</option>-->
+        </select>
+        <div class="phone-wrap">
+          <div class="porTemp" ng-if="adv.addData.adPosition=='PORTAL'">
+            <img ng-src="{{(adv.addData.adImageUrl| imgUrlWithToken)||adv.defaultImg}}" alt="广告图">
+          </div>
+          <div class="sucTemp" ng-if="adv.addData.adPosition=='SUCCESS'" style="background:url('{{(adv.addData.adImageUrl| imgUrlWithToken)|| adv.defaultImg}}') no-repeat center;background-size:cover'}">
+            <div class="tit">广告</div>
+            <div class="time">5<span>跳过</span></div>
+          </div>
+          <div class="orderTemp" ng-if="adv.addData.adPosition=='ORDER_DETAIL'">
+            <img ng-src="{{(adv.addData.adImageUrl| imgUrlWithToken)||adv.defaultImg_l}}" alt="广告图">
+          </div>
+          <div class="payTemp" ng-if="adv.addData.adPosition=='PAY_SUCCESS'">
+            <img ng-src="{{(adv.addData.adImageUrl| imgUrlWithToken)||adv.defaultImg_l}}" alt="广告图">
+          </div>
+          <div class="succTemp-2" ng-if="adv.addData.adPosition=='SUCCESS_UP'">
+            <img ng-src="{{(adv.addData.adImageUrl| imgUrlWithToken)||adv.defaultImg_m}}" alt="广告图">
+          </div>
+          <div class="succTemp-1" ng-if="adv.addData.adPosition=='SUCCESS_DOWN'">
+            <img ng-src="{{(adv.addData.adImageUrl| imgUrlWithToken)||adv.defaultImg_m}}" alt="广告图">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7 col-sm-7 col-xs-7">
+        <form class="form-horizontal" role="form" name="advForm">
+          <div class="form-group" ng-class="{'has-success':advForm.advName.$valid,'has-error':advForm.advName.$invalid && advForm.advName.$dirty}">
+            <label class="col-md-4  col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>广告名称：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <input type="text" class="form-control" name="advName" placeholder="" ng-model="adv.addData.name" ng-maxlength="20" required>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':advForm.startTime.$valid,'has-error':advForm.startTime.$invalid && advForm.startTime.$dirty}">
+            <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>投放开始时间：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <div class="input-group input-date">
+                <input type="text" class="form-control" readonly="readonly" name="startTime" uib-datepicker-popup="yyyy/MM/dd" datepicker-options="adv.startDateOps" required ng-model="adv.showStartTime" ng-change="adv.selDate('start')" is-open="adv.startOpen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" placeholder="投放开始时间" />
+                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="adv.startOpen=!adv.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':advForm.endTime.$valid,'has-error':advForm.endTime.$invalid && advForm.endTime.$dirty}">
+            <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>投放结束时间：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <div class="input-group input-date">
+                <input type="text" class="form-control" readonly="readonly" datepicker-options="adv.endDateOps" ng-change="adv.selDate('end')" name="endTime" uib-datepicker-popup="yyyy/MM/dd" required ng-model="adv.showEndTime" is-open="adv.endOpen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" placeholder="投放结束时间" />
+                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="adv.endOpen=!adv.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':advForm.crowd.$valid,'has-error':advForm.crowd.$invalid && advForm.crowd.$dirty}">
+            <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>投放人群：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <select class="form-control" name="crowd" ng-model="adv.addData.crowd" required>
+                                <option value="ALL">所有人群</option>
+                            </select>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':adv.addData.cityCodes.length>0,'has-error':adv.addData.cityCodes.length==0}">
+            <label class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>投放地点：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <button type="button" class="btn btn-shallow" ng-click="adv.selCity()">选择投放地点</button>
+              <!--<input type="text" name="cityCodes" ng-model="adv.addData.cityCodes" ng-minlength="1" required>-->
+              <span class="text-success" ng-if="adv.addData.cityCodes.split(',').length">已选择{{adv.isAllcities == true ? '全部':adv.addData.cityCodes.split(',').length+'个'}}区域。</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>广告图片：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <small>图片要求小于1M，尺寸要求{{adv.addData.adPosition=='ORDER_DETAIL'|| adv.addData.adPosition=='PAY_SUCCESS'?'750*220':'750*400'}}</small>
+
+              <input type="hidden" ng-model="adv.addData.adImage">
+              <div class="form-control-static">
+                <button type="file" ngf-select="adv.uploadFiles($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+              </div>
+              <small ng-if="adv.addImgSuccess=='on'">图片正在上传...</small>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':advForm.adUrl.$valid,'has-error':advForm.adUrl.$invalid && advForm.adUrl.$dirty}">
+            <label class="col-md-4 col-sm-4 col-xs-4 control-label"><strong class="text-danger">*</strong>广告链接：</label>
+            <div class="col-md-8 col-sm-8 col-xs-8 row">
+              <input type="url" class="form-control" name="adUrl" placeholder="输入广告链接...如:http://www.51eparty.com" ng-model="adv.addData.adUrl" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-offset-4 col-sm-offset-4 col-xs-offset-4 col-md-8 col-sm-8 col-xs-8">
+              <div class="row">
+                <button type="submit" class="btn btn-primary" ng-disabled="advForm.$invalid || adv.addImgSuccess=='on'" ng-click="adv.previewAdvert()">确定</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/ng-template" id="selCity.html">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">选择投放地点</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body selCity-box" id="modal-body">
+      <label class="checkbox-inline">
+                <input type="checkbox" ng-model="$ctrl.isAllcities" ng-change="$ctrl.selectAllCities($ctrl.isAllcities)">
+                <i class="iconfont"></i>
+                <span>全国</span>
+            </label>
+      <div ivh-treeview="$ctrl.cities" ivh-treeview-options="$ctrl.cityOpts" ivh-treeview-on-cb-change="$ctrl.changeCallback(ivhNode)" ivh-treeview-node-tpl="$ctrl.tpl">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+    </div>
+  </script>
+  <script type="text/ng-template" id="preview.html">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">预览广告</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <p class="bg-warning check-advTip" ng-if="!$ctrl.isConflic"><i class="iconfont icon-icon116"></i>系统检测到在本次广告投放时间内，与其他广告存在重合的投放城市，重合城市的广告将会随机展现~</p>
+    <div class="modal-body addAdv-box" id="modal-body">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="phone-wrap">
+            <div class="porTemp" ng-if="$ctrl.addData.adPosition=='PORTAL'">
+              <img ng-src="{{ ($ctrl.addData.adImageUrl) || $ctrl.defaultImg }}" alt="广告图">
+            </div>
+            <div class="sucTemp" ng-if="$ctrl.addData.adPosition=='SUCCESS'" style="background:url('{{($ctrl.addData.adImageUrl)|| $ctrl.defaultImg}}') no-repeat center;background-size:cover}">
+              <div class="tit">广告</div>
+              <div class="time">5<span>跳过</span></div>
+            </div>
+            <div class="orderTemp" ng-if="$ctrl.addData.adPosition=='ORDER_DETAIL'">
+              <img ng-src="{{($ctrl.addData.adImageUrl)||$ctrl.defaultImg_l}}" alt="广告图">
+            </div>
+            <div class="payTemp" ng-if="$ctrl.addData.adPosition=='PAY_SUCCESS'">
+              <img ng-src="{{($ctrl.addData.adImageUrl)||$ctrl.defaultImg_l}}" alt="广告图">
+            </div>
+            <div class="succTemp-2" ng-if="$ctrl.addData.adPosition=='SUCCESS_UP'">
+              <img ng-src="{{($ctrl.addData.adImageUrl)||$ctrl.defaultImg_m}}" alt="广告图">
+            </div>
+            <div class="succTemp-1" ng-if="$ctrl.addData.adPosition=='SUCCESS_DOWN'">
+              <img ng-src="{{($ctrl.addData.adImageUrl)||$ctrl.defaultImg_m}}" alt="广告图">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">广告名称：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <p class="form-control-static">{{$ctrl.addData.name||''}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">广告位：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <p class="form-control-static">{{$ctrl.adPositionName[$ctrl.addData.adPosition]||''}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">投放开始时间：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <div class="input-group">
+                  <p class="form-control-static">{{$ctrl.addData.startTime||''}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">投放结束时间：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <div class="input-group">
+                  <p class="form-control-static">{{$ctrl.addData.endTime||''}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">投放人群：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <p class="form-control-static">{{$ctrl.addData.crowd=='ALL'?'所有人群':'未知'}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">投放地点：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <p class="form-control-static overflow-h150">{{$ctrl.isAllcities == true ? '全国' : ($ctrl.cityNames||'')}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">广告图片：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <div ng-if="$ctrl.addData.adImageUrl" class="thumbnail-small">
+                  <img ng-src="{{$ctrl.addData.adImageUrl}}" alt="img" class="img-thumbnail">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">广告链接：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 row">
+                <p class="form-control-static break-word"><a ng-href="{{$ctrl.addData.adUrl}}">{{$ctrl.addData.adUrl}}</a>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class=" col-md-offset-4 col-sm-offset-4 col-xs-offset-4  col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <button type="submit" class="btn btn-primary" ng-click="$ctrl.saveAdvert()">发布广告</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </script>
+</div>

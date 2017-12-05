@@ -1,0 +1,101 @@
+<ul class="breadcrumb">
+  <li>运营中心</li>
+  <li><a ui-sref="application.appList">移动应用管理</a></li>
+  <li class="active">添加应用</li>
+</ul>
+<div class="mainContent" ng-controller="AddAppCtrl as app">
+  <div class="content-box">
+    <div class="container">
+    <form class="form-horizontal" role="form" name="addApp">
+      <div class="form-group" ng-class="{'has-success':addApp.dataCode.$valid,'has-error':addApp.dataCode.$invalid && addApp.dataCode.$dirty}">
+        <label class="col-md-3 control-label"><strong class="text-danger">*</strong>应用名称：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+            <!-- <select class="form-control" name="dataCode" ng-model="app.params.name" ng-options="names.dataCode as names.dataName for names in app.appNames" ng-change="app.checkAppVer()" required>
+            </select> -->
+            <sel-allapp ng-model="app.params.name" type="APP_NAME" name="dataCode" callback="app.checkAppVer()" required></sel-allapp>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addApp.type.$valid,'has-error':addApp.type.$invalid && addApp.type.$dirty}">
+        <label for="" class="col-md-3 control-label"><strong class="text-danger">*</strong>APP类型：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+          <select class="form-control" name="type" ng-model="app.params.type" ng-options="type.code as type.name for type in app.appTypes" ng-change="app.checkAppVer()" required>
+          </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addApp.forceUpdated.$valid,'has-error':addApp.forceUpdated.$invalid && addApp.forceUpdated.$dirty}">
+        <label class="col-md-3 control-label"><strong class="text-danger">*</strong>是否强制更新：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+            <label class="radio-inline">
+                <input type="radio" ng-value="true" name="forceUpdated" ng-model="app.params.forceUpdated"><i class="iconfont"></i> 是
+            </label>
+            <label class="radio-inline">
+                <input type="radio" ng-value="false" name="forceUpdated" ng-model="app.params.forceUpdated"><i class="iconfont"></i> 否
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addApp.version.$valid,'has-error':addApp.version.$invalid && addApp.version.$dirty}">
+        <label for="" class="col-md-3 control-label"><strong class="text-danger">*</strong>实际版本号：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+            <input type="number" class="form-control" name="version" placeholder="请输入版本号" min="0" ng-model="app.params.version" required>
+          </div>
+          <div class="col-md-6">
+            <p class="form-control-static text-danger">(版本号必须大于当前最新版本，当前版本：{{app.oldVers}})</p>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addApp.changeList.$valid,'has-error':addApp.changeList.$invalid && addApp.changeList.$dirty}">
+        <label for="" class="col-md-3 control-label"><strong class="text-danger">*</strong>更新说明：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+          <textarea class="form-control" rows="3" name="changeList" placeholder="更新相关说明（200字以内）" ng-model="app.params.changeList" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="app.params.type=='ANDROID'" ng-class="{'has-success':addApp.fileId.$valid,'has-error':addApp.fileId.$invalid && addApp.fileId.$dirty}">
+        <label class="col-md-3 control-label"><strong class="text-danger">*</strong>安装文件：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+          <input type="hidden" ng-model="app.params.fileId" name="fileId" required>
+          <div class="form-control-static">
+            <button type="file" ngf-select="app.uploadFiles($file, $invalidFiles)" ngf-max-size="30MB" ngf-model-invalid="errorFile" class="btn btn-shallow">附件上传</button>
+            <span class="text-warning">(.apk文件，最大限制30MB)</span>
+            <span class="text-success" ng-if="app.params.fileId"><i class="iconfont icon-nb-w1"></i>上传成功!</span>
+            <p class="help-block text-danger" ng-show="errorFile.$error=='maxSize'">文件太大！ 当前文件：{{errorFile.size / 1000000|number:1}}MB，最大30MB</p>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="app.params.type=='IOS'" ng-class="{'has-success':addApp.url.$valid,'has-error':addApp.url.$invalid && addApp.url.$dirty}">
+        <label for="" class="col-md-3 control-label"><strong class="text-danger">*</strong>app地址：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+            <input type="url" class="form-control" name="url" ng-pattern="/^https/i" placeholder="请输入链接(https://xxx.xxx.xx)" ng-model="app.params.url">
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addApp.displayVersion.$valid,'has-error':addApp.displayVersion.$invalid && addApp.displayVersion.$dirty}">
+        <label for="" class="col-md-3 control-label"><strong class="text-danger">*</strong>对外显示版本号：</label>
+        <div class="col-md-9 row">
+          <div class="col-md-6 row">
+            <input type="text" class="form-control" name="displayVersion" ng-maxlength="10" required placeholder="请输入对外显示版本号" ng-model="app.params.displayVersion">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+          <div class="row">
+            <button type="button" class="btn btn-primary" ng-click="app.addBt()" ng-disabled="addApp.$invalid">确认添加</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

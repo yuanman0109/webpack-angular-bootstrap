@@ -1,0 +1,34 @@
+<div class="page-payment-verify-details">
+    <ul class="breadcrumb">
+      <li class="active">配置中心</li>
+      <li class="active"><a ui-sref="configCenter.paymentVerify">进件审核</a></li>
+      <li class="active">进件详情—更多辅助</li>
+    </ul>
+    <div class="mainContent">
+      <div class="alert alert-info" role="alert">
+          &nbsp;该门店第{{ctrl.payCaseTotalTimes}}次支付进件,第{{ctrl.payCaseTimes}}次进件【{{ctrl.connectionOrg|PaymentConnectionOrg}}】，结算方式是:<span ng-if="ctrl.settleMethod == 'PRIVATE'">对私</span> <span ng-if="ctrl.settleMethod == 'PUBLIC'">对公</span>
+      </div>
+      <div class="content-box">
+        <p>门店名称：{{ctrl.storeName}}</p>
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th>较上次发生修改字段名</th>
+              <th>修改前内容</th>
+              <th>修改后内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in ctrl.history">
+              <td>{{item.fieldName}}</td>
+              <td><span ng-if="!item.image">{{item.oldValue}}</span><button class="btn btn-link btn-link-success" ng-if="item.image && item.oldValue" ng-click="ctrl.lookImage(item.oldValue)">查看</button></td>
+              <td><span ng-if="!item.image">{{item.newValue}}</span><button class="btn btn-link btn-link-success" ng-if="item.image && item.newValue" ng-click="ctrl.lookImage(item.newValue)">查看</button></td>
+            </tr>
+            <tr ng-if="!(ctrl.history.length > 0)">
+              <td colspan="3" class="empty-box">暂无任何内容</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

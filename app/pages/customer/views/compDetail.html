@@ -1,0 +1,82 @@
+<ul class="breadcrumb">
+    <li><a ui-sref="customer.customerManager">客户管理</a></li>
+    <li><a ui-sref="customer.customerLists">客户列表</a></li>
+    <li class="active">公司详情</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box customerDetail-box" ng-controller="CompDetailCtrl as comp">
+        <h4>企业信息</h4>
+        <div class="border-radius-box padding20 container-fluid">
+            <div class="row">
+                <p class="col-md-4">企业名称：{{comp.compDetail.name||'暂无'}}</p>
+                <p class="col-md-4">企业联系人：{{comp.compDetail.linkman||'暂无'}}</p>
+                <p class="col-md-4">联系人职位：{{comp.compDetail.linkmanPosition||'暂无'}}</p>
+                <p class="col-md-4">联系人电话：{{comp.compDetail.linkmanTel||'暂无'}}</p>
+                <p class="col-md-4">联系人手机：{{comp.compDetail.linkmanMobile||'暂无'}}</p>
+                <p class="col-md-4">联系人邮箱：{{comp.compDetail.linkmanEmail||'暂无'}}</p>
+                <p class="col-md-4">联系人微信：{{comp.compDetail.linkmanWechart||'暂无'}}</p>
+                <p class="col-md-4">企业规模：{{comp.compDetail.companyScaleName||'暂无'}}</p>
+                <p class="col-md-4">注册资本：{{comp.compDetail.registeredAssets||'暂无'}}万</p>
+                <p class="col-md-4">企业法人：{{comp.compDetail.artificialPerson||'暂无'}}</p>
+                <p class="col-md-4">总部电话：{{comp.compDetail.linkTel||'暂无'}}</p>
+                <p class="col-md-4">企业官网：{{comp.compDetail.website||'暂无'}}</p>
+                <p class="col-md-4">客户来源：<span ng-repeat="cus in comp.compDetail.customerSources">{{cus.customerSourceName}}-外部合作：{{cus.partnerName||'暂无'}}、</span></p>
+                <p class="col-md-4">总部地址：{{comp.compDetail.address||'暂无'}}</p>
+            </div>
+        </div>
+        <h4>品牌信息：</h4>
+        <div class="container-fluid border-radius-box padding20">
+            <div class="row" ng-repeat="brand in comp.compDetail.brands">
+                <p class="col-md-4">品牌名称：{{brand.name||'暂无'}}</p>
+                <p class="col-md-4">品牌菜系：<span ng-repeat="dish in brand.dishStyles">{{dish.dishStyleName}}、</span></p>
+                <p class="col-md-4">品牌LOGO：<img ng-src="{{brand.logo|imgUrl}}" alt="{{brand.name}}" class="logoImg"></p>
+                <p class="col-md-4">客户类型：{{brand.customerTypeName||'暂无'}}</p>
+                <p class="col-md-4">品牌联系人：{{brand.linkman||'暂无'}}</p>
+                <p class="col-md-4">联系人职位：{{brand.linkmanPosition||'暂无'}}</p>
+                <p class="col-md-4">联系人手机：{{brand.linkmanMobile||'暂无'}}</p>
+                <p class="col-md-4">联系人电话：{{brand.linkmanTel||'暂无'}}</p>
+                <p class="col-md-4">联系人邮箱：{{brand.linkmanEmail||'暂无'}}</p>
+                <p class="col-md-4">联系人微信：{{brand.linkmanWechart||'暂无'}}</p>
+                <hr>
+            </div>  
+        </div>
+        <h4>签约信息：</h4>
+        <div class="container-fluid border-radius-box padding20">
+            <div class="row" ng-repeat="con in comp.compDetail.companyContracts">
+                <p class="col-md-4">签约时间：{{con.contractTime||'暂无'}}</p>
+                <p class="col-md-8">合同编号：{{con.contractNo||'暂无'}}　(<a ng-href="{{con.contractFile|imgUrl}}">下载合同</a>)</p>
+                <p class="col-md-4">签约开通业务：<span ng-repeat="bus in con.companyContractBusinesses">{{bus.businessTypeName}}、</span></p>
+                <p class="col-md-8">签约费率：{{con.contractRate||'暂无'}}</p>
+                <hr>
+            </div> 
+        </div>
+        <h4>证件信息：</h4>
+        <div class="border-radius-box container-fluid padding20">
+            <div class="row">
+                <p class="col-md-4">营业执照类型：{{comp.compDetail.businessLicenseType||'暂无'}}</p>
+                <p class="col-md-4">营业执照：<img ng-src="{{comp.compDetail.businessLicense|imgUrl}}" alt="{{comp.compDetail.businessLicenseType}}" class="logoImg"></p>
+                <p class="col-md-4">法人姓名：{{comp.compDetail.artificialPerson||'暂无'}}</p>
+                <p class="col-md-4">法人身份证号：{{comp.compDetail.artificialPersonCard||'暂无'}}</p>
+                <p class="col-md-4">法人身份证：正面：<img ng-src="{{comp.compDetail.artificialPersonCardFront|imgUrl}}" alt="正面" class="logoImg">反面：<img class="logoImg" ng-src="{{comp.compDetail.artificialPersonCardBack|imgUrl}}" alt="反面"></p>
+                <p class="col-md-4">餐饮服务许可证：<img ng-src="{{comp.compDetail.cateringLicense|imgUrl}}" alt="餐饮服务许可证" class="logoImg"></p>
+            </div>
+        </div>
+        <h4>账户信息：</h4>
+        <div class="border-radius-box container-fluid padding20">
+            <div class="row">
+                <p class="col-md-4">账户类型：{{comp.compDetail.accountType||'暂无'}}</p>
+                <p class="col-md-4">开户名称：{{comp.compDetail.accountName||'暂无'}}</p>
+                <p class="col-md-4">开户银行：{{comp.compDetail.bankName||'暂无'}}</p>
+                <p class="col-md-4">开户支行：{{comp.compDetail.subBankName||'暂无'}}</p>
+                <p class="col-md-4">银行账号：{{comp.compDetail.accountNo||'暂无'}}</p>
+            </div>
+        </div>
+        <h4>备注说明：</h4>
+        <div class="border-radius-box container-fluid padding20">
+            <p>{{comp.compDetail.remark||'暂无'}}</p>
+        </div>
+        <div class="box-pd">
+            <button type="button" class="btn btn-primary" ui-sref="customer.modifyComp({id:comp.compDetail.id})">修改</button>
+        </div>
+    </div>
+</div>

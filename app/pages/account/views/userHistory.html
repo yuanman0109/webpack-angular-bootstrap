@@ -1,0 +1,111 @@
+<ul class="breadcrumb">
+    <li>账户管理</li>
+    <li class="active">操作记录</li>
+</ul>
+<div class="mainContent" ng-controller="userHistoryCtrl as his">
+    <div class="form-inline table-head">
+        <div class="form-group">
+            <select class="form-control" ng-options="dept.id as dept.name for dept in his.deptLists" ng-model="his.searchData.deptId">
+                <option value="">按部门</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="his.searchData.module">
+              <option value="">按板块</option>
+              <option value="客户管理">客户管理</option>
+              <option value="支付进件">支付进件</option>
+              <option value="支付进件审核">支付进件审核</option>
+              <option value="二维码/模版">二维码/模版</option>
+              <option value="工单">工单</option>
+              <option value="广告">广告</option>
+              <option value="FAQ管理">FAQ管理</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="input-group date-form">
+                <input type="text" class="form-control" placeholder="开始时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="his.begin" is-open="his.startIsopen" ng-change="his.selDate( 'start')" datepicker-options="his.startDateOps" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="his.startIsopen=!his.startIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="dateText">-</span>
+        </div>
+        <div class="form-group">
+            <div class="input-group date-form">
+                <input type="text" class="form-control" placeholder="结束时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="his.end" is-open="his.endIsopen" ng-change="his.selDate( 'end')" datepicker-options="his.endDateOps" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="his.endIsopen=!his.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" name="Subordinate"  ng-model="his.searchData.directSubordinate" ng-change="his.searchData.directSubordinate==true? his.searchData.allSubordinate=false: return">
+                <i class="iconfont"></i>直接下属
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" name="Subordinate"  ng-model="his.searchData.allSubordinate" ng-change="his.searchData.allSubordinate==true? his.searchData.directSubordinate=false:return">
+                <i class="iconfont"></i>全部下属
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="text" name="" ng-model="his.searchData.searchWord" value="" class="form-control" ng-keyup="his.enterKeyup($event)" placeholder="按门店名称／姓名／账号／工号／操作搜索...">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-white" ng-click="his.searchBt()">搜索</button>
+        </div>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-theadbg table-striped">
+            <thead>
+                <tr>
+                    <th width="180"><div>时间</div></th>
+                    <th width="80"><div>姓名</div></th>
+                    <th width="80"><div>工号</div></th>
+                    <th width="160"><div>部门</div></th>
+                    <th width="180"><div>账号</div></th>
+                    <th width="160"><div>板块</div></th>
+                    <th width="160"><div>客户对象</div></th>
+                    <th><div>操作记录</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in his.userHistory">
+                    <td class="text-overflow">
+                        {{user.operationTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.realName||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.userNo||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.deptName||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.userName||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.moduleName||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        {{user.custName||'暂无'}}
+                    </td>
+                    <td class="text-overflow">
+                        <span title="{{user.operationContent||'暂无'}}">{{user.operationContent||'暂无'}}</span>
+                    </td>
+                </tr>
+                <tr ng-if="!his.userHistory || his.userHistory.length == 0" class="empty-tr">
+                  <td colspan="8" class="empty-box">暂无任何内容</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <ul uib-pagination total-items="his.totalRecords" ng-if="his.totalRecords>his.searchData.pageSize" items-per-page="his.searchData.pageSize" max-size="5" boundary-link-numbers="true" previous-text="<" next-text=">" ng-model="his.searchData.pageNo" ng-change="his.pageChanged()" class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="his.totalRecords>his.searchData.pageSize">共{{his.totalRecords}}条</b>
+    </div>
+</div>

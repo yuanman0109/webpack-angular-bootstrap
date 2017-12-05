@@ -1,0 +1,68 @@
+<!--审核弹窗-->
+<div class="modal-store-modal">
+  <form class="form-horizontal" name="verifyform">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">审核结果</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label class="col-sm-4 control-label"><strong class="text-danger">*</strong>审核结果：</label>
+        <div class="col-sm-8 row">
+          <label class="radio-inline">
+            <input type="radio" name="isVerify" ng-checked="ctrl.isStatus==false" ng-click="ctrl.isStatus=false"><i class="iconfont"></i> 驳回
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-disabled="ctrl.isDisabled =='reject' && ctrl.comTotal!=0"  name="isVerify" ng-checked="ctrl.isStatus==true" ng-click="ctrl.isStatus=true"><i class="iconfont"></i> 通过
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label"><strong class="text-danger">*</strong>账号：</label>
+        <div class="col-sm-8 row" ng-class="{'has-success':verifyForm.verifyname.$valid,'has-error':verifyForm.verifyname.$invalid && verifyForm.verifyname.$dirty}">
+          <div class="col-xs-8 row">
+            <input class="form-control" name="verifyname" type="text" ng-model="ctrl.account" ng-readonly="true" required>
+          </div>
+          <div class="col-xs-4">
+            <!--<button ng-if="ctrl.comTotal != 0" type="button" class="btn btn-gray col-sm-3" ng-click="ctrl.geneAccount()">生成账号</button>-->
+            <button ng-if="ctrl.comTotal == 0" type="button" class="btn btn-primary" ng-click="ctrl.geneAccount()">生成账号</button>
+          </div>
+        </div>
+      </div>
+      <!--<div class="form-group">
+        <label class="col-sm-3 control-label">版本：</label>
+        <div class="col-sm-7 row">
+          <label class="radio-inline">
+            <input type="radio" name="isFlag" ng-checked="ctrl.isFlag==true" ng-click="ctrl.isFlag=true"><i class="iconfont"></i> 完整版
+          </label>
+          <label class="radio-inline">
+            <input type="radio"  name="isFlag" ng-checked="ctrl.isFlag==false" ng-click="ctrl.isFlag=false"><i class="iconfont"></i> 快餐版
+          </label>
+        </div>
+      </div>-->
+      <div class="form-group">
+        <label for="" class="col-sm-4 control-label">审核内容：</label>
+        <div class="col-sm-8 row">
+          <div class="col-xs-8 row">
+            <input class="form-control" type="textarea" ng-model="ctrl.data.remark" maxlength="500" placeholder="不能超过500个字符">
+            <!--<span class="text-danger" ng-if="!ctrl.data.remark && ctrl.data.remark !=''">不能超过500个字符</span>-->
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+          <label class="checkbox-inline row">
+            <input type="checkbox" ng-init="ctrl.data.isNew = false" ng-model="ctrl.data.isNew" >
+            <i class="iconfont"></i> 同步至新后台（临时测试使用，非2.0测试店不允许选择）
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button ng-if="ctrl.isStatus==false" class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+      <button ng-if="ctrl.isStatus==true" class="btn btn-primary" ng-disabled="ctrl.subBtnDisabled || verifyform.$invalid && ctrl.comTotal == 0" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

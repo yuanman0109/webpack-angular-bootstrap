@@ -1,0 +1,191 @@
+<div class="page-payment-verify-details">
+  <ul class="breadcrumb">
+    <li class="active">配置中心</li>
+    <li class="active"><a ui-sref="configCenter.paymentVerify">进件审核</a></li>
+    <li class="active">进件详情—{{ctrl.data.status | configStatusFilter}}</li>
+  </ul>
+  <div class="mainContent">
+    <div class="alert alert-info" role="alert">
+        &nbsp;该门店第{{ctrl.data.payCaseTimes}}次进件【{{ctrl.data.connectionOrg|PaymentConnectionOrg}}】，结算方式是:<span ng-if="ctrl.data.settleMethod == 'PRIVATE'">对私</span> <span ng-if="ctrl.data.settleMethod == 'PUBLIC'">对公</span>
+    </div>
+    <div class="content-box">
+      <!-- <h4>
+        <b>
+        该门店进件连接机构是：{{ctrl.data.connectionOrg|PaymentConnectionOrg}} &nbsp; &nbsp;  
+        结算方式是:<span ng-if="ctrl.data.settleMethod == 'PRIVATE'">对私</span> <span ng-if="ctrl.data.settleMethod == 'PUBLIC'">对公</span> &nbsp; &nbsp;  
+        门店第{{ctrl.data.payCaseTimes}}次进件至{{ctrl.data.connectionOrg|PaymentConnectionOrg}}
+        </b>
+      </h4> -->
+      
+      <h4>门店基本信息：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>门店名称：{{ctrl.data.storeName}}</p>
+            <p>省市区：{{ctrl.data.storeDetail.provinceName}}<spann ng-if="ctrl.data.storeDetail.provinceName">-</span>{{ctrl.data.storeDetail.cityName}}<span ng-if="ctrl.data.storeDetail.cityName">-</span>{{ctrl.data.storeDetail.districtName}}</p>
+            <p>面积：{{ctrl.data.storeDetail.area}}</p>
+            <p>所属商圈：{{ctrl.data.storeDetail.businessArea}}</p>
+            <p>日交易流水：{{ctrl.data.storeDetail.dailyTransactionAmount}}</p>
+            <p>座位数：{{ctrl.data.storeDetail.seatNumber}}</p>
+            <p>门店实景：<a ng-if="ctrl.data.storeDetail.logoUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.storeDetail.logoUrl,title:'门店实景'})" target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+          </div>
+          <div class="col-md-4">
+            <p>门店编号：{{ctrl.data.storeDetail.code}}</p>
+            <p>门店地址：{{ctrl.data.storeAddr}}</p>
+            <p>人均：{{ctrl.data.storeDetail.perCapita}}</p>
+            <p>楼层信息：{{ctrl.data.storeDetail.floor}}</p>
+            <p>地点归属：{{ctrl.attribution[ctrl.data.storeDetail.attribution]||''}}</p>
+            <p>餐桌数：{{ctrl.data.storeDetail.tableNumber}}</p>
+            <p>门店说明：{{ctrl.data.storeDetail.remark}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>营业时间说明：{{ctrl.data.storeDetail.shopHours}}</p>
+            <p>经纬度：{{ctrl.data.storeDetail.poiLat}} - {{ctrl.data.storeDetail.poiLng}}</p>
+            <p>评分：{{ctrl.data.storeDetail.grade}}</p>
+            <p>菜系：{{ctrl.data.storeDetail.dishStyleName}}</p>
+            <p>门店属性：{{ctrl.data.storeDetail.storeProperty == '1'?'直营':'加盟'}}</p>
+            <p>门店电话：{{ctrl.data.storeDetail.linkTel}}</p>
+          </div>
+        </div>
+      </div>
+      </br>
+      <h4>企业信息&&品牌信息:</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>品牌名称：{{ctrl.data.storeDetail.brandName}}</p>
+            <p>所属企业：{{ctrl.data.storeDetail.companyName}}</p>
+            <p>企业法人：{{ctrl.data.storeDetail.artificialPerson}}</p>
+            <p>企业官网：{{ctrl.data.storeDetail.companyWebsite}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>品牌LOGO：<a ng-if="ctrl.data.storeDetail.brandLogoUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.storeDetail.brandLogoUrl,title:'品牌LOGO'})" target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>企业规模：{{ctrl.companyScale[ctrl.data.storeDetail.companyScale]}}</p>
+            <p>总部电话：{{ctrl.data.storeDetail.companyLinkTel}}</p>
+            <p>企业状态：{{ctrl.status[ctrl.data.storeDetail.companyStatus]}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>品牌状态：{{ctrl.status[ctrl.data.storeDetail.brandStatus]}}</p>
+            <p>注册资本：{{ctrl.data.storeDetail.registeredAssets}}</p>
+            <p>总部地址：{{ctrl.data.storeDetail.companyAddress}}</p>
+            <p>业务类型：{{ctrl.data.storeDetail.companyBusinessTypeNameStr}}</p>
+          </div>
+        </div>
+      </div>
+      </br>
+      <h4>法人&经营者信息：</h4>
+      <h4>基本信息：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>商户类型：{{ctrl.data.storeType | buzinessType}}</p>
+            <p>营业执照注册名称：{{ctrl.data.businessLicenseName}}</p>
+            <p>营业执照号码：{{ctrl.data.businessLicenseNo}}</p>
+            <p>注册地址：{{ctrl.data.registerAddr}}</p>
+            <p>营业执照有效期：{{ctrl.data.businessLicenseBeginDate | date:'yyyy-MM-dd'}}—{{ctrl.data.businessLicenseEndDate | date:'yyyy-MM-dd'}}</p>
+            <p>营业执照影印件：<a ng-if="ctrl.data.businessLicenseFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.businessLicenseFileIdUrl,title:'营业执照影印件'})" target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>经营内容：{{ctrl.data.operationScope}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>组织机构代码证号码：{{ctrl.data.orgLicenseNo}}</p>
+            <p>组织机构代码有效期：{{ctrl.data.orgLicenseBeginDate | date:'yyyy-MM-dd'}}—{{ctrl.data.orgLicenseEndDate | date:'yyyy-MM-dd'}}</p>
+            <p>组织结构代码证影印件：<a ng-if="ctrl.data.orgLicenseFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.orgLicenseFileIdUrl,title:'组织结构代码证影印件'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>餐饮许可证影印件：<a ng-if="ctrl.data.caterersLicenseFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.caterersLicenseFileIdUrl,title:'餐饮许可证影印件'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>店铺门头照片：<a ng-if="ctrl.data.storeFacesFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.storeFacesFileIdUrl,title:'店铺门头照片'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>收银台照片：<a ng-if="ctrl.data.posFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.posFileIdUrl,title:'收银台照片'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>支付签约协议：<a ng-if="ctrl.data.agreementFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.agreementFileIdUrl,title:'支付签约协议'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+          </div>
+          <div class="col-md-4">
+            <p>老板姓名：{{ctrl.data.businessLinkman}}</p>
+            <p>老板手机号：{{ctrl.data.businessLinkmanMobile}}</p>
+            <p>邮箱：{{ctrl.data.businessLinkmanEmail}}</p>
+            <p>客服电话：{{ctrl.data.serviceTel}}</p>
+            <p>紧急联系人姓名：{{ctrl.data.emergencyContactName}}</p>
+            <p>紧急联系人手机号：{{ctrl.data.emergencyContactPhone}}</p>
+            <p ng-if="false">费率：{{ctrl.data.rate}}</p>
+            <p ng-if="false">支持卡种：{{ctrl.data.cardType}}</p>
+            <p ng-if="false">服务费：{{ctrl.data.serviceFee}}</p>
+          </div>
+        </div>
+      </div>
+      </br>
+      <h4>支付进件-门店法人&经营者信息：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>证件类型：{{ctrl.data.ownerCardType | cardType}}</p>
+            <p>证件号码：{{ctrl.data.ownerCardNo}}</p>
+            <p>手持证件照：<a ng-if="ctrl.data.handheldIdFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.handheldIdFileIdUrl,title:'手持证件照'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>法人&amp;经营者姓名：{{ctrl.data.ownerName}}</p>
+            <p>证件影印件正面：<a ng-if="ctrl.data.ownerCardFrontFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.ownerCardFrontFileIdUrl,title:'证件影印件正面'})" target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>证件有效期：{{ctrl.data.ownerCardBeginDate | date:'yyyy-MM-dd'}}—{{ctrl.data.ownerCardEndDate | date:'yyyy-MM-dd'}}</p>
+            <p>证件影印件反面：<a ng-if="ctrl.data.ownerCardBackFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.ownerCardBackFileIdUrl,title:'证件影印件反面'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+          </div>
+        </div>
+      </div>
+      </br>
+      <h4>结算信息:</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>开户许可证：<a ng-if="ctrl.data.accountLicenseFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.accountLicenseFileIdUrl,title:'开户许可证'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>委托收款协议：<a ng-if="ctrl.data.consignmentAgreementFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.consignmentAgreementFileIdUrl,title:'委托收款协议'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>银行卡正面：<a ng-if="ctrl.data.bankCardFrontFileIdUrl" ng-click="ctrl.openLightboxModal({url:ctrl.data.bankCardFrontFileIdUrl,title:'银行卡正面'})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></p>
+            <p>银联号：{{ctrl.data.bankUnionCode}}</p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>结算方式：<span ng-if="ctrl.data.settleMethod == 'PRIVATE'">对私</span> <span ng-if="ctrl.data.settleMethod == 'PUBLIC'">对公</span> </p>
+            <p>账户名称：{{ctrl.data.bankAccountName}}</p>
+            <p>银行账号：{{ctrl.data.bankCardNo}}</p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>开户省-市：{{ctrl.data.accountBankProvinceName}}-{{ctrl.data.accountBankCityName}}</p>
+            <p>开户行：{{ctrl.data.accountBank}}</p>
+            <p>开户支行：{{ctrl.data.accountBankBranch}}</p>
+          </div>
+        </div>
+      </div>
+      <h4 ng-if="ctrl.data.status==='AUDIT'">审核辅助:</h4>
+      <div class="border-radius-box padding20" ng-if="ctrl.data.status==='AUDIT'">
+        <button type="button" class="btn btn-normal pull-right" ng-if="ctrl.data.moreInfo" ui-sref="configCenter.moreAssist({id:ctrl.data.id})">查看更多辅助</button>
+        <div class="row">
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link" ng-class="{'btn-link-noline':!ctrl.data.businessLinkmanCount}" ng-click="ctrl.openModal({businessLinkman:ctrl.data.businessLinkman}, ctrl.data.businessLinkmanCount)">本次进件的老板姓名<span ng-if="ctrl.data.businessLinkmanCount">被{{ctrl.data.businessLinkmanCount || 0}}家</span><span ng-if="!ctrl.data.businessLinkmanCount">没有</span>门店使用</a>
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link" ng-class="{'btn-link-noline':!ctrl.data.businessLinkmanMobileCount}" ng-click="ctrl.openModal({businessLinkmanMobile:ctrl.data.businessLinkmanMobile}, ctrl.data.businessLinkmanMobileCount)">本次进件的老板手机号<span ng-if="ctrl.data.businessLinkmanMobileCount">被{{ctrl.data.businessLinkmanMobileCount || 0}}家</span><span ng-if="!ctrl.data.businessLinkmanMobileCount">没有</span>门店使用</a>
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link" ng-class="{'btn-link-noline':!ctrl.data.businessLicenseNoCount}" ng-click="ctrl.openModal({businessLicenseNo:ctrl.data.businessLicenseNo}, ctrl.data.businessLicenseNoCount)">本次进件的营业执照号码<span ng-if="ctrl.data.businessLicenseNoCount">被{{ctrl.data.businessLicenseNoCount || 0}}家</span><span ng-if="!ctrl.data.businessLicenseNoCount">没有</span>门店使用</a>
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link" ng-class="{'btn-link-noline':!ctrl.data.ownerCardNoCount}" ng-click="ctrl.openModal({ownerCardNo:ctrl.data.ownerCardNo}, ctrl.data.ownerCardNoCount)">本次进件的身份证号码<span ng-if="ctrl.data.ownerCardNoCount">被{{ctrl.data.ownerCardNoCount || 0}}家</span><span ng-if="!ctrl.data.ownerCardNoCount">没有</span>门店使用</a>
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link" ng-class="{'btn-link-noline':!ctrl.data.bankCardNoCount}" ng-click="ctrl.openModal({bankCardNo:ctrl.data.bankCardNo}, ctrl.data.bankCardNoCount)">本次进件的银行账号<span ng-if="ctrl.data.bankCardNoCount">被{{ctrl.data.bankCardNoCount || 0}}家</span><span ng-if="!ctrl.data.bankCardNoCount">没有</span>门店使用</a>
+          </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <a class="btn btn-link btn-link-noline">申请人近30天申请{{ctrl.data.caseCount || 0}}次支付进件，其中发生退回{{ctrl.data.caseFailCount || 0}}次</a>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="btns-wrap pull-left" ng-if="ctrl.isShowBtn(ctrl.data.status)">
+          <button ng-if="ctrl.data.status==='AUDIT'?btnlist.CONFIG_0102:btnlist.CONFIG_0103" class="btn btn-primary" ng-click="ctrl.verify()" type="button">{{ctrl.data.status | configStatusFilter}}</button>
+        </div>
+        <div class="log-wrapper pull-left">
+          <ul>
+            <li ng-repeat="item in ctrl.verifyLog" ng-class="{'first-ok':$index==$first}">
+              <p>{{item.auditUser+' 在'+(item.auditTime | date:'yyyy-MM-dd HH:mm:ss')+(' '+ctrl.verType[item.auditResult])+'申请;'}}</p>
+              <p>{{item.auditRemark}}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

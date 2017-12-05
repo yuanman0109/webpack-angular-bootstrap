@@ -1,0 +1,33 @@
+<div class="modal-payment-modal">
+  <form class="form-horizontal" name="verify_form">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">审核结果</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>审核结果：</label>
+        <div class="col-md-7 col-sm-7 col-xs-7 row">
+          <label class="radio-inline">
+            <input type="radio" name="isVerify" ng-checked="ctrl.data.rejected" ng-click="ctrl.switch('REJECT')" required/><i class="iconfont"></i> 驳回
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-checked="!ctrl.data.rejected" ng-click="ctrl.switch('ONLINE')" name="isVerify" required/><i class="iconfont"></i> 通过
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>审核内容：</label>
+        <div class="col-md-9 col-sm-9 col-xs-9 row">
+          <div class="col-md-11 col-sm-11 col-xs-11 row" ng-class="{'has-success':verify_form.remark.$dirty && verify_form.remark.$valid,'has-error': verify_form.remark.$dirty && verify_form.remark.$invalid}"> 
+            <textarea class="form-control" rows="3" ng-model="ctrl.data.remark" name="remark" maxlength="500" placeholder="请填写审核内容" ng-required="true"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-if="btnlist.CONFIG_0602" ng-disabled="verify_form.$invalid || ctrl.subBtnDisabled || (ctrl.data.rejected && !ctrl.data.auditRemark)" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

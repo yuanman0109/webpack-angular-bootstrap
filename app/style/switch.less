@@ -1,0 +1,101 @@
+.switch-btn {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 80px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.checked-switch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.text-switch {
+  background-color: #fff;
+  border: 1px solid #C0C0C0;
+  border-radius: inherit;
+  color: #999;
+  display: block;
+  font-size: 12px;
+  height: inherit;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.text-switch:before,
+.text-switch:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -.5em;
+  line-height: 1;
+  -webkit-transition: inherit;
+  -moz-transition: inherit;
+  -o-transition: inherit;
+  transition: inherit;
+}
+
+.text-switch:before {
+  content: attr(data-no);
+  right: 8px;
+  font-weight: normal
+}
+
+.text-switch:after {
+  content: attr(data-yes);
+  left: 8px;
+  color: #3CB6AF;
+  opacity: 0;
+  font-weight: normal
+}
+
+.checked-switch:checked~.text-switch {
+  background-color: #fff;
+  border: 1px solid #3CB6AF;
+}
+
+.checked-switch:checked~.text-switch:before {
+  opacity: 0;
+}
+
+.checked-switch:checked~.text-switch:after {
+  opacity: 1;
+}
+
+.toggle-btn {
+  background: #D8D8D8;
+  height: 30px;
+  left: 0;
+  position: absolute;
+  top: -3px;
+  width: 42px;
+  border-radius: 6px;
+  box-shadow: 0 4px 0 #C0C0C0
+}
+
+.toggle-btn::before {
+  color: #aaaaaa;
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: -2px;
+  padding: 4px 0;
+  vertical-align: middle;
+}
+
+.checked-switch:checked~.toggle-btn {
+  left: 38px;
+  background: #3CB6AF;
+  box-shadow: 0 4px 0 #2A9D98
+}
+
+.text-switch,
+.toggle-btn {
+  transition: All 0.3s ease;
+  -webkit-transition: All 0.3s ease;
+  -moz-transition: All 0.3s ease;
+  -o-transition: All 0.3s ease;
+}

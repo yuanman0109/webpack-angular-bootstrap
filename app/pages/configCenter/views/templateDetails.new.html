@@ -1,0 +1,134 @@
+<div class="page-payment-template-details">
+  <ul class="breadcrumb">
+    <li class="active">配置中心</li>
+    <li class="active"><a ui-sref="configCenter.template()">模板管理</a></li>
+    <li class="active">{{ctrl.isAdd ? '新增模板' : '编辑模板'}}</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box row">
+      <form class="form-horizontal  col-md-6  col-xs-6  col-sm-6" name="templateForm" >
+         <div class="form-group">
+            <label for="inputName" class="col-md-3 col-xs-3  col-sm-3  control-label"><strong class="text-danger">*</strong>业务类型：</label>
+            <div class="col-md-8 col-xs-8  col-sm-8  row" ng-class="{'has-success': (templateForm.businessId.$dirty && templateForm.businessId.$valid) || templateForm.businessId.$valid,'has-error': templateForm.businessId.$dirty && templateForm.businessId.$invalid}"> 
+              <select class="form-control" name="businessId" ng-options="business.dataCode as business.dataName for business in ctrl.businessIds" ng-model="ctrl.details.businessId"  required>
+              </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputName" class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>模板类型：</label>
+            <div class="col-md-8 col-xs-8  col-sm-8 row" ng-class="{'has-success': (templateForm.type.$dirty && templateForm.type.$valid) || templateForm.type.$valid,'has-error': templateForm.type.$dirty && templateForm.type.$invalid}"> 
+              <select class="form-control col-md-6 col-xs-6  col-sm-6" name="type" ng-options="opt.type as opt.name for opt in ctrl.tableType" ng-model="ctrl.details.type" ng-init="ctrl.details.type = 'TABLE'">
+              </select>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':templateForm.name.$valid && !ctrl.sameName,'has-error':(templateForm.name.$invalid && templateForm.name.$dirty) || ctrl.sameName}">
+          <label for="inputName" class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>模板名称：</label>
+          <div class="col-md-8 col-xs-8  col-sm-8 row">
+              <input type="text" class="form-control" id="inputName" name="name" ng-model="ctrl.details.name" ng-maxlength="200" placeholder="请输入模板名称" ng-blur="ctrl.checkName()"  required>
+              <span class="text-danger" ng-if="ctrl.sameName">检测到模板名重复！</span>
+          </div>
+        </div>
+        <div class="form-group" >
+            <label for="inputName" class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>模板大小：</label>
+            <div class="col-md-8 col-xs-8  col-sm-8 row">
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success': (templateForm.width.$dirty && templateForm.width.$valid) || templateForm.width.$valid,'has-error': templateForm.width.$dirty && templateForm.width.$invalid}"> 
+                <input type="number" class="form-control" name="width" placeholder="宽" ng-model="ctrl.details.width"  ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/" ng-change="ctrl.setTplImage()" 
+                uib-tooltip="原始尺寸宽度是{{ctrl.naturalWidth}}px"
+                tooltip-placement="bottom"
+                tooltip-class="gray"
+                tooltip-enable="!inputModel"   required />
+                <span class="input-group-addon">px</span>
+              </div>
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success':(templateForm.height.$dirty && templateForm.height.$valid) || templateForm.height.$valid,'has-error': templateForm.height.$dirty && templateForm.height.$invalid}">
+                <input type="number" class="form-control" placeholder="高" name="height" ng-model="ctrl.details.height" ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/"  ng-change="ctrl.setTplImage()"  
+                uib-tooltip="原始尺寸高度是{{ctrl.naturalHeight}}px"
+                tooltip-placement="bottom"
+                tooltip-class="gray"
+                tooltip-enable="!inputModel"  required />
+                <span class="input-group-addon">px</span>
+              </div> 
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputName" class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>二维码大小：</label>
+            <div class="col-md-8 col-xs-8  col-sm-8 row">
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success':(templateForm.barcodeWidth.$dirty && templateForm.barcodeWidth.$valid) || templateForm.barcodeWidth.$valid ,'has-error':templateForm.barcodeWidth.$dirty && templateForm.barcodeWidth.$invalid}"> 
+                <input type="number" class="form-control" placeholder="宽" name="barcodeWidth" ng-model="ctrl.details.barcodeWidth"   ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/"  ng-change="ctrl.setTplImage()"  max="{{ctrl.details.width}}" 
+                uib-tooltip="宽度不能超过模板的宽度"
+                tooltip-placement="bottom"
+                tooltip-trigger="'none'"
+                tooltip-class="gray"
+                tooltip-enable="!inputModel" tooltip-is-open="templateForm.barcodeWidth.$invalid" required />
+                <span class="input-group-addon">px</span>
+              </div>
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success':(templateForm.barcodeHeight.$valid && templateForm.barcodeHeight.$dirty) || templateForm.barcodeHeight.$valid ,'has-error':templateForm.barcodeHeight.$dirty &&  templateForm.barcodeHeight.$invalid}">
+                <input type="number" class="form-control" placeholder="高" name="barcodeHeight" ng-model="ctrl.details.barcodeHeight"  ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/"  ng-change="ctrl.setTplImage()"   max="{{ctrl.details.height}}" 
+                uib-tooltip="高度不能超过模板的高度"
+                tooltip-placement="bottom"
+                tooltip-class="gray"
+                tooltip-trigger="'none'"
+                tooltip-enable="!inputModel" tooltip-is-open="templateForm.barcodeHeight.$invalid"  required />
+                <span class="input-group-addon">px</span>
+              </div> 
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputName" class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>二维码位置：</label>
+            <div class="col-md-8 col-xs-8  col-sm-8 row">
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success':(templateForm.barcodeHorizon.$dirty && templateForm.barcodeHorizon.$valid) ||templateForm.barcodeHorizon.$valid  ,'has-error':templateForm.barcodeHorizon.$dirty && templateForm.barcodeHorizon.$invalid }"> 
+                <input type="number" class="form-control" placeholder="距左" name="barcodeHorizon" ng-model="ctrl.details.barcodeHorizon"  ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/"  ng-change="ctrl.setTplImage()"  required />
+                <span class="input-group-addon">px</span>
+              </div>
+              <div class="col-md-6 col-xs-6  col-sm-6 input-group" ng-class="{'has-success':(templateForm.barcodeVertical.$dirty && templateForm.barcodeVertical.$valid) || templateForm.barcodeVertical.$valid ,'has-error':templateForm.barcodeVertical.$dirty && templateForm.barcodeVertical.$invalid }">
+                <input type="number" class="form-control" placeholder="距上" name="barcodeVertical"  ng-model="ctrl.details.barcodeVertical"  ng-pattern="/^(([1-9]\d{0,2}[0-8]?(\.\d+)?)|(0\.\d*[1-9])?|9999)$/"  ng-change="ctrl.setTplImage()"   required />
+                <span class="input-group-addon">px</span>
+              </div> 
+           </div>
+        </div> 
+        <div class="form-group" ng-class="{'has-success':templateForm.file.$valid,'has-error':templateForm.file.$invalid && templateForm.file.$dirty}">
+          <label class="col-md-3 col-xs-3  col-sm-3 control-label"  ><strong class="text-danger">*</strong>上传模板：</label>
+          <div class="col-md-8 col-xs-8  col-sm-8 row">
+            <input type="hidden" ng-model="ctrl.details.fileId" name="file" required>
+            <div class="form-control-static">
+              <button type="file" ngf-select="ctrl.uploadFiles($file, $invalidFiles)" ng-model="picFile" ngf-max-size="10MB" accept="image/jpg,image/jpeg,image/png" ngf-model-invalid="errorFile" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+              <!--<span ng-if="ctrl.thumbnail" class="thumbnail-mdall">
+                <span class="img-thumbnail" ng-style="{'background-image': 'url('+ctrl.thumbnail+access_token+')'}"></span>
+                <img  class="img-thumbnail"  id="tplimage" width="400px" ng-src="{{ctrl.thumbnail+access_token}}" imgonload = "ctrl.getImgSize()"/>
+              </span>-->
+              <span>大小：小于等于10MB</span>
+              <p class="help-block text-success" ng-show="ctrl.details.fileId">上传成功<i class="iconfont icon-nb-w1"></i></p>
+              <p class="help-block text-danger" ng-show="errorFile.$error=='maxSize'">文件太大！ 当前文件：{{errorFile.size / 1000000|number:1}}MB，最大10MB</p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-xs-3  col-sm-3 control-label"><strong class="text-danger">*</strong>模板状态：</label>
+          <div class="col-md-8 col-xs-8  col-sm-8 radio-wrap">
+            <div class="row">
+              <label class="radio-inline">
+                <input type="radio" ng-value="true" value="true" ng-model="ctrl.details.status" name="status" ng-init="ctrl.details.status = true"><i class="iconfont"></i> 可用
+              </label>
+              <label class="radio-inline">
+                <input type="radio" ng-value="false" value="false" ng-model="ctrl.details.status" name="status"><i class="iconfont"></i> 禁用
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group btns-wrap">
+          <div class="col-md-offset-3 col-xs-offset-3 col-sm-offset-3 col-md-6 col-xs-6  col-sm-6">
+            <div class="row">
+              <button class="btn btn-primary"  ng-click="ctrl.submit(!templateForm.$valid || ctrl.sameName)" type="button">提 交</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col-md-6 tpl-img">
+         <span class="text-danger" ng-if="!ctrl.thumbnail">*请上传模板</span>
+        <a ng-if="ctrl.thumbnail">
+            <img  class="img-thumbnail"  id="tplimage"   ng-style="ctrl.TplStyle" ng-src="{{ctrl.thumbnail+access_token}}" imgonload = "ctrl.getImgSize()"/>
+            <img  class="qrcode" id="qrcode"  ng-style="ctrl.qrcodeTplStyle"  />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

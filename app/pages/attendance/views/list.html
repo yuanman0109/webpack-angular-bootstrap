@@ -1,0 +1,138 @@
+<div class="page-store">
+  <div class="clearfix">
+    <ul class="breadcrumb pull-left">
+      <li>考勤管理</li>
+      <li>考勤打卡报表</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="form-inline table-head ">
+      <form>
+        <div class="form-group ui-select">
+          <ui-select ng-model="ctrl.getParame.userName" name="userName" required theme="bootstrap" 
+              reset-search-input="false" title="姓名">
+              <ui-select-match placeholder="姓名" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getUserName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入部门搜索..." ng-model="ctrl.getParame.deptName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <!-- <div class="form-group">
+          <select class="form-control" ng-options="dept.name as dept.name for dept in ctrl.deptLists" ng-model="ctrl.getParame.deptName">
+              <option value="">按部门</option>
+          </select>
+      </div> -->
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入手机序列号搜索" ng-model="ctrl.getParame.imei" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <select class="form-control selectList" ng-model="ctrl.getParame.punchType">
+            <option value="">请选择打卡类型</option>
+            <option value="CHECK_IN">上班打卡</option>
+            <option value="CHECK_OUT">下班打卡</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form ">
+            <input type="text" readonly="readonly" class="form-control selectList" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.startTime" is-open="ctrl.startOpen" on-open-focus="false"  datepicker-options="ctrl.startDateOps" ng-change="ctrl.selDate('start')" current-text="今天"
+              clear-text="清除" close-text="关闭" placeholder="打卡日期开始时间" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.startOpen=!ctrl.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control selectList" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.endTime" is-open="ctrl.endOpen" on-open-focus="false"  datepicker-options="ctrl.endDateOps" ng-change="ctrl.selDate('end')" current-text="今天"
+              clear-text="清除" close-text="关闭" placeholder="打卡日期结束时间" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.endOpen=!ctrl.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-theadbg table-customer table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>
+                <div>姓名</div>
+              </th>
+              <th>
+                <div>工号</div>
+              </th>
+              <th>
+                <div>部门</div>
+              </th>
+              <th >
+                <div>打卡类型</div>
+              </th>
+              <th >
+                <div>打卡日期</div>
+              </th>
+              <th>
+                <div>打卡时间</div>
+              </th>
+              <th >
+                <div>打卡位置</div>
+              </th>
+              <th >
+                <div>备注说明</div>
+              </th>
+              <th >
+                <div>手机序列号</div>
+              </th>
+              <th >
+                <div>图片</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.list.length == 0">
+            <tr class="empty-tr">
+              <td colspan="7" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.list" ng-if="ctrl.list && ctrl.list.length > 0">
+              <td class="text-overflow"><span title="{{item.userName|| '暂无'}}">{{item.userName || '暂无'}}</span></td>
+              <td class="text-overflow"><span title="{{item.userNo|| '暂无'}}">{{item.userNo || '暂无'}}</span></td>
+              <td class="text-overflow"><span title="{{item.deptName|| '暂无'}}">{{item.deptName || '暂无'}}</span></td>
+              <td>{{item.punchTypeStr}}</td>
+              <td>{{item.punchTimeDay || '-'}}</td>
+              <td class="text-overflow"><span title="{{item.punchTime|| '暂无'}}">{{item.punchTimeStr || '-'}}</span></td>
+              <td>{{item.address || '暂无'}}</td>
+              <td>{{item.remark || '暂无'}}</td>
+              <td>{{item.imei || '暂无'}}</td>
+              <td><a ng-if="item.imageIdUrl" ng-click="ctrl.openLightboxModal({url:item.imageIdUrl})"  target="_black" class="text-success" href="javascript:void(0)">查看</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0409" ng-click="ctrl.exportStore()">导出</button>
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

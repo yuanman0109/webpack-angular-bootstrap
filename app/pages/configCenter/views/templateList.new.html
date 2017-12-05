@@ -1,0 +1,69 @@
+<div class="page-payment-template-list">
+  <ul class="breadcrumb">
+    <li class="active">配置中心</li>
+    <li class="active">模板管理</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form class="form-inline">
+        <div class="form-group">
+          <select class="form-control"  ng-options="business.dataCode as business.dataName for business in ctrl.businessIds" ng-model="ctrl.params.businessId">
+              <option value="">选择业务</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control"  ng-options="tableType.type as tableType.name for tableType in ctrl.tableType"  ng-model="ctrl.params.type">
+              <option value="">选择模板</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="按模板名称搜索..." ng-model="ctrl.params.name" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group ">
+          <button type="button" class="btn btn-white" ng-click="ctrl.search()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <ul>
+        <li ng-repeat="item in ctrl.templateList" ng-if="ctrl.templateList && ctrl.templateList.length > 0"  ng-class="{'disabled':!item.status}" ng-click="ctrl.details(btnlist.CONFIG_0303,item.id)"   >
+           <div class="tpl-top">
+             <i ng-if="item.type == 'TABLE_STICKER'" class="table"></i>
+             <i ng-if="item.type == 'TABLE'"   class="table-sticker"></i>
+             <p uib-tooltip="{{item.name}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true">
+                {{item.name | maxString:true:14:' ...'}}
+              </p>
+           </div>
+           <div class="tpl-center">
+             <a href=""><img ng-src="{{item.url+access_token}}" alt="" ></a>
+           </div>
+           <div class="tpl-bottom">
+           <p class="payment">{{item.businessId|businessTypeFilter}}</p>  
+           <p class="clearfix">
+              <span class="pull-left" uib-tooltip="{{item.createUser}}"
+                tooltip-placement="top"
+                tooltip-class="gray"
+                tooltip-enable="true">
+                {{item.createUser | maxString:true:8:' ...'}}
+              </span>
+             <!--<span class="pull-left">
+               {{item.createUser}}</span>-->
+             <span class="pull-right">{{item.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+          </p>
+           </div>
+        </li>
+      </ul>
+      <div ng-if="ctrl.noList" class="empty-box">暂无任何内容</div>
+      <div class="clearfix">
+        <button ng-if="btnlist.CONFIG_0301" class="btn btn-primary" ui-sref="configCenter.templateAdd()">新增模板</button>
+        <ul uib-pagination total-items="ctrl.total" ng-if="(ctrl.total/ctrl.params.pageSize)>1" items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true"
+          ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+        <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>          
+      </div>
+    </div>
+    
+  </div>
+</div>

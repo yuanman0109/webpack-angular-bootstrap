@@ -1,0 +1,190 @@
+<div class="page-order-mine">
+  <div class="clearfix">
+    <ul class="breadcrumb">
+      <li>工单中心</li>
+      <li>我的工单</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="form-inline table-head">
+      <form>
+        <div class="form-group">
+          <input type="text" name="" value="" class="form-control" placeholder="客户名称" ng-model="ctrl.getParame.storeName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <select class="form-control selectList" ng-options="item.dataCode as item.dataName for item in ctrl.businessId" ng-model="ctrl.getParame.businessId">
+            <option value="">请选择业务类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control selectList" ng-options="item.dataCode as item.dataName for item in ctrl.taskType" ng-model="ctrl.getParame.taskType">
+            <option value="">请选择任务类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control selectList" ng-options="item.name as item.type for item in ctrl.typeList" ng-model="ctrl.getParame.type">
+            <option value="">请选择工单类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control selectList" ng-options="item.name as item.status for item in ctrl.status" ng-model="ctrl.getParame.status">
+            <option value="">请选择工单状态</option>
+          </select>
+        </div>
+        <div class="form-group ui-select">
+          <ui-select ng-model="ctrl.getParame.createUser" name="createUser" required theme="bootstrap" 
+              reset-search-input="false" title="派单人">
+              <ui-select-match placeholder="派单人" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getUserName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="form-group ui-select">
+          <ui-select ng-model="ctrl.getParame.finishUser" name="finishUser" required theme="bootstrap" 
+              reset-search-input="false" title="完成人">
+              <ui-select-match placeholder="请输入姓名搜索" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getfinishUser($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.createStart" is-open="ctrl.startOpen" on-open-focus="false" datepicker-options="ctrl.startDateOps" ng-change="ctrl.selDate( 'start')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="派单开始时间">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="ctrl.startOpen=!ctrl.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.createEnd" is-open="ctrl.endOpen" on-open-focus="false"  datepicker-options="ctrl.endDateOps" ng-change="ctrl.selDate( 'end')" current-text="今天"
+              clear-text="清除" close-text="关闭" placeholder="派单结束时间" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.endOpen=!ctrl.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.finishStart" is-open="ctrl.finStart" on-open-focus="false" datepicker-options="ctrl.finstartDateOps" ng-change="ctrl.selDate( 'finStart')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="完成开始时间">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="ctrl.finStart=!ctrl.finStart"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.finishEnd" is-open="ctrl.finEnd" on-open-focus="false"  datepicker-options="ctrl.finendDateOps" ng-change="ctrl.selDate( 'finEnd')" current-text="今天"
+              clear-text="清除" close-text="关闭" placeholder="完成结束时间" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.finEnd=!ctrl.finEnd"><i class="iconfont icon-CombinedShape1"></i></button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-theadbg table-hover table-striped">
+          <thead>
+            <tr>
+              <th>
+                <div>客户名称</div>
+              </th>
+              <th>
+                <div>业务类型</div>
+              </th>
+              <th>
+                <div>任务类型</div>
+              </th>
+              <th>
+                <div>工单类型</div>
+              </th>
+              <th>
+                <div>派单人</div>
+              </th>
+              <th>
+                <div>派单时间</div>
+              </th>
+              <th>
+                <div>状态</div>
+              </th>
+              <th>
+                <div>完成人</div>
+              </th>
+              <th>
+                <div>完成时间</div>
+              </th>
+              <th>
+                <div>完成时长</div>
+              </th>
+              <th width="100">
+                <div>期望完成日期</div>
+              </th>
+              <th>
+                <div>操作</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.myOrderList.length === 0 || !ctrl.myOrderList">
+            <tr class="empty-tr">
+              <td colspan="12" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.myOrderList" ng-class="{'text-error':{{ctrl.timestamp > item.expectDate && item.status==='待处理'}}}">
+              <td class="text-overflow" title="{{item.storeName}}">{{item.storeName || '暂无'}}</td>
+              <td class="text-overflow">{{item.businessType || '暂无'}}</td>
+              <td class="text-overflow">{{item.taskType || '暂无'}}</td>
+              <td class="text-overflow">{{item.type || '暂无'}}</td>
+              <td class="text-overflow">{{item.createUser || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}">{{(item.createTime | date:'yyyy-MM-dd HH:mm:ss' | maxString:true:15:' ...') || '-'}}</td>
+              <td class="text-overflow">{{item.status || '暂无'}}</td>
+              <td class="text-overflow">{{item.finishUser || '-'}}</td>
+              <td class="text-overflow" title="{{item.finishTime | date:'yyyy-MM-dd HH:mm:ss'}}">{{(item.finishTime | date:'yyyy-MM-dd HH:mm:ss' | maxString:true:15:' ...') || '-'}}</td>
+              <td class="text-overflow">{{(item.finishPeriod | date:'yyyy-MM-dd HH:mm:ss') || '-'}}</td>
+              <td class="text-overflow">{{item.expectDate | date:'yyyy-MM-dd' || '暂无'}}</td>
+              <td>
+                <!--<button type="button" class="btn btn-link btn-link-success"  ui-sref="order.orderPending({id:item.id})">查看</button>-->
+                <a ng-if="item.status==='待处理' && btnlist.ORDER_0103" class="btn btn-link btn-link-success" ui-sref="order.orderPending({id:item.id})">查看</a>
+                <a ng-if="item.status==='已处理' && btnlist.ORDER_0103" class="btn btn-link btn-link-success" ui-sref="order.orderProcess({id:item.id})">查看</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group">
+            <button type="button" ng-if="btnlist.ORDER_0102" class="btn btn-primary" ng-click="ctrl.export()">导出</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" ui-sref="order.addOrder">新建工单</button>            
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="page-application-faqType">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li><a ui-sref="application.faqList">FAQ管理</a></li>
+    <li>FAQ问题类型</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <div class="form-group">
+          <select class="form-control" ng-options="item.dataCode as item.dataName for item in ctrl.productList" ng-model="ctrl.getParame.product">
+              <option value="">产品名称</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" ng-keyup="ctrl.enterKeyup($event)" placeholder="请输入问题类型名称" ng-model="ctrl.getParame.questionType">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-white" type="button" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-common-theme text-center table-hover table-striped">
+          <thead>
+            <tr> 
+              <th width="">问题类型</th>
+              <th width="">产品名称</th>
+              <th width="">状态</th>
+              <th width="130">操作</th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.faqTypeList.length === 0">
+            <tr class="empty-tr">
+              <td colspan="4" class="empty-box">没有您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.faqTypeList">
+              <td class="text-overflow" title="{{item.questionType || '--'}}">{{item.questionType || '--'}}</td>
+              <td class="text-overflow" title="{{item.product | faqFilterName}}">{{item.product | faqFilterName}}</td>
+              <td class="text-overflow" title="{{item.isAvailable === 1 ? '使用中': '已删除';}}">{{item.isAvailable === 1 ? '使用中': '已删除';}}</td>
+              <td class="text-left">
+                <button ng-if="btnlist.APP_MGR_040602" ng-click="ctrl.editFaqType(item)" type="btn" class="btn btn-link">编辑</button>
+                <button ng-if="btnlist.APP_MGR_040603 && item.isAvailable === 1" ng-click="ctrl.deleteFaqType(item)" type="btn" class="btn btn-link btn-link-danger">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group">
+            <button type="button" ng-if="btnlist.APP_MGR_040601" ng-click="ctrl.addFaqType(item)" class="btn btn-primary" >新增问题类型</button>
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="addFaqType.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">{{$ctrl.topTitle}}</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <form class="form-horizontal" name="addFaqType">
+    <div class="modal-body" id="modal-body">
+      <div class="form-group" ng-class="{'has-success':addFaqType.questionType.$valid,'has-error':addFaqType.questionType.$invalid && addFaqType.questionType.$dirty}">
+        <label class="col-md-4 col-sm-3 control-label"><strong class="text-danger">*</strong>问题类型：</label>
+        <div class="col-md-7 col-sm-7">
+          <input type="text" class="form-control" name='questionType' ng-model="$ctrl.questionType"  maxlength="20" placeholder="不能超过20个字符集" required>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-success':addFaqType.product.$valid,'has-error':addFaqType.product.$invalid && addFaqType.product.$dirty}">
+        <label class="col-md-4 col-sm-3 control-label"><strong class="text-danger">*</strong>所属产品名称：</label>
+        <div class="col-md-7 col-sm-7">
+          <select class="form-control" name="product" ng-model="$ctrl.product" ng-options="item.dataCode as item.dataName for item in $ctrl.productList" ng-disabled="$ctrl.editStatus" required>
+            <option value="">请选择产品名称</option>
+          </select>            
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" type="button" ng-disabled="addFaqType.$invalid" ng-click="$ctrl.ok()">确 定</button>
+    </div>
+  </form>
+</script>

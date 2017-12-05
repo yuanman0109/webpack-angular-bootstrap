@@ -1,0 +1,26 @@
+<div ng-controller="LoginCtrl as login" class="login-bg">
+  <div class="login-box">
+    <div class="login-box-header clearfix">
+      <div class="pull-left">
+        <i class="iconfont icon-icon-test10"></i>
+      </div>
+      <div class="pull-right">
+        <h2>业务支持系统</h2>
+      </div>
+    </div>
+    <div class="login-cont">
+      <form name="login_form">
+        <div class="form-group">
+          <input type="text" id="nameInput" class="form-control" ng-model="login.formData.username" placeholder="请输入EHR账号…" required>
+        </div>
+        <div class="form-group">
+          <input type="password" id="passInput" class="form-control" ng-model="login.formData.password" placeholder="请输入密码" ng-keyup="login.enterKeyup($event)" required>
+        </div>
+        <button type="button" id="loginBtn" class="btn btn-primary btn-block" ng-click="login.loginBt()" ng-disabled="login_form.$invalid || login.isLogin">登录</button>
+      </form>
+    </div>
+    <div class="login-footer"><a href='javascript:void(0)' ui-sref="forgetPass.step1">忘记密码</a></div>
+  </div>
+  <toaster-container toaster-options="{ 'toaster-id': 1,  'position-class': 'toast-top-center','icon-class':'toast-default'}"></toaster-container>
+  <p class="copyright-text">版权所有©百味云科技股份有限公司</p>
+</div>

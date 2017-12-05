@@ -1,0 +1,1314 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="store.list">私海列表</a></li>
+    <li class="active">编辑私海</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box" ng-controller="editPrivateSeaCtrl as ads">
+        <div class="container">
+            <form class="form-horizontal" role="form" name="addstore" id="addStore" novalidate>
+                <p><strong>基本信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <!--<div class="form-group" ng-class="{'has-success':addstore.cityCode.$valid && addstore.cityCode.$dirty,'has-error':addstore.cityCode.$invalid && addstore.cityCode.$dirty}">
+                        <label for="inputEmail3" class="col-sm-5 control-label">导入门店：</label>
+                        <div class="col-sm-7 row">
+                            <button type="button" class="btn btn-shallow" ng-click="ads.openMap()">从地图上选择门店</button>
+                            <span>　若没有找到对应门店，请先在高德地图上进行标示。<a href="http://map.amap.com/help/index.html?type=addpoi" target="_blank">点击查看标注方式</a></span>
+                            <input type="hidden" name="provinceCode" ng-model="ads.basicInfo.provinceCode" required>-->
+                        <!-- <input type="hidden" name="poiId" ng-model="ads.basicInfo.poiId">
+                            <input type="hidden" name="poiLat" ng-model="ads.basicInfo.poiLat" required>
+                            <input type="hidden" name="poiLng" ng-model="ads.basicInfo.poiLng" required>
+                            <input type="hidden" name="cityCode" ng-model="ads.basicInfo.cityCode" required>
+                            <input type="hidden" name="districtCode" ng-model="ads.basicInfo.districtCode" required>
+                            <span class="help-block" ng-if="addstore.cityCode.$invalid && addstore.cityCode.$dirty">门店信息是否正确！</span>
+                        </div>
+                    </div>-->
+                        <div class="form-group" ng-class="{'has-success':addstore.name.$valid && addstore.name.$dirty,'has-error':addstore.name.$invalid && addstore.name.$dirty}">
+                            <label class="col-sm-5 control-label"><span class="text-danger">* </span>门店名称：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="name" placeholder="" ng-model="ads.basicInfo.name" irregular="[\s\r\n\'\0x34‘“”’]"
+                                        ng-maxlength="100" maxlength="100" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label class="col-sm-5 control-label">门店编号：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="code" placeholder="" ng-model="ads.basicInfo.code" ng-maxlength="100" maxlength="100">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':(addstore.provinceCode.$valid && addstore.provinceCode.$dirty) ||addstore.provinceCode.$valid,'has-error':addstore.provinceCode.$invalid && addstore.provinceCode.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>省份：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="hidden" name="provinceCode" class="form-control" ng-model="ads.basicInfo.provinceCode" required>
+                                    <prov-select province='ads.basicInfo.provinceCode'></prov-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':(addstore.cityCode.$valid && addstore.cityCode.$dirty)||addstore.cityCode.$valid,'has-error':addstore.cityCode.$invalid && addstore.cityCode.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>城市：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="hidden" name="cityCode" class="form-control" ng-model="ads.basicInfo.cityCode" required>
+                                    <city-select province='ads.basicInfo.provinceCode' city='ads.basicInfo.cityCode'></city-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':(addstore.districtCode.$valid && addstore.districtCode.$dirty)||addstore.districtCode.$valid,'has-error':addstore.districtCode.$invalid && addstore.districtCode.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>区/县：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="hidden" name="districtCode" class="form-control" ng-model="ads.basicInfo.districtCode" required>
+                                    <county-select city='ads.basicInfo.cityCode' county='ads.basicInfo.districtCode'></county-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.address.$valid && addstore.address.$dirty,'has-error':addstore.address.$invalid && addstore.address.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店地址：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="address" placeholder="" ng-maxlength="500" maxlength="500" irregular="[\s\r\n\'\0x34‘“”’]"
+                                        ng-model="ads.basicInfo.address" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.poiLng.$valid && addstore.poiLng.$dirty,'has-error':addstore.poiLng.$invalid && addstore.poiLng.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>经度：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="number" class="form-control" name="poiLng" placeholder="经度范围：-180~180" min="-180" max="180" ng-maxlength="40"
+                                        maxlength="40" ng-model="ads.basicInfo.poiLng" disabled required>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="form-control-static"><a href="javascript:void(0)" class="btn btn-link" ng-click="ads.openMap()">请点击获取经纬度</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.poiLat.$valid && addstore.poiLat.$dirty,'has-error':addstore.poiLat.$invalid && addstore.poiLat.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>纬度：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="number" class="form-control" name="poiLat" placeholder="纬度范围：-90~90" min="-90" max="90" ng-maxlength="40" maxlength="40"
+                                        ng-model="ads.basicInfo.poiLat" disabled required >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="" class="col-sm-5 control-label">所属商圈：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="businessArea" ng-maxlength="30" maxlength="30" placeholder="" ng-model="ads.basicInfo.businessArea">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label">楼层信息：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" ng-model="ads.basicInfo.floor" name="floor" ng-maxlength="30" maxlength="30" class="form-control">
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="form-control-static">层（如果是地下室，请填写负值，例：-1）</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.attribution.$valid && addstore.attribution.$dirty,'has-error':addstore.attribution.$invalid && addstore.attribution.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>地点归属：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="attribution" ng-maxlength="80" ng-options="attr.dataCode as attr.dataName for attr in ads.attribution" ng-model="ads.basicInfo.attribution"
+                                        required>
+                                    <option value="" class="option-one">选择地点归属</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.linkTel.$valid && addstore.linkTel.$dirty,'has-error':addstore.linkTel.$invalid && addstore.linkTel.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店电话：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="linkTel" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.linkTel"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.logo.$valid,'has-error':addstore.logo.$invalid && addstore.logo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店实景：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="logo" ng-model="ads.basicInfo.logo" required>
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'logo')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.logoUrl" class="thumbnail-small">
+                                    <a ng-href="{{ads.basicInfo.logoUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.logoUrl| imgUrlWithToken}}" alt="实景" class="img-thumbnail"></a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.logo.$invalid && addstore.logo.$dirty">门店实景是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.storeRemark.$valid && addstore.storeRemark.$dirty,'has-error':addstore.storeRemark.$invalid && addstore.storeRemark.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店说明：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <textarea rows="5" name="storeRemark" ng-maxlength="250" maxlength="250" ng-model="ads.basicInfo.storeRemark" class="form-control"
+                                        required></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.tableNumber.$valid && addstore.tableNumber.$dirty,'has-error':addstore.tableNumber.$invalid && addstore.tableNumber.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>餐桌数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="tableNumber" placeholder="" ng-model="ads.basicInfo.tableNumber" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.seatNumber.$valid && addstore.seatNumber.$dirty,'has-error':addstore.seatNumber.$invalid && addstore.seatNumber.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>座位数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="seatNumber" placeholder="" ng-model="ads.basicInfo.seatNumber" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label for="" class="col-sm-5 control-label">收银机数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="posNumber" placeholder="" ng-model="ads.basicInfo.posNumber">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="" class="col-sm-5 control-label">服务员人数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="waiterNumber" placeholder="" ng-model="ads.basicInfo.waiterNumber">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label">后厨数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="chefNumber" placeholder="" ng-model="ads.basicInfo.chefNumber">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-success':addstore.dailyTransactionAmount.$valid && addstore.dailyTransactionAmount.$dirty,'has-error':addstore.dailyTransactionAmount.$invalid && addstore.dailyTransactionAmount.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>日交易流水：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="number" class="form-control" step='0.01' name="dailyTransactionAmount" placeholder="" min="0" max="99999999.99" ng-model="ads.basicInfo.dailyTransactionAmount"
+                                        required>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="form-control-static">元</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.shopHours.$valid && addstore.shopHours.$dirty,'has-error':addstore.shopHours.$invalid && addstore.shopHours.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>营业时间说明：</label>
+                            <div class="col-sm-7 row">
+                                <!--<div class="col-xs-8 row">
+                                <div class="pull-left" uib-timepicker ng-model="ads.openTime" show-spinners="false" show-meridian="false"></div>
+                                <p class="form-control-static pull-left">　到　</p>
+                                <div class="pull-left" uib-timepicker ng-model="ads.closeTime" show-spinners="false" show-meridian="false"></div>
+                            </div>-->
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="shopHours" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.shopHours"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.area.$valid && addstore.area.$dirty,'has-error':addstore.area.$invalid && addstore.area.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>面积：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                   <input type="number" class="form-control" name="area" step='0.01'  placeholder="" ng-maxlength="11" ng-max="99999999.99" min="0" maxlength="11" ng-model="ads.basicInfo.area" required>          
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="form-control-static">平米</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.perCapita.$valid && addstore.perCapita.$dirty,'has-error':addstore.perCapita.$invalid && addstore.perCapita.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>人均：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="number" class="form-control" step='0.01' name="perCapita" placeholder="" min="0" max="99999999.99" ng-model="ads.basicInfo.perCapita"
+                                        required>
+                                </div>
+                                <div class="col-xs-7">
+                                    <p class="form-control-static">元</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label">评分：</label>
+                            <div class="col-sm-7 row">
+                                <!--<div class="col-xs-5 row">
+                                <input type="number" class="form-control" step='0.01' name="grade" placeholder="" min="0" max="99999999.99" ng-model="ads.basicInfo.grade">
+                            </div>-->
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="grade" ng-options="attr.dataCode as attr.dataName for attr in ads.grade" ng-model="ads.basicInfo.grade">
+                                    <option value=""  class="option-one">选择评分</option> 
+                                </select>
+                                </div>
+                                <!-- {{ads.basicInfo.grade}} -->
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.dishStyleCode.$valid && addstore.dishStyleCode.$dirty,'has-error':addstore.dishStyleCode.$invalid && addstore.dishStyleCode.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>菜系：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="dishStyleCode" ng-options="dish.dataCode as dish.dataName for dish in ads.disheslist"
+                                        ng-model="ads.basicInfo.dishStyleCode" required>
+                                    <option value="" class="option-one">选择菜系</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+                            <div class="col-sm-7 row">
+                                <business-type edit="true" result="ads.basicInfo.business"></business-type>
+                                <!-- <label class="checkbox-inline" ng-repeat="bus in ads.storeBusinessType">
+                                    <input type="checkbox" name="business" ng-model="bus.select"  disabled><i class="iconfont"></i> {{bus.dataName}}
+                                </label> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.flag.$valid && addstore.flag.$dirty,'has-error':addstore.flag.$invalid && addstore.flag.$dirty}">
+                            <label class="col-sm-5 control-label"><span class="text-danger">* </span>餐饮业态：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="flag" ng-options="prop.dataCode as prop.dataName for prop in ads.flags"
+                                        ng-model="ads.basicInfo.flag" required>
+                                    <option value="" class="option-one">选择餐饮业态</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.storeProperty.$valid && addstore.storeProperty.$dirty,'has-error':addstore.storeProperty.$invalid && addstore.storeProperty.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店属性：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="storeProperty" ng-options="prop.dataCode as prop.dataName for prop in ads.Properties"
+                                        ng-model="ads.basicInfo.storeProperty" required>
+                                    <option value="" class="option-one">选择门店属性</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.status.$valid && addstore.status.$dirty,'has-error':addstore.status.$invalid && addstore.status.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店状态：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="status" ng-options="status.dataCode as status.dataName for status in ads.statuses" ng-model="ads.basicInfo.status"
+                                        required>
+                                <option value="" class="option-one">选择门店状态</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p><strong>品牌信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group" ng-class="{'has-success':addstore.brandName.$valid && addstore.brandName.$dirty,'has-error':addstore.brandName.$invalid && addstore.brandName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属品牌：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <ui-select ng-model="ads.basicInfo.brandName" name="brandName" required theme="bootstrap" on-select="ads.searchBrandsCallback($select.selected)"
+                                        reset-search-input="false" title="所属品牌">
+                                        <ui-select-match placeholder="输入品牌">{{$select.selected.name || ads.basicInfo.brandName}}</ui-select-match>
+                                        <ui-select-choices repeat="brand.id as brand in ads.brandList track by $index" refresh="ads.searchBrands($select.search)"
+                                            refresh-delay="500">
+                                            <div ng-bind-html="brand.name | highlight: $select.search"></div>
+                                            <small>
+                                                企业：<span ng-bind-html="brand.companyName | highlight: $select.search"></span>
+                                                菜系：<span ng-bind-html="brand.dishStyleName | highlight: $select.search"></span>
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.brandLogo.$valid,'has-error':addstore.brandLogo.$invalid && addstore.brandLogo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>品牌logo：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="brandLogo" ng-model="ads.basicInfo.brandLogo" required>
+                                <div class="form-control-static">
+                                    <button type="file"  ngf-select="ads.uploadFiles($file, $invalidFiles, 'brandLogo')" class="btn btn-upload"  ng-disabled="ads.companyDisabled"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.brandLogoUrl" class="thumbnail-small">
+                                    <a ng-href="{{ads.basicInfo.brandLogoUrl| imgUrlWithToken}}" target="_blank">
+                                        <img ng-src="{{ads.basicInfo.brandLogoUrl | imgUrlWithToken}}" alt="品牌logo" class="img-thumbnail" >
+                                    </a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.brandLogo.$invalid && addstore.brandLogo.$dirty">品牌logo是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.brandStatus.$valid && addstore.brandStatus.$dirty,'has-error':addstore.brandStatus.$invalid && addstore.brandStatus.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>品牌状态：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="brandStatus" ng-options="status.dataCode as status.dataName for status in ads.statuses" ng-model="ads.basicInfo.brandStatus"
+                                        ng-disabled="ads.companyDisabled"  required>
+                                    <option value="" class="option-one">选择品牌状态</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p><strong>企业信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group" ng-class="{'has-success':addstore.companyName.$valid && addstore.companyName.$dirty,'has-error':addstore.companyName.$invalid && addstore.companyName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属企业：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <!-- <input type="text" class="form-control" name="companyName" placeholder="" ng-disabled="ads.companyDisabled" ng-model="ads.basicInfo.companyName" ng-change="ads.companyChange()"
+                                        required> -->
+                                    <ui-select ng-model="ads.basicInfo.companyName" name="companyName"  theme="bootstrap" required reset-search-input="false"  on-select="ads.companyCallback($select.selected)" title="企业" ng-disabled="ads.companyDisabled">
+                                        <ui-select-match placeholder="输入企业">{{$select.selected.companyName || ads.basicInfo.companyName}}</ui-select-match>
+                                        <ui-select-choices repeat="city.name as city in ads.companyList track by $index" refresh="ads.searchCompanies($select.search)" refresh-delay="500">
+                                            <div ng-bind-html="city.name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.companyScale.$valid && addstore.companyScale.$dirty,'has-error':addstore.companyScale.$invalid && addstore.companyScale.$dirty}">
+                            <label for="" class="col-sm-5 control-label">企业规模：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control"  name="companyScale" ng-options="status.code as status.name for status in ads.companyScales" ng-disabled="ads.companyDisabled||ads.companyKey" ng-model="ads.basicInfo.companyScale">
+                                        <option value="" class="option-one">选择企业规模</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.registeredAssets.$valid && addstore.registeredAssets.$dirty,'has-error':addstore.registeredAssets.$invalid && addstore.registeredAssets.$dirty}">
+                            <label for="" class="col-sm-5 control-label">注册资本：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="registeredAssets" placeholder="" ng-model="ads.basicInfo.registeredAssets" ng-disabled="ads.companyDisabled||ads.companyKey">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.artificialPerson.$valid && addstore.artificialPerson.$dirty,'has-error':addstore.artificialPerson.$invalid && addstore.artificialPerson.$dirty}">
+                            <label for="" class="col-sm-5 control-label">企业法人：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="artificialPerson" placeholder="" ng-model="ads.basicInfo.artificialPerson" ng-disabled="ads.companyDisabled||ads.companyKey">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.companyLinkTel.$valid && addstore.companyLinkTel.$dirty,'has-error':addstore.companyLinkTel.$invalid && addstore.companyLinkTel.$dirty}">
+                            <label for="" class="col-sm-5 control-label">总部电话：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="companyLinkTel" placeholder="" ng-model="ads.basicInfo.companyLinkTel" ng-disabled="ads.companyDisabled||ads.companyKey">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-success':addstore.companyAddress.$valid && addstore.companyAddress.$dirty,'has-error':addstore.companyAddress.$invalid && addstore.companyAddress.$dirty}">
+                            <label for="" class="col-sm-5 control-label">总部地址：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="companyAddress" placeholder="" ng-model="ads.basicInfo.companyAddress" ng-disabled="ads.companyDisabled||ads.companyKey">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.companyWebsite.$valid && addstore.companyWebsite.$dirty,'has-error':addstore.companyWebsite.$invalid && addstore.companyWebsite.$dirty}">
+                            <label for="" class="col-sm-5 control-label">企业官网：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="companyWebsite" placeholder="" ng-model="ads.basicInfo.companyWebsite" ng-disabled="ads.companyDisabled||ads.companyKey">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+                            <div class="col-sm-7 row">
+                              <business-type edit="ads.companyDisabled||ads.companyKey" result="ads.basicInfo.companyBusinessTypes"></business-type>
+                              <!-- <label class="checkbox-inline" ng-repeat="bus in ads.companyType">
+                                  <input type="checkbox" name="companyBusinessType" ng-model="bus.select" ng-change="ads.businessChange(bus,'companyType')" ng-disabled="ads.companyDisabled||ads.companyKey"><i class="iconfont"></i> {{bus.dataName}}
+                              </label> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.companyStatus.$valid && addstore.companyStatus.$dirty,'has-error':addstore.companyStatus.$invalid && addstore.companyStatus.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>企业状态：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="companyStatus" ng-options="status.dataCode as status.dataName for status in ads.statuses" ng-model="ads.basicInfo.companyStatus" ng-disabled="ads.companyDisabled||ads.companyKey"
+                                        required>
+                                <option value="" class="option-one">选择门店状态</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p><strong>最新联系人：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group" ng-class="{'has-success':addstore.linkManName.$valid && addstore.linkManName.$dirty,'has-error':addstore.linkManName.$invalid && addstore.linkManName.$dirty}">
+                            <label class="col-sm-5 control-label"><span class="text-danger">* </span>姓名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="linkManName" placeholder="" ng-model="ads.basicInfo.linkManName" irregular="[\s\r\n\'\0x34‘“”’]"
+                                        ng-maxlength="80" maxlength="80" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.sex.$valid && addstore.sex.$dirty,'has-error':addstore.sex.$invalid && addstore.sex.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>性别：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="sex" ng-options="status.code as status.name for status in ads.sex" ng-model="ads.basicInfo.sex" required>
+                                        <option value="" class="option-one">选择性别</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ageGroup.$valid && addstore.ageGroup.$dirty,'has-error':addstore.ageGroup.$invalid && addstore.ageGroup.$dirty}">
+                            <label for="" class="col-sm-5 control-label">年龄段：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="ageGroup" ng-options="ages.code as ages.name for ages  in ads.changeAgeLists" ng-model="ads.basicInfo.ageGroup">
+                                        <option value="" class="option-one">选择年龄段</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.mobile.$valid && addstore.mobile.$dirty,'has-error':addstore.mobile.$invalid && addstore.mobile.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>手机：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="tel" class="form-control" name="mobile" placeholder="" ng-maxlength="11" ng-minlength="11" ng-pattern="/^1(3|4|5|7|8)\d{9}$/"  ng-model="ads.basicInfo.mobile"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.position.$valid && addstore.position.$dirty,'has-error':addstore.position.$invalid && addstore.position.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>职位：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="position" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.position"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.isKp.$valid && addstore.isKp.$dirty,'has-error':addstore.isKp.$invalid && addstore.isKp.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>是否KP：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="isKp" ng-options="isKp.code as isKp.name for isKp  in ads.isKp" ng-model="ads.basicInfo.isKp" required>
+                                        <option value="" class="option-one">选择是否KP</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.birthday.$valid && addstore.birthday.$dirty,'has-error':addstore.birthday.$invalid && addstore.birthday.$dirty}">
+                            <label for="" class="col-sm-5 control-label">生日：</label>
+                            <div class="col-sm-7 row">
+                                <div class="input-group col-xs-5  date-form">
+                                    <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.birthday" is-open="ads.birthdayOpen"
+                                        on-open-focus="false" datepicker-options="ads.birthday" ng-change="ads.selDate()"
+                                        current-text="今天" clear-text="清除" close-text="关闭关闭" />
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="ads.birthdayOpen=!ads.birthdayOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.phone.$valid && addstore.phone.$dirty,'has-error':addstore.phone.$invalid && addstore.phone.$dirty}">
+                            <label for="" class="col-sm-5 control-label">备用号码：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="phone" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.phone"
+                                        >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.wechat.$valid && addstore.wechat.$dirty,'has-error':addstore.wechat.$invalid && addstore.wechat.$dirty}">
+                            <label for="" class="col-sm-5 control-label">微信：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="wechat" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.wechat">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.email.$valid && addstore.email.$dirty,'has-error':addstore.email.$invalid && addstore.email.$dirty}">
+                            <label for="" class="col-sm-5 control-label">邮箱：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="email" class="form-control" name="email" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.remark.$valid && addstore.remark.$dirty,'has-error':addstore.remark.$invalid && addstore.remark.$dirty}">
+                            <label for="" class="col-sm-5 control-label">备注：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="remark" placeholder="" ng-maxlength="500" maxlength="500" ng-model="ads.basicInfo.remark">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <p><strong>会员相关信息：</strong></p>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="form-group" ng-class="{'has-success':addstore.vipBusinessAgreement.$valid && addstore.vipBusinessAgreement.$dirty,'has-error':addstore.vipBusinessAgreement.$invalid && addstore.vipBusinessAgreement.$dirty}">
+                        <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessVIP">* </span>会员业务协议：</label>
+                        <div class="col-sm-7 row">
+                            <input type="hidden" name="vipBusinessAgreement" ng-model="ads.basicInfo.vipBusinessAgreement" ng-required="ads.businessVIP">
+                            <div class="form-control-static">
+                                <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'vipBusinessAgreement')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                <span ng-if="ads.basicInfo.vipBusinessAgreement" class="thumbnail-small">
+                                    <a ng-href="{{ads.basicInfo.vipBusinessAgreementUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.vipBusinessAgreementUrl| imgUrlWithToken}}" alt="会员业务协议" class="img-thumbnail"></a>
+                                </span>
+                            </div>
+                            <span class="help-block" ng-if="ads.vipBusinessAgreement.$invalid && addstore.vipBusinessAgreement.$dirty">会员业务协议是否上传！</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':addstore.vipRemark.$valid && addstore.vipRemark.$dirty,'has-error':addstore.vipRemark.$invalid && addstore.vipRemark.$dirty}">
+                      <label for="" class="col-sm-5 control-label">备注说明：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <textarea rows="5" name="vipRemark" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.vipRemark" class="form-control"
+                                  ></textarea>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p><strong>菜单&餐桌相关信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="form-group" ng-class="{'has-success':addstore.tableReference.$valid,'has-error':addstore.tableReference.$invalid && addstore.tableReference.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessSnack">* </span>餐台参考：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="tableReference" ng-model="ads.basicInfo.tableReference"  ng-required="ads.businessSnack">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'tableReference')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.tableReferenceUrl" class="thumbnail-small">
+                                    <a ng-href="{{ads.basicInfo.tableReferenceUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.tableReferenceUrl| imgUrlWithToken}}" alt="餐台参考" class="img-thumbnail"></a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.tableReference.$invalid && addstore.tableReference.$dirty">餐台参考是否上传！</span>
+                            </div>
+                        </div>
+        
+                        <div class="form-group" ng-class="{'has-success':addstore.menuReferences.$valid,'has-error':addstore.menuReferences.$invalid && addstore.menuReferences.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessSnack">* </span>菜单参考：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="menuReferences" ng-model="ads.basicInfo.menuReferences" ng-required="ads.businessSnack">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="" ngf-change="ads.uploadFiles($newFiles, $invalidFiles, 'menuReferences')"  ngf-multiple="true" ngf-keep="'distinct'" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.menuReferencesUrl" class="thumbnail-small" ng-repeat="(key,url) in ads.basicInfo.menuReferencesUrl">
+                                        <i class="iconfont icon-shanchu-copy deleteImg" ng-click="ads.delete(key,'menuReferences')"></i>
+                                        <a ng-href="{{url| imgUrlWithToken}}" target="_blank"><img ng-src="{{url | imgUrlWithToken}}" alt="菜单参考" class="img-thumbnail"></a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.menuReferences.$invalid && addstore.menuReferences.$dirty">菜单参考是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.supportPreOrder.$valid && addstore.supportPreOrder.$dirty,'has-error':addstore.supportPreOrder.$invalid && addstore.supportPreOrder.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessSnack">* </span>是否支持预点：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="supportPreOrder" ng-options="status.code as status.name for status in ads.isKp" ng-model="ads.basicInfo.supportPreOrder"  ng-required="ads.businessSnack">
+                                        <option value="" class="option-one">选择是否</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label">快餐业务协议书：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="businessAgreement" ng-model="ads.basicInfo.businessAgreement">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'businessAgreement')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.businessAgreementUrl" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.businessAgreementUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.businessAgreementUrl| imgUrlWithToken}}" alt="快餐业务协议书" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.businessAgreement.$invalid && addstore.businessAgreement.$dirty">快餐业务协议书是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.otherRemark.$valid && addstore.otherRemark.$dirty,'has-error':addstore.otherRemark.$invalid && addstore.otherRemark.$dirty}">
+                            <label for="" class="col-sm-5 control-label">备注说明：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <textarea rows="5" name="otherRemark" ng-maxlength="500" maxlength="500" ng-model="ads.basicInfo.otherRemark" class="form-control"
+                                        ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p><strong>支付进件-基本信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="form-group" ng-class="{'has-success':addstore.connectionOrg.$valid && addstore.connectionOrg.$dirty,'has-error':addstore.connectionOrg.$invalid && addstore.connectionOrg.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>连接机构：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control"  name="connectionOrg" ng-options="status.code as status.name for status in ads.connectionOrgs" ng-model="ads.basicInfo.connectionOrg" ng-change="ads.connectionOrgCg(ads.basicInfo.connectionOrg)"  ng-required="ads.businessPay">
+                                        <option value="" class="option-one">选择连接机构</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.settleMethod.$valid && addstore.settleMethod.$dirty,'has-error':addstore.settleMethod.$invalid && addstore.settleMethod.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>结算方式：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="settleMethod" ng-options="status.code as status.name for status in ads.settleMethods" ng-model="ads.basicInfo.settleMethod" ng-required="ads.businessPay">
+                                        <option value="" class="option-one">选择结算方式</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.storeType.$valid && addstore.storeType.$dirty,'has-error':addstore.storeType.$invalid && addstore.storeType.$dirty}">
+                            <label class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>商户类型：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="storeType" ng-options="status.code as status.name for status in ads.businessTypes" ng-model="ads.basicInfo.storeType" ng-required="ads.businessPay">
+                                        <option value="" class="option-one">选择商户类型</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLicenseName.$valid && addstore.businessLicenseName.$dirty,'has-error':addstore.businessLicenseName.$invalid && addstore.businessLicenseName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>营业执照注册名称：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="businessLicenseName" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.businessLicenseName" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLicenseNo.$valid && addstore.businessLicenseNo.$dirty,'has-error':addstore.businessLicenseNo.$invalid && addstore.businessLicenseNo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>营业执照号码：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="businessLicenseNo" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.businessLicenseNo" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.registerAddr.$valid && addstore.registerAddr.$dirty,'has-error':addstore.registerAddr.$invalid && addstore.registerAddr.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>注册地址：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="registerAddr" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.registerAddr" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.operationScope.$valid && addstore.operationScope.$dirty,'has-error':addstore.operationScope.$invalid && addstore.operationScope.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>经营内容：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="operationScope" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.operationScope" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>营业执照有效期：</label>
+                            <div class="col-sm-7 row">
+                                <div class="input-group col-xs-5  date-form pull-left">
+                                    <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.businessLicenseBeginDate" is-open="ads.businessLicenseBeginDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.startDateOps" ng-change="ads.selDate('start','businessLicenseBeginDate')"  ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'"
+                                        current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','businessLicenseBeginDate','businessLicenseBeginDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                    <span class="form-control" style="border:none;"> 至 </span> 
+                                </div>
+                                <div class="input-group col-xs-5  date-form pull-left">
+                                    <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.businessLicenseEndDate" is-open="ads.businessLicenseEndDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.endDateOps" ng-change="ads.selDate('end','businessLicenseEndDate')"  ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'"
+                                        current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','businessLicenseEndDate','businessLicenseEndDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                </div>
+                                <div class="col-xs-2">
+                                        <label class="checkbox-inline" >
+                                        <input type="checkbox" name="businessLicense" ng-model="businessLicense"  ng-click="ads.forever('businessLicense',businessLicense)"><i class="iconfont"></i> 永久
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLicenseFileId.$valid,'has-error':addstore.businessLicenseFileId.$invalid && addstore.businessLicenseFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>营业执照影印件：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="businessLicenseFileId" ng-model="ads.basicInfo.businessLicenseFileId" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'businessLicenseFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.businessLicenseFileId" class="thumbnail-small">
+                                    <a ng-href="{{ads.basicInfo.businessLicenseFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.businessLicenseFileIdUrl| imgUrlWithToken}}" alt="" class="img-thumbnail"></a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.businessLicenseFileId.$invalid && addstore.businessLicenseFileId.$dirty">营业执照影印件是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.orgLicenseNo.$valid && addstore.orgLicenseNo.$dirty,'has-error':addstore.orgLicenseNo.$invalid && addstore.orgLicenseNo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>组织机构代码证号码：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="orgLicenseNo" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.orgLicenseNo" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" >
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>组织机构代码证有效期：</label>
+                            <div class="col-sm-7 row">
+                                <div class="input-group col-xs-5  date-form pull-left">
+                                    <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.orgLicenseBeginDate" is-open="ads.orgLicenseBeginDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.startDateOps" ng-change="ads.selDate('start','orgLicenseBeginDate')"  ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'"
+                                        current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','orgLicenseBeginDate','orgLicenseBeginDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                    <span class="form-control" style="border:none;"> 至 </span> 
+                                </div>
+                                <div class="input-group col-xs-5  date-form pull-left">
+                                    <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.orgLicenseEndDate" is-open="ads.orgLicenseEndDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.endDateOps" ng-change="ads.selDate('end','orgLicenseEndDate')" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'"
+                                        current-text="今天" clear-text="清除" close-text="关闭" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','orgLicenseEndDate','orgLicenseEndDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                </div>
+                                <div class="col-xs-2">
+                                        <label class="checkbox-inline" >
+                                        <input type="checkbox" name="orgLicense"  ng-model="orgLicense" ng-click="ads.forever('orgLicense',orgLicense)" ><i class="iconfont"></i> 永久
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.orgLicenseFileId.$valid,'has-error':addstore.orgLicenseFileId.$invalid && addstore.orgLicenseFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>组织机构代码证影印件：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="orgLicenseFileId" ng-model="ads.basicInfo.orgLicenseFileId" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'orgLicenseFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.orgLicenseFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.orgLicenseFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.orgLicenseFileIdUrl| imgUrlWithToken}}" alt="组织机构代码证影印件" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.orgLicenseFileId.$invalid && addstore.orgLicenseFileId.$dirty">组织机构代码证影印件是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.caterersLicenseFileId.$valid,'has-error':addstore.caterersLicenseFileId.$invalid && addstore.caterersLicenseFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>餐饮许可证影印件：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="caterersLicenseFileId" ng-model="ads.basicInfo.caterersLicenseFileId" ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'caterersLicenseFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.caterersLicenseFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.caterersLicenseFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.caterersLicenseFileIdUrl| imgUrlWithToken}}" alt="餐饮许可证影印件" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.caterersLicenseFileId.$invalid && addstore.caterersLicenseFileId.$dirty">餐饮许可证影印件是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.storeFacesFileId.$valid,'has-error':addstore.storeFacesFileId.$invalid && addstore.storeFacesFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>店铺门头照片：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="storeFacesFileId" ng-model="ads.basicInfo.storeFacesFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'storeFacesFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.storeFacesFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.storeFacesFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.storeFacesFileIdUrl| imgUrlWithToken}}" alt="店铺门头照片" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.storeFacesFileId.$invalid && addstore.storeFacesFileId.$dirty">店铺门头照片是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.posFileId.$valid,'has-error':addstore.posFileId.$invalid && addstore.posFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>收银台照片：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="posFileId" ng-model="ads.basicInfo.posFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'posFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.posFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.posFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.posFileIdUrl| imgUrlWithToken}}" alt="收银台照片" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.posFileId.$invalid && addstore.posFileId.$dirty">收银台照片是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.agreementFileId.$valid,'has-error':addstore.agreementFileId.$invalid && addstore.agreementFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>支付签约协议：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="agreementFileId" ng-model="ads.basicInfo.agreementFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'agreementFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.agreementFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.agreementFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.agreementFileIdUrl| imgUrlWithToken}}" alt="支付签约协议" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.agreementFileId.$invalid && addstore.agreementFileId.$dirty">支付签约协议是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLinkman.$valid && addstore.businessLinkman.$dirty,'has-error':addstore.businessLinkman.$invalid && addstore.businessLinkman.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay || ads.businessPOS">* </span>老板姓名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="businessLinkman" placeholder="" ng-maxlength="80" maxlength="80" ng-model="ads.basicInfo.businessLinkman"
+                                        ng-required="ads.businessPay || ads.businessPOS">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLinkmanMobile.$valid && addstore.businessLinkmanMobile.$dirty,'has-error':addstore.businessLinkmanMobile.$invalid && addstore.businessLinkmanMobile.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay || ads.businessPOS">* </span>老板手机：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="tel" class="form-control" name="businessLinkmanMobile" placeholder="" ng-maxlength="11" ng-minlength="11" ng-pattern="/^1(3|4|5|7|8)\d{9}$/" ng-model="ads.basicInfo.businessLinkmanMobile"
+                                        ng-required="ads.businessPay || ads.businessPOS">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.businessLinkmanEmail.$valid && addstore.businessLinkmanEmail.$dirty,'has-error':addstore.businessLinkmanEmail.$invalid && addstore.businessLinkmanEmail.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>邮箱：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="email" class="form-control" name="businessLinkmanEmail" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.businessLinkmanEmail"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="form-group" ng-class="{'has-success':addstore.handheldIdFileId.$valid,'has-error':addstore.handheldIdFileId.$invalid && addstore.handheldIdFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>手持身份证照片：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="handheldIdFileId" ng-model="ads.basicInfo.handheldIdFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'handheldIdFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.handheldIdFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.handheldIdFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.handheldIdFileIdUrl| imgUrlWithToken}}" alt="手持身份证照片" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.handheldIdFileId.$invalid && addstore.handheldIdFileId.$dirty">手持身份证照片是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.serviceTel.$valid && addstore.serviceTel.$dirty,'has-error':addstore.serviceTel.$invalid && addstore.serviceTel.$dirty}">
+                            <label for="" class="col-sm-5 control-label">客服电话：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="serviceTel" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.serviceTel"
+                                        >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.emergencyContactName.$valid && addstore.emergencyContactName.$dirty,'has-error':addstore.emergencyContactName.$invalid && addstore.emergencyContactName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>紧急联系人姓名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="emergencyContactName" placeholder="" ng-maxlength="80" maxlength="80" ng-model="ads.basicInfo.emergencyContactName"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.emergencyContactPhone.$valid && addstore.emergencyContactPhone.$dirty,'has-error':addstore.emergencyContactPhone.$invalid && addstore.emergencyContactPhone.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>紧急联系人手机号：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="tel" class="form-control" name="emergencyContactPhone" placeholder="" ng-maxlength="11" ng-pattern="/^1(3|4|5|7|8)\d{9}$/" ng-minlength="11"  ng-model="ads.basicInfo.emergencyContactPhone"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p><strong>支付进件-门店法人&经营者信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerCardType.$valid && addstore.ownerCardType.$dirty,'has-error':addstore.ownerCardType.$invalid && addstore.ownerCardType.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>证件类型：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="ownerCardType" ng-options="status.code as status.name for status in ads.ownerCardTypes" ng-model="ads.basicInfo.ownerCardType"
+                                        ng-required="ads.businessPay">
+                                <option value="" class="option-one">选择证件类型</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                         
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerType.$valid && addstore.ownerType.$dirty,'has-error':addstore.ownerType.$invalid && addstore.ownerType.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>法人or经营者：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <select class="form-control" name="ownerType" ng-options="status.code as status.name for status in ads.ownerTypes" ng-model="ads.basicInfo.ownerType" ng-required="ads.businessPay">
+                                        <option value="">选择法人or经营者</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerName.$valid && addstore.ownerName.$dirty,'has-error':addstore.ownerName.$invalid && addstore.ownerName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>法人&经营者姓名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="ownerName" placeholder="" ng-maxlength="80" maxlength="80" ng-model="ads.basicInfo.ownerName"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerCardNo.$valid && addstore.ownerCardNo.$dirty,'has-error':addstore.ownerCardNo.$invalid && addstore.ownerCardNo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>证件号码：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="ownerCardNo" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.ownerCardNo"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="form-group" >
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>证件有效期：</label>
+                            <div class="col-sm-7 row">
+                                <div class="input-group col-xs-5  date-form pull-left" ng-class="{'has-success':addstore.ownerCardBeginDate.$valid && addstore.ownerCardBeginDate.$dirty,'has-error':addstore.ownerCardBeginDate.$invalid && addstore.ownerCardBeginDate.$dirty}">
+                                    <input type="text" readonly="readonly" name="ownerCardBeginDate" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.ownerCardBeginDate" is-open="ads.ownerCardBeginDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.startDateOps" ng-change="ads.selDate('start','ownerCardBeginDate')"
+                                        current-text="今天" clear-text="清除" close-text="关闭" ng-required="ads.businessPay" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','ownerCardBeginDate','ownerCardBeginDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                    <span class="form-control" style="border:none;"> 至 </span> 
+                                </div>
+                                <div class="input-group col-xs-5  date-form pull-left"  ng-class="{'has-success':addstore.ownerCardEndDate.$valid && addstore.ownerCardEndDate.$dirty,'has-error':addstore.ownerCardEndDate.$invalid && addstore.ownerCardEndDate.$dirty}">
+                                    <input type="text" readonly="readonly" name="ownerCardBeginDate" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ads.basicInfo.ownerCardEndDate" is-open="ads.ownerCardEndDateOpen"
+                                        on-open-focus="false" datepicker-options="ads.ownerCardEndDate" ng-change="ads.selDate('end','ownerCardEndDate')"
+                                        current-text="今天" clear-text="清除" close-text="关闭" ng-required="ads.businessPay" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="ads.selDate('end','ownerCardEndDate','ownerCardEndDateOpen')"><i class="iconfont icon-CombinedShape1"></i></button>
+                                    </span>
+                                </div>
+                                <div class="col-xs-2">
+                                        <label class="checkbox-inline" >
+                                        <input type="checkbox" name="ownerCard" ng-model="ownerCard"  ng-click="ads.forever('ownerCard',ownerCard)"><i class="iconfont"></i> 永久
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerCardFrontFileId.$valid,'has-error':addstore.ownerCardFrontFileId.$invalid && addstore.ownerCardFrontFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>证件正面：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="ownerCardFrontFileId" ng-model="ads.basicInfo.ownerCardFrontFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'ownerCardFrontFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.ownerCardFrontFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.ownerCardFrontFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.ownerCardFrontFileIdUrl| imgUrlWithToken}}" alt="证件正面" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.ownerCardFrontFileId.$invalid && addstore.ownerCardFrontFileId.$dirty">证件正面是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.ownerCardBackFileId.$valid,'has-error':addstore.ownerCardBackFileId.$invalid && addstore.ownerCardBackFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>证件反面：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="ownerCardBackFileId" ng-model="ads.basicInfo.ownerCardBackFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'ownerCardBackFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.ownerCardBackFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.ownerCardBackFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.ownerCardBackFileIdUrl| imgUrlWithToken}}" alt="证件反面" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.ownerCardBackFileId.$invalid && addstore.ownerCardBackFileId.$dirty">证件反面是否上传！</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p><strong>支付进件-结算信息：</strong></p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="form-group" ng-class="{'has-success':addstore.accountLicenseFileId.$valid && addstore.accountLicenseFileId.$dirty,'has-error':addstore.accountLicenseFileId.$invalid && addstore.accountLicenseFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">* </span>开户许可证：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="accountLicenseFileId" ng-model="ads.basicInfo.accountLicenseFileId"  ng-required="ads.businessPay&&ads.basicInfo.settleMethod=='PUBLIC'">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'accountLicenseFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.accountLicenseFileId" class="thumbnail-small">
+                                        <a ng-href="{{ads.basicInfo.accountLicenseFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.accountLicenseFileIdUrl| imgUrlWithToken}}" alt="开户许可证" class="img-thumbnail"></a>
+                                    </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.accountLicenseFileId.$invalid && addstore.accountLicenseFileId.$dirty">开户许可证是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.bankCardFrontFileId.$valid,'has-error':addstore.bankCardFrontFileId.$invalid && addstore.bankCardFrontFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>银行卡正面：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="bankCardFrontFileId" ng-model="ads.basicInfo.bankCardFrontFileId" ng-required="ads.businessPay">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'bankCardFrontFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.bankCardFrontFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.bankCardFrontFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.bankCardFrontFileIdUrl| imgUrlWithToken}}" alt="银行卡正面" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.bankCardFrontFileId.$invalid && addstore.bankCardFrontFileId.$dirty">银行卡正面是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.consignmentAgreementFileId.$valid,'has-error':addstore.consignmentAgreementFileId.$invalid && addstore.consignmentAgreementFileId.$dirty}">
+                            <label for="" class="col-sm-5 control-label">委托收款协议：</label>
+                            <div class="col-sm-7 row">
+                                <input type="hidden" name="consignmentAgreementFileId" ng-model="ads.basicInfo.consignmentAgreementFileId">
+                                <div class="form-control-static">
+                                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles, 'consignmentAgreementFileId')" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    <span ng-if="ads.basicInfo.consignmentAgreementFileId" class="thumbnail-small">
+                                <a ng-href="{{ads.basicInfo.consignmentAgreementFileIdUrl| imgUrlWithToken}}" target="_blank"><img ng-src="{{ads.basicInfo.consignmentAgreementFileIdUrl| imgUrlWithToken}}" alt="委托收款协议" class="img-thumbnail"></a>
+                                </span>
+                                </div>
+                                <span class="help-block" ng-if="ads.consignmentAgreementFileId.$invalid && addstore.consignmentAgreementFileId.$dirty">委托收款协议是否上传！</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.bankAccountName.$valid && addstore.bankAccountName.$dirty,'has-error':addstore.bankAccountName.$invalid && addstore.bankAccountName.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>账户名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="bankAccountName" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.bankAccountName"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.bankCardNo.$valid && addstore.bankCardNo.$dirty,'has-error':addstore.bankCardNo.$invalid && addstore.bankCardNo.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>银行账号：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-5 row">
+                                    <input type="text" class="form-control" name="bankCardNo" placeholder=""  ng-maxlength="30" ng-model="ads.basicInfo.bankCardNo"
+                                        ng-required="ads.businessPay">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>开户省市：</label>
+                            <div class="col-sm-7 row">
+                                <div ng-if="ads.basicInfo.connectionOrg!=='FUYOU'" class="col-xs-5 row"  ng-class="{'has-success':(addstore.accountBankProvinceCode.$valid && addstore.accountBankProvinceCode.$dirty) ||addstore.accountBankProvinceCode.$valid,'has-error':addstore.accountBankProvinceCode.$invalid && addstore.accountBankProvinceCode.$dirty}">
+                                    <input type="hidden" name="accountBankProvinceCode" class="form-control" ng-model="ads.basicInfo.accountBankProvinceCode" ng-required="ads.businessPay">
+                                    <prov-select province='ads.basicInfo.accountBankProvinceCode'></prov-select>
+                                </div>
+                                <div ng-if="ads.basicInfo.connectionOrg=='FUYOU'" class="col-xs-5 row"  ng-class="{'has-success':(addstore.accountBankProvinceCode.$valid && addstore.accountBankProvinceCode.$dirty) ||addstore.accountBankProvinceCode.$valid,'has-error':addstore.accountBankProvinceCode.$invalid && addstore.accountBankProvinceCode.$dirty}">
+                                    <select class="form-control" name="accountBankProvinceCode"  ng-options="status.areaCode as status.areaName for status in ads.AreasList" ng-model="ads.basicInfo.accountBankProvinceCode"  ng-change="ads.getCity(ads.basicInfo.accountBankProvinceCode)" ng-required="ads.businessPay">
+                                        <option value="" class="option-one">--省--</option>
+                                    </select>
+                                </div>
+
+                                <div ng-if="ads.basicInfo.connectionOrg!=='FUYOU'" class="col-xs-5 col-xs-offset-1 row" ng-class="{'has-success':(addstore.accountBankCityCode.$valid && addstore.accountBankCityCode.$dirty)||addstore.accountBankCityCode.$valid,'has-error':addstore.accountBankCityCode.$invalid && addstore.accountBankCityCode.$dirty}">
+                                    <input type="hidden" name="accountBankCityCode" class="form-control" ng-model="ads.basicInfo.accountBankCityCode" ng-required="ads.businessPay">
+                                    <city-select province='ads.basicInfo.accountBankProvinceCode' city='ads.basicInfo.accountBankCityCode'></city-select>
+                                </div>
+                                <div ng-if="ads.basicInfo.connectionOrg=='FUYOU'" class="col-xs-5 col-xs-offset-1 row" ng-class="{'has-success':(addstore.accountBankCityCode.$valid && addstore.accountBankCityCode.$dirty)||addstore.accountBankCityCode.$valid,'has-error':addstore.accountBankCityCode.$invalid && addstore.accountBankCityCode.$dirty}">
+                                    <select class="form-control" name="accountBankCityCode"  ng-options="status.areaCode as status.areaName for status in ads.cityList" ng-model="ads.basicInfo.accountBankCityCode" ng-required="ads.businessPay" ng-change="ads.changeCity()">
+                                        <option value="" class="option-one">--市--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.accountBank.$valid && addstore.accountBank.$dirty,'has-error':addstore.accountBank.$invalid && addstore.accountBank.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>开户行：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-7 row">
+                                    <input ng-if="ads.basicInfo.connectionOrg!=='FUYOU'" type="text" class="form-control" name="accountBank" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.accountBank"
+                                        ng-required="ads.businessPay">
+                                        
+                                    <div ng-if="ads.basicInfo.connectionOrg=='FUYOU'" >
+                                        <select class="form-control" name="accountBank"  ng-options="bank.code as bank.name for bank in ads.banksList" ng-model="ads.basicInfo.accountBankCode" ng-change="ads.accountBankCode(ads.basicInfo.accountBankCode)" ng-required="ads.businessPay">
+                                            <option value="" class="option-one">--选择开户行--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-success':addstore.accountBankBranch.$valid && addstore.accountBankBranch.$dirty,'has-error':addstore.accountBankBranch.$invalid && addstore.accountBankBranch.$dirty}">
+                            <label for="" class="col-sm-5 control-label"><span class="text-danger" ng-if="ads.businessPay">* </span>开户支行：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input ng-if="ads.basicInfo.connectionOrg!=='FUYOU'" type="text" class="form-control" name="accountBankBranch" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.accountBankBranch"
+                                        ng-required="ads.businessPay">    
+
+                                    <ui-select ng-if="ads.basicInfo.connectionOrg=='FUYOU'" ng-model="ads.basicInfo.accountBankBranch" name="accountBankBranch"  theme="bootstrap" ng-required="ads.businessPay"  reset-search-input="false"  on-select="ads.bankCallback($select.selected)" title="支行">
+                                        <ui-select-match placeholder="输入支行">{{$select.selected.bankName || ads.basicInfo.accountBankBranch}}</ui-select-match>
+                                        <ui-select-choices repeat="city.bankName as city in ads.subBankList track by $index" refresh="ads.getSubBank($select.search,ads.basicInfo.accountBankBranch)" refresh-delay="500">
+                                            <div ng-bind-html="city.bankName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" ng-if="!ads.storeId">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>销售维护人：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <ui-select ng-model="ads.basicInfo.saleServiceUser" name="saleServiceUser" required theme="bootstrap" reset-search-input="false"
+                                title="选择销售维护人">
+                                <ui-select-match placeholder="输入维护人姓名">{{$select.selected.name || ads.basicInfo.saleServiceUser}}</ui-select-match>
+                                <ui-select-choices repeat="user.id as user in ads.userList track by $index" refresh="ads.getSaleName($select.search)" refresh-delay="500">
+                                    <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                    <small>
+                            工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                            部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                        </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix table-bottom">
+                    <div class="text-center form-inline">
+                        <div class="form-group form-group20">
+                            <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0201" ng-disabled="addstore.$invalid" ng-click="ads.saveStore()">保存至私海</button>
+                        </div>
+                        <div class="form-group form-group20">
+                            <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0203" ng-disabled="addstore.$invalid" ng-click="ads.saveStore('sub')">提交建店审核</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="clearfix">
+                <div class="log-wrapper pull-left">
+                    <ul>
+                        <li ng-repeat="item in ads.verifyLog" ng-class="{'first':$first}">
+                            <div ng-class="{'text-success':item.status=='ONLINE','text-danger':item.status=='REJECT'}">
+                                <p>{{item.createUser+(' '+ads.verType[item.status])}}
+                                     <span ng-if="item.status == 'GET'">{{'【' + item.businessName + '】 至私海'}}</span>
+                                     <span ng-if="item.status == 'REJECT' || item.status == 'ONLINE'">{{item.businessName + ' 的申请'}}</span>
+                                </p>
+                                <p>{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">地图</h4>
+        <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="mapContainer">
+            <a-map sel="$ctrl.sel()" seldata="$ctrl.seldata"></a-map>
+            <div class="searchmap">
+                <input type="text" id="keywords" class="form-control" name="addressInp" placeholder="请输入关键字：(回车后搜索)" />
+            </div>
+            <div class="searchList">
+                <div id="panel">
+                    <ul id="myList"></ul>
+                    <div class="pagin-wrapper">
+                        <ul id="pagination-demo" class="pagination-sm"></ul>
+                    </div>
+                </div>
+            </div>
+            <div id="tip">
+            </div>
+        </div>
+    </div>
+</script>

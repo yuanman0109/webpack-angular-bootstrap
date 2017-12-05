@@ -1,0 +1,353 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="store.list">门店列表</a></li>
+    <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box" ng-controller="AddStoreCtrl as ads">
+      <div class="container">
+        <form class="form-horizontal" role="form" name="addstore" id="addStore" novalidate>
+          <div class="form-group" ng-class="{'has-success':addstore.cityCode.$valid && addstore.cityCode.$dirty,'has-error':addstore.cityCode.$invalid && addstore.cityCode.$dirty}">
+              <label for="inputEmail3" class="col-sm-5 control-label">导入门店：</label>
+              <div class="col-sm-7 row">
+                  <button type="button" class="btn btn-shallow" ng-click="ads.openMap()">从地图上选择门店</button>
+                  <span>　若没有找到对应门店，请先在高德地图上进行标示。<a href="http://map.amap.com/help/index.html?type=addpoi" target="_blank">点击查看标注方式</a></span>
+                  <!--<input type="hidden" name="provinceCode" ng-model="ads.basicInfo.provinceCode" required>-->
+                  <input type="hidden" name="poiId" ng-model="ads.basicInfo.poiId">
+                  <!--<input type="hidden" name="poiLat" ng-model="ads.basicInfo.poiLat" required>
+                  <input type="hidden" name="poiLng" ng-model="ads.basicInfo.poiLng" required>
+                  <input type="hidden" name="cityCode" ng-model="ads.basicInfo.cityCode" required>
+                  <input type="hidden" name="districtCode" ng-model="ads.basicInfo.districtCode" required>-->
+                  <span class="help-block" ng-if="addstore.cityCode.$invalid && addstore.cityCode.$dirty">门店信息是否正确！</span>
+              </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addstore.storeName.$valid && addstore.storeName.$dirty,'has-error':addstore.storeName.$invalid && addstore.storeName.$dirty}">
+            <label class="col-sm-5 control-label"><span class="text-danger">* </span>门店名称：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <input type="text" class="form-control" name="storeName"  placeholder="" ng-model="ads.basicInfo.name" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="100" maxlength="100" required>
+                </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addstore.code.$valid && addstore.code.$dirty,'has-error':addstore.code.$invalid && addstore.code.$dirty}">
+              <label class="col-sm-5 control-label">门店编号：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <input type="text" class="form-control" name="code" placeholder="" ng-model="ads.basicInfo.code" ng-maxlength="100" maxlength="100"> 
+                  </div>
+              </div>
+          </div>
+          
+
+          <div class="form-group" ng-class="{'has-success':addstore.poiLng.$valid && addstore.poiLng.$dirty,'has-error':addstore.poiLng.$invalid && addstore.poiLng.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>经度：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <input type="number" class="form-control" name="poiLng" placeholder="经度范围：-180~180" min="-180" max="180" ng-maxlength="40" maxlength="40" ng-model="ads.basicInfo.poiLng" required>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="form-group" ng-class="{'has-success':addstore.poiLat.$valid && addstore.poiLat.$dirty,'has-error':addstore.poiLat.$invalid && addstore.poiLat.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>纬度：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <input type="number" class="form-control" name="poiLat" placeholder="纬度范围：-90~90" min="-90" max="90" ng-maxlength="40" maxlength="40" ng-model="ads.basicInfo.poiLat" required>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':(addstore.provinceCode.$valid && addstore.provinceCode.$dirty) ||addstore.provinceCode.$valid,'has-error':addstore.provinceCode.$invalid && addstore.provinceCode.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>省份：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <input type="hidden" name="provinceCode" class="form-control" ng-model="ads.basicInfo.provinceCode" required>
+                    <prov-select province='ads.basicInfo.provinceCode'></prov-select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':(addstore.cityCode.$valid && addstore.cityCode.$dirty)||addstore.cityCode.$valid,'has-error':addstore.cityCode.$invalid && addstore.cityCode.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>城市：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <input type="hidden" name="cityCode" class="form-control" ng-model="ads.basicInfo.cityCode" required>
+                    <city-select province='ads.basicInfo.provinceCode' city='ads.basicInfo.cityCode'></city-select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':(addstore.districtCode.$valid && addstore.districtCode.$dirty)||addstore.districtCode.$valid,'has-error':addstore.districtCode.$invalid && addstore.districtCode.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>区/县：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <input type="hidden" name="districtCode" class="form-control" ng-model="ads.basicInfo.districtCode" required>
+                    <county-select city='ads.basicInfo.cityCode' county='ads.basicInfo.districtCode'></county-select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.address.$valid && addstore.address.$dirty,'has-error':addstore.address.$invalid && addstore.address.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店地址：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <input type="text" class="form-control" name="address" placeholder="" ng-maxlength="500" maxlength="500" irregular="[\s\r\n\'\0x34‘“”’]" ng-model="ads.basicInfo.address" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.businessArea.$valid && addstore.businessArea.$dirty,'has-error':addstore.businessArea.$invalid && addstore.businessArea.$dirty}">
+            <label for="" class="col-sm-5 control-label">所属商圈：</label>              
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <input type="text" class="form-control" name="businessArea" ng-maxlength="30" maxlength="30" placeholder="" ng-model="ads.basicInfo.businessArea">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.floor.$valid && addstore.floor.$dirty,'has-error':addstore.floor.$invalid && addstore.floor.$dirty}">
+            <label for="" class="col-sm-5 control-label">楼层信息：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <input type="text" ng-model="ads.basicInfo.floor" name="floor" ng-maxlength="30" maxlength="30" class="form-control">
+                </div>
+                <div class="col-xs-7">
+                    <p class="form-control-static">层（如果是地下室，请填写负值，例：-1）</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.attribution.$valid && addstore.attribution.$dirty,'has-error':addstore.attribution.$invalid && addstore.attribution.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>地点归属：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <select class="form-control" name="attribution" ng-options="attr.dataCode as attr.dataName for attr in ads.attribution" ng-model="ads.basicInfo.attribution" required>
+                      <option value="">选择地点归属</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.linkTel.$valid && addstore.linkTel.$dirty,'has-error':addstore.linkTel.$invalid && addstore.linkTel.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店电话：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <input type="text" class="form-control" name="linkTel" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.linkTel" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.logo.$valid,'has-error':addstore.logo.$invalid && addstore.logo.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店实景：</label>
+            <div class="col-sm-7 row">
+                <input type="hidden" name="logo" ng-model="ads.basicInfo.logo" required>
+                <div class="form-control-static"> 
+                    <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                    <span ng-if="ads.basicInfo.logo" class="thumbnail-small">
+                      <img ng-src="{{ads.basicInfo.logoUrl| imgUrlWithToken}}" alt="" class="img-thumbnail">
+                    </span>
+                </div>
+                <span class="help-block" ng-if="ads.logo.$invalid && addstore.logo.$dirty">门店实景是否上传！</span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addstore.remark.$valid && addstore.remark.$dirty,'has-error':addstore.remark.$invalid && addstore.remark.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店说明：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                  <textarea rows="5" name="remark" ng-maxlength="250" maxlength="250" ng-model="ads.basicInfo.remark" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.shopHours.$valid && addstore.shopHours.$dirty,'has-error':addstore.shopHours.$invalid && addstore.shopHours.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>营业时间说明：</label>
+              <div class="col-sm-7 row">
+                  <!--<div class="col-xs-8 row">
+                    <div class="pull-left" uib-timepicker ng-model="ads.openTime" show-spinners="false" show-meridian="false"></div>
+                    <p class="form-control-static pull-left">　到　</p>
+                    <div class="pull-left" uib-timepicker ng-model="ads.closeTime" show-spinners="false" show-meridian="false"></div>
+                  </div>-->
+                  <div class="col-xs-5 row">
+                      <input type="text" class="form-control" name="shopHours" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ads.basicInfo.shopHours" required>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.area.$valid && addstore.area.$dirty,'has-error':addstore.area.$invalid && addstore.area.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>面积：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <input type="number" class="form-control" name="area" placeholder="" step='0.01'  ng-maxlength="11" ng-max="99999999.99" min="0" maxlength="11" ng-model="ads.basicInfo.area" required>
+                  </div>
+                  <div class="col-xs-7">
+                      <p class="form-control-static">平米</p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.perCapita.$valid && addstore.perCapita.$dirty,'has-error':addstore.perCapita.$invalid && addstore.perCapita.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>人均：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <input type="number" class="form-control" step='0.01' name="perCapita" placeholder="" min="0" max="99999999.99" ng-model="ads.basicInfo.perCapita" required>
+                  </div>
+                  <div class="col-xs-7">
+                      <p class="form-control-static">元</p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.grade.$valid && addstore.grade.$dirty,'has-error':addstore.grade.$invalid && addstore.grade.$dirty}">
+              <label for="" class="col-sm-5 control-label">评分：</label>
+              <div class="col-sm-7 row">
+                  <!--<div class="col-xs-5 row">
+                      <input type="number" class="form-control" step='0.01' name="grade" placeholder="" min="0" max="99999999.99" ng-model="ads.basicInfo.grade">
+                  </div>-->
+                  <div class="col-xs-5 row">
+                      <select class="form-control" name="grade" ng-options="attr.dataCode as attr.dataName for attr in ads.grade" ng-model="ads.basicInfo.grade">
+                         <option value="">选择评分</option> 
+                      </select>
+                  </div>
+                  <!-- {{ads.basicInfo.grade}} -->
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.dishStyleCode.$valid && addstore.dishStyleCode.$dirty,'has-error':addstore.dishStyleCode.$invalid && addstore.dishStyleCode.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>菜系：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <select class="form-control" name="dishStyleCode" ng-options="dish.dataCode as dish.dataName for dish in ads.disheslist" ng-model="ads.basicInfo.dishStyleCode" required>
+                      <option value="">选择菜系</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+          <div class="form-group">
+            <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+            <div class="col-sm-7 row">
+              <business-type ng-if="ads.basicInfo.business" edit="ads.busTypeEdit" fewdisabled="ads.busTypeDisabled"  result="ads.basicInfo.business"></business-type>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-5 control-label"><span class="text-danger">* </span>餐饮业态：</label>
+            <div class="col-sm-7 row">
+              <label class="radio-inline">
+                <input type="radio" name="flag" ng-value="1" ng-init="ads.basicInfo.flag=1" ng-model="ads.basicInfo.flag"><i class="iconfont"></i> 正餐版
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="flag" ng-value="2" ng-model="ads.basicInfo.flag"><i class="iconfont"></i> 快餐版
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.storeProperty.$valid && addstore.storeProperty.$dirty,'has-error':addstore.storeProperty.$invalid && addstore.storeProperty.$dirty}">
+            <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店属性：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-5 row">
+                    <select class="form-control" name="storeProperty" ng-options="prop.dataCode as prop.dataName for prop in ads.Properties" ng-model="ads.basicInfo.storeProperty" required>
+                      <option value="">选择门店属性</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.status.$valid && addstore.status.$dirty,'has-error':addstore.status.$invalid && addstore.status.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店状态：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <select class="form-control" name="status" ng-options="status.dataCode as status.dataName for status in ads.statuses" ng-model="ads.basicInfo.status" required>
+                        <option value="">选择门店状态</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.brandId.$valid && addstore.brandId.$dirty,'has-error':addstore.brandId.$invalid && addstore.brandId.$dirty}">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属品牌：</label>             
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <ui-select ng-model="ads.basicInfo.brandId" name="brandId" required theme="bootstrap" on-select="ads.searchBrandsCallback($select.selected)"
+                      reset-search-input="false" title="所属品牌">
+                      <ui-select-match placeholder="输入品牌">{{$select.selected.name || ads.basicInfo.brandName}}</ui-select-match>
+                      <ui-select-choices repeat="brand.id as brand in ads.brandList track by $index" refresh="ads.searchBrands($select.search)"
+                        refresh-delay="500">
+                        <div ng-bind-html="brand.name | highlight: $select.search"></div>
+                        <small>
+                            企业：<span ng-bind-html="brand.companyName | highlight: $select.search"></span>
+                            菜系：<span ng-bind-html="brand.dishStyleName | highlight: $select.search"></span>
+                        </small>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-success':addstore.companyName.$valid && addstore.companyName.$dirty,'has-error':addstore.companyName.$invalid && addstore.companyName.$dirty}">
+              <label for="" class="col-sm-5 control-label">所属企业：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                      <input type="text" class="form-control" name="companyName" placeholder="" ng-disabled="true" ng-model="ads.basicInfo.companyName" required>
+                  </div>
+              </div>
+          </div>
+
+          
+          <div class="form-group" ng-if="!ads.storeId">
+              <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>销售维护人：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-5 row">
+                    <ui-select ng-model="ads.basicInfo.saleServiceUser" name="saleServiceUser" required theme="bootstrap" reset-search-input="false" title="选择销售维护人">
+                      <ui-select-match placeholder="输入维护人姓名">{{$select.selected.name || ads.basicInfo.saleServiceUser}}</ui-select-match>
+                      <ui-select-choices repeat="user.id as user in ads.userList track by $index" refresh="ads.getSaleName($select.search)"
+                        refresh-delay="500">
+                        <div ng-bind-html="user.name | highlight: $select.search"></div>
+                        <small>
+                            工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                            部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                        </small>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+              </div>
+          </div>
+
+          
+
+          <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-7 row">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary" ng-disabled="addstore.$invalid || ads.clickStatus" ng-click="ads.saveStore()">确认提交</button>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">地图</h4>
+        <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="mapContainer">
+            <a-map sel="$ctrl.sel()" seldata="$ctrl.seldata"></a-map>
+            <div class="searchmap">
+                <input type="text" id="keywords" class="form-control" name="addressInp" placeholder="请输入关键字：(回车后搜索)"/>
+            </div>
+            <div class="searchList">
+              <div id="panel">
+                <ul id="myList"></ul>
+                <div class="pagin-wrapper">
+                  <ul id="pagination-demo" class="pagination-sm"></ul>
+                </div>
+              </div>
+            </div>
+            <div id="tip">
+            </div>
+        </div>
+    </div>
+</script>

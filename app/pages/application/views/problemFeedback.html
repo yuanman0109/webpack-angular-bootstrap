@@ -1,0 +1,105 @@
+<div class="page-application-feedback">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li>问题反馈</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <div class="form-group">
+           <select class="form-control"  ng-options="type.type as type.name for type in ctrl.types" ng-model="ctrl.params.type">
+              <option value="">按反馈类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <sel-allapp ng-model="ctrl.params.productName" holder="按产品名称" type="PRODUCT_NAME"></sel-allapp>
+        </div>
+         <div class="form-group">
+            <div class="input-group date-form">
+                <input type="text" class="form-control" placeholder="开始时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="ctrl.params.begin" is-open="his.startIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="his.startIsopen=!his.startIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <span class="dateText">-</span>
+        </div>
+        <div class="form-group">
+            <div class="input-group date-form">
+                <input type="text" class="form-control" placeholder="结束时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="ctrl.params.end" is-open="his.endIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="his.endIsopen=!his.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+            </div>
+        </div>
+         <div class="form-group ui-select">
+           <ui-select  ng-model="ctrl.params.createUser" name="transmitUser" required theme="bootstrap" reset-search-input="false" title="选择用户">
+            <ui-select-match placeholder="请搜索反馈人" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getUserName($select.search)"
+              refresh-delay="500">
+              <div ng-bind-html="user.name | highlight: $select.search"></div>
+              <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+              </small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="按反馈内容搜索" ng-model="ctrl.params.content" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-responsive text-center table-common-theme table-striped">
+          <thead>
+            <tr>
+              <th>反馈编号</th>
+              <th>反馈人</th>
+              <th>城市</th>
+              <th>反馈时间</th>
+              <th>反馈类型</th>
+              <th>产品名称</th>
+              <th>产品版本号</th>
+              <th>反馈内容</th>
+              <th ng-if="btnlist.APP_MGR_0503">操作</th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.List.length == 0">
+            <tr class="empty-tr">
+              <td colspan="{{btnlist.APP_MGR_0503?9:8}}" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.List">
+              <td class="text-overflow">{{item.no || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.createUser}}">{{item.createUser || '暂无'}}</td>
+              <td class="text-overflow">{{item.cityName || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.createTime | date:'yyyy-MM-dd HH:mm:ss'}}">{{item.createTime | date:'yyyy-MM-dd HH:mm:ss' || '暂无'}}</td>
+              <td class="text-overflow">{{(item.type | problemFeedbackType) || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.productName}}">{{item.productName || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.productVersion || '暂无'}}">{{item.productVersion || '暂无'}}</td>
+              <td class="text-overflow" title="{{item.content}}">{{item.content  | maxString:true:40:' ...' || '暂无'}}</td>
+              <td class="text-overflow" ng-if="btnlist.APP_MGR_0503"><a ng-click="ctrl.Detail(item.id)">详情</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix">
+        <div class="pull-left">
+          <button ng-if="btnlist.APP_MGR_0501" type="button" class="btn btn-primary" ng-click="ctrl.exportCsv()">导出</button>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>   
+  </div>
+</div>

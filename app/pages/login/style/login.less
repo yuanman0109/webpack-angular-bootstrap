@@ -1,0 +1,188 @@
+.login-bg{
+    background: #e4eeee;
+    position: fixed;
+    top: 0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    z-index: 999; 
+}
+.login-box{
+    width: 408px;
+    height: 340px;
+    position: absolute;
+    top: 50%;
+    margin-top: -170px;
+    margin-left:-204px;
+    left: 50%;
+    z-index: 1000;
+    background: rgba(255,255,255,0.78);
+    border-radius: 4px;
+    padding: 40px 60px 10px;
+    background: #FFFFFF;
+    border: 1px solid #DAE3E3;
+}
+.login-box-header{
+    .pull-left i{
+        color:#3CB6AF;
+        font-size:36px;
+        display: block;
+        line-height: normal;
+    }
+    .pull-right h2{
+        font-size:20px;
+        color: #666;
+        margin: 9px 0;
+        font-weight: 600;
+    }
+}
+.login-cont{
+    margin-top: 30px;
+    .form-control{
+        background-color:#eeeeee;
+        border:1px solid transparent;
+        color: #fff;
+        height: 36px;
+        margin-bottom: 20px;
+        color: #333;
+        outline: none;
+        &:focus{
+          outline: none;
+          box-shadow: none;
+        }
+        &::-moz-placeholder {
+            color: #cdcdcd;
+        }
+        &:-ms-input-placeholder {
+            color: #cdcdcd;
+        }
+        &::-webkit-input-placeholder {
+            color: #cdcdcd;
+        }
+    }
+}
+.login-footer{
+    margin-top: 10px;
+    a{
+        color: #666;
+    }
+}
+.container-login{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 64px;
+    padding: 20px;
+    .mainContent{
+        height: 100%;
+        position: relative;
+    }
+    .panel{
+        border: none;
+        box-shadow:none;
+        -webkit-box-shadow:none;
+        .panel-heading{
+            border: none;
+            background-color: #E3E7E9;
+            height: 132px;
+        }
+    }
+}
+.copyright-text{
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #BDBDBD;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+.login-steps{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    margin-top: 15px;
+}
+.login-step{
+    float: left;
+    .step-item{
+        position: relative;
+        width: 104px;
+        float: left;
+    }
+    .step-item .step-head-num{
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        border-radius: 50%;
+        background: #D8D8D8;
+        color: #fff;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .step-item .step-text{
+        color: #999;
+        font-size: 18px;
+        position: absolute;
+        width: 204px;
+        text-align: center;
+        left: -50px;
+        margin-top:20px; 
+    }
+    .stet-line{
+        width: 250px;
+        height: 2px;
+        border-bottom: 2px dashed #D8D8D8;
+        float: left;
+        margin-top: 20px;
+    }
+    .stet-line-active{
+        border-color:#3CB6AF;
+    }
+}
+.login-step-active{
+    .step-item .step-head-num{
+        background: #3CB6AF;
+    }
+    .step-item .step-text{
+        color: #666;
+    }
+}
+.pass-from{
+    width: 385px;
+    margin: 100px auto;
+    .form-group{
+        margin-bottom: 20px;
+        &:nth-child(2){
+            margin-bottom: 24px;
+        }
+    }
+}
+.newPass-from{
+    width: 430px;
+    margin: 100px auto;
+}
+.page-title{
+    font-size: 20px;
+    color: #666666;
+}
+.forgetPass-box .navbar-brand{
+    margin-right: 20px;
+}
+.copyright-footer{
+    position: absolute;
+    bottom: 25px;
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    color: #BDBDBD;
+}
+.sendMail{
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 35px;
+}

@@ -1,0 +1,554 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="customer.customerLists">门店列表</a></li>
+    <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box" ng-controller="AddStoreCtrl as ads">
+        <uib-tabset class="tabs-default" active="ads.tabIndex">
+            <uib-tab index="0" heading="基本信息">
+                <form class="form-horizontal" role="form" name="addstore" id="addStore">
+                    <div class="form-group" ng-class="{'has-success':addstore.cityName.$valid && addstore.cityName.$dirty,'has-error':addstore.cityName.$invalid && addstore.cityName.$dirty}">
+                        <label for="inputEmail3" class="col-sm-5 control-label"><span class="text-danger">* </span>导入门店：</label>
+                        <div class="col-sm-7 row">
+                            <button type="button" class="btn btn-shallow" ng-click="ads.openMap()">从地图上选择门店</button>
+                            <span>　若没有找到对应门店，请先在高德地图上进行标示。<a href="http://map.amap.com/help/index.html?type=addpoi" target="_blank">点击查看标注方式</a></span>
+                            <input type="hidden" name="provinceName" ng-model="ads.basicInfo.provinceName" required>
+                            <input type="hidden" name="poiId" ng-model="ads.basicInfo.poiId" required>
+                            <input type="hidden" name="poiLat" ng-model="ads.basicInfo.poiLat" required>
+                            <input type="hidden" name="poiLng" ng-model="ads.basicInfo.poiLng" required>
+                            <input type="hidden" name="cityName" ng-model="ads.basicInfo.cityName" required>
+                            <input type="hidden" name="countyName" ng-model="ads.basicInfo.countyName" required>
+                            <span class="help-block" ng-if="addstore.cityName.$invalid && addstore.cityName.$dirty">门店信息是否正确！</span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':addstore.storeName.$valid && addstore.storeName.$dirty,'has-error':addstore.storeName.$invalid && addstore.storeName.$dirty}">
+                        <label class="col-sm-5 control-label"><span class="text-danger">* </span>门店名称：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" name="storeName"  placeholder="" ng-model="ads.basicInfo.name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':addstore.address.$valid && addstore.address.$dirty,'has-error':addstore.address.$invalid && addstore.address.$dirty}">
+                        <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店地址：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" name="address" placeholder="" ng-model="ads.basicInfo.address" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">门店编号：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.code"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':addstore.brandId.$valid && addstore.brandId.$dirty,'has-error':addstore.brandId.$invalid && addstore.brandId.$dirty}">
+                        <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属品牌：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <select class="form-control" name="brandId" ng-options="brand.id as brand.name for brand in ads.brandList" ng-model="ads.basicInfo.brandId" required>
+                                    <option value="">选择品牌</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="" class="col-sm-5 control-label">所属商圈：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5">
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">所在楼层：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" ng-model="ads.basicInfo.floor" class="form-control">
+                            </div>
+                            <div class="col-xs-5">
+                                <p class="form-control-static">层（如果是地下室，请填写负值，例：-1）</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">门店联系人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkman">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">联系人职务：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkmanPosition">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">联系人手机：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkmanMobile">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">联系人电话：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkmanTel">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">联系人邮箱：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkmanEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">联系人微信：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.linkmanWechart">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">营业时间：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-8 row">
+                                <div class="pull-left" uib-timepicker ng-model="ads.basicInfo.openTime" show-spinners="false" show-meridian="false"></div>
+                                <p class="form-control-static pull-left">　到　</p>
+                                <div class="pull-left" uib-timepicker ng-model="ads.basicInfo.closeTime" show-spinners="false" show-meridian="false"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-success':addstore.logo.$valid && addstore.logo.$dirty,'has-error':addstore.logo.$invalid && addstore.logo.$dirty}">
+                        <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>门店招牌图：</label>
+                        <div class="col-sm-7 row">
+                            <input type="hidden" name="logo" ng-model="ads.basicInfo.logo" required>
+                            <div class="form-control-static"> 
+                                <button type="file" ngf-select="ads.uploadFiles($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                <span ng-if="ads.basicInfo.logo" class="thumbnail-small">
+                                    <img ng-src="{{ads.basicInfo.logo|imgUrl}}" alt="招牌" class="img-thumbnail">
+                                </span>
+                            </div>
+                            <span class="help-block" ng-if="addstore.logo.$invalid && addstore.logo.$dirty">门店logo是否上传！</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">BD负责人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <!--<input type="text" class="form-control" placeholder="" ng-model="ads.basicInfo.bdUserNo">-->
+                                <ui-select ng-model="ads.basicInfo.bdUserName"
+                                            theme="bootstrap"
+                                            ng-disabled="!ads.codes"
+                                            on-select="ads.selCallback($select.selected,'bd')"
+                                            reset-search-input="false"
+                                            title="选择用户">
+                                    <ui-select-match placeholder="输入用户名">{{$select.selected.realName||ads.basicInfo.bdUserName}}</ui-select-match>
+                                    <ui-select-choices repeat="reg.realName as reg in ads.bdList track by $index"
+                                            refresh="ads.getRegionDirector({
+                                                areaCodes:ads.codes,
+                                                businessType:'BD',
+                                                realName:$select.search 
+                                            })"
+                                            refresh-delay="0">
+                                    <div ng-bind-html="reg.realName | highlight: $select.search"></div>
+                                    <small>
+                                        用户名: {{reg.userName}}
+                                        工号: <span ng-bind-html="''+reg.userNo | highlight: $select.search"></span>
+                                    </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">FAE负责人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <ui-select ng-model="ads.basicInfo.faeUserName"
+                                            theme="bootstrap"
+                                            ng-disabled="!ads.codes"
+                                            on-select="ads.selCallback($select.selected,'fae')"
+                                            reset-search-input="false"
+                                            title="选择用户">
+                                    <ui-select-match placeholder="输入用户名">{{$select.selected.realName||ads.basicInfo.faeUserName}}</ui-select-match>
+                                    <ui-select-choices repeat="reg.realName as reg in ads.faeList track by $index"
+                                            refresh="ads.getRegionDirector({
+                                                areaCodes:ads.codes,
+                                                businessType:'FAE',
+                                                realName:$select.search 
+                                            })"
+                                            refresh-delay="0">
+                                    <div ng-bind-html="reg.realName | highlight: $select.search"></div>
+                                    <small>
+                                        用户名: {{reg.userName}}
+                                        工号: <span ng-bind-html="''+reg.userNo | highlight: $select.search"></span>
+                                    </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">录审负责人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <ui-select ng-model="ads.basicInfo.lsUserName"
+                                            theme="bootstrap"
+                                            ng-disabled="!ads.codes"
+                                            on-select="ads.selCallback($select.selected,'ls')"
+                                            reset-search-input="false"
+                                            title="选择用户">
+                                    <ui-select-match placeholder="输入用户名">{{$select.selected.realName||ads.basicInfo.lsUserName}}</ui-select-match>
+                                    <ui-select-choices repeat="reg.realName as reg in ads.lsList track by $index"
+                                            refresh="ads.getRegionDirector({
+                                                areaCodes:ads.codes,
+                                                businessType:'LS',
+                                                realName:$select.search 
+                                            })"
+                                            refresh-delay="0">
+                                    <div ng-bind-html="reg.realName | highlight: $select.search"></div>
+                                    <small>
+                                        用户名: {{reg.userName}}
+                                        工号: <span ng-bind-html="''+reg.userNo | highlight: $select.search"></span>
+                                    </small>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-7  row">
+                            <div class="row">
+                                <button type="submit" class="btn btn-primary" ng-disabled="addstore.$invalid" ng-click="ads.saveStore()">下一步</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </uib-tab>
+            <uib-tab index="1" heading="餐厅详情">
+                <form class="form-horizontal form-middle" role="form" name="storeInfo">
+                    <h5><strong>餐厅布局相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label class="col-lg-5 control-label">餐厅层数：</label>
+                            <div class="col-lg-7 row">
+                                <div class="col-lg-7 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.hallFloors">
+                                </div>
+                                <div class="col-lg-2 form-control-static">
+                                    层
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">餐厅面积：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-7 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.hallArea">
+                                </div>
+                                <div class="col-xs-2 form-control-static">
+                                    (平米)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">餐厅桌数：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.hallTables">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5><strong>餐厅布局相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">是否有其他商业Wi-Fi：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="isWifi" ng-model="ads.storeDetail.hasOtherWifi"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="isWifi" ng-model="ads.storeDetail.hasOtherWifi"><i class="iconfont"></i> 否
+                                </label>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasOtherWifi">
+                            <label class="col-sm-5 control-label">商业Wi-Fi品牌：</label>
+                            <div class="col-sm-7 row">
+                                <div class="row form-group" ng-repeat="otherWifi in ads.storeDetail.otherWifiBrands">
+                                    <div class="col-xs-7">
+                                        <input type="text" class="form-control" placeholder="输入WiFi运营商品牌名..." ng-model="otherWifi.name"> 
+                                    </div>
+                                    <div class="col-xs-5 row">
+                                        <button type="button" ng-if="$index!=0" class="btn btn-link btn-link-danger" ng-click="ads.deleteWifi($index)">删除</button>
+                                        <button type="button" ng-if="$last" class="btn btn-link" ng-click="ads.addWifi()">添加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">是否已安装宽带：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="haveWifi" ng-model="ads.storeDetail.hasBroadband"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="haveWifi" ng-model="ads.storeDetail.hasBroadband"><i class="iconfont"></i> 否
+                                </label>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasBroadband">
+                            <label class="col-sm-5 control-label">宽带运营商：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <select name="" class="form-control" ng-model="ads.storeDetail.broadbandIsp">
+                                        <option value="">选择宽带运营商</option>
+                                        <option ng-value="broad.dataCode" ng-repeat="broad in ads.broadList">{{broad.dataName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasBroadband=='1'">
+                            <label  class="col-sm-5 control-label">带宽：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-7 row">
+                                    <input type="text" class="form-control" placeholder="请输入带宽" ng-model="ads.storeDetail.broadbandWidth">
+                                </div>
+                                <div class="col-xs-2 form-control-static">
+                                    M
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasBroadband=='1'">
+                            <label  class="col-sm-5 control-label">宽带用户名：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="请输入宽带账号" ng-model="ads.storeDetail.broadbandUsername">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasBroadband=='1'">
+                            <label  class="col-sm-5 control-label">宽带密码：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="请输入密码" ng-model="ads.storeDetail.broadbandPassword">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有电源接口：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="isPower" ng-model="ads.storeDetail.hasPowerPort"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="isPower" ng-model="ads.storeDetail.hasPowerPort"><i class="iconfont"></i> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有LAN接口：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="isLan" ng-model="ads.storeDetail.hasLanPort"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="isLan" ng-model="ads.storeDetail.hasLanPort"><i class="iconfont"></i> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">期望安装维护时间：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-sm-9 row">
+                                    <div class="col-xs-5 row">
+                                        <div uib-timepicker ng-model="ads.hopeSeviceStartTime" show-spinners="false" show-meridian="false"></div>
+                                    </div>
+                                    <div class="col-xs-2 form-control-static">
+                                        到
+                                    </div>
+                                    <div class="col-xs-5 row">
+                                        <div uib-timepicker ng-model="ads.hopeSeviceEndTime" show-spinners="false" show-meridian="false"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">所需设置数量：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-7 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.setupCount">
+                                </div>
+                                <div class="col-xs-2 form-control-static">
+                                    台
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">现场实施联系人：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.localeLinkman">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">现场实施联系人职务：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.localeLinkmanPosition">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">现场实施联系人手机：</label>
+                            <div class="col-sm-7 row">
+                                <div class="col-xs-9 row">
+                                    <input type="text" class="form-control" placeholder="" ng-model="ads.storeDetail.localeLinkmanTel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5><strong>餐厅系统相关信息：</strong></h5>
+                    <div class="formItem">
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有其他点餐系统：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="hasOrderSystem" ng-model="ads.storeDetail.hasOrderSystem"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="hasOrderSystem" ng-model="ads.storeDetail.hasOrderSystem"><i class="iconfont"></i> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasOrderSystem">
+                            <label  class="col-sm-5 control-label">点餐系统品牌：</label>
+                            <div class="col-sm-7 row">
+                                <div class="row form-group" ng-repeat="otherOrder in ads.storeDetail.orderSystemBrands">
+                                    <div class="col-xs-7">
+                                        <input type="text" class="form-control" placeholder="" ng-model="otherOrder.name"> 
+                                    </div>
+                                    <div class="col-xs-5 row">
+                                        <button type="button" ng-if="$index!=0" class="btn btn-link btn-link-danger" ng-click="ads.deleteOrder($index)">删除</button>
+                                        <button type="button" ng-if="$last" class="btn btn-link" ng-click="ads.addOrder()">添加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否已安装收银系统：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="hasPosSystem" ng-model="ads.storeDetail.hasPosSystem"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="hasPosSystem" ng-model="ads.storeDetail.hasPosSystem"><i class="iconfont"></i> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasPosSystem">
+                            <div class="col-sm-offset-5 col-sm-7 row">
+                                <div class="row" ng-repeat="pos in ads.storeDetail.posSystemBrands">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">品牌：</label>
+                                        <div class="col-sm-6 row">
+                                            <input type="text" class="form-control" placeholder="收银系统品牌" ng-model="pos.name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-sm-2 control-label">型号：</label>
+                                        <div class="col-sm-6 row">
+                                            <input type="text" class="form-control" placeholder="收银系统型号" ng-model="pos.model">
+                                        </div>
+                                        <div class="col-sm-4 row">
+                                            <button type="button" ng-if="$index!=0" class="btn btn-link btn-link-danger" ng-click="ads.deletePost($index)">删除</button>
+                                            <button type="button" ng-if="$last" class="btn btn-link" ng-click="ads.addPost()">添加</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-5 control-label">是否有其他打印机：</label>
+                            <div class="col-sm-7 row">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="true" name="hasPrinter" ng-model="ads.storeDetail.hasPrinter"><i class="iconfont"></i> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-value="false" name="hasPrinter" ng-model="ads.storeDetail.hasPrinter"><i class="iconfont"></i> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="ads.storeDetail.hasPrinter=='1'">
+                            <div class="col-sm-offset-5 col-sm-7 row">
+                                <div class="row" ng-repeat="printer in ads.storeDetail.printerBrands">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">品牌：</label>
+                                        <div class="col-sm-6 row">
+                                            <input type="text" class="form-control" placeholder="打印机品牌" ng-model="printer.name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-sm-2 control-label">型号：</label>
+                                        <div class="col-sm-6 row">
+                                            <input type="text" class="form-control" placeholder="打印机型号" ng-model="printer.model">
+                                        </div>
+                                        <div class="col-sm-4 row">
+                                            <button type="button" ng-if="$index!=0" class="btn btn-link btn-link-danger" ng-click="ads.deletePrinter($index)">删除</button>
+                                            <button type="button" ng-if="$last" class="btn btn-link" ng-click="ads.addPrinter()">添加</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5><strong>备注说明：</strong></h5>
+                    <textarea class="form-control" placeholder="请输入备注" rows="3" ng-model="ads.storeDetail.remark"></textarea>
+                    <div class="panel-body text-center">
+                        <button type="button" class="btn btn-primary"  ng-disabled="storeInfo.$invalid" ng-click="ads.saveStoreInfo()">保存</button>
+                    </div>
+                </form>
+            </uib-tab>
+            <!--<uib-tab index="2" heading="业务信息">业务信息</uib-tab>-->
+        </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">地图</h4>
+        <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="mapContainer">
+            <a-map sel="$ctrl.sel()" seldata="$ctrl.seldata"></a-map>
+            <div class="searchmap">
+                <input type="text" id="addressInp" class="form-control" name="addressInp" placeholder="请输入关键字：(选定后搜索)" onfocus='this.value=""'/>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,354 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref='store.list'>客户列表</a></li>
+    <li class="active">门店详情</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box customerDetail-box store_echart" ng-controller="CustomerDetailCtrl as customer">
+      <uib-tabset class="tabs-default" active="customer.tabIndex">
+        <uib-tab index="0" heading="基本信息"  ng-click="customer.tabIndex=0">
+          
+          <div class="clearfix border-radius-box padding20 customerDetail-head">
+            <div class="pull-left customerDetail-basic-img">
+              <img ng-src='{{(customer.customerDetail.logoUrl |imgUrlWithToken)|| customer.normalImg}}' alt="绿茶餐厅">
+            </div>
+            <div class="container-fluid customerDetail-basic-text">
+              <div class="row">
+                <p class="col-md-4">门店名称：{{customer.customerDetail.name||''}}</p>
+                <p class="col-md-4">所属品牌：{{customer.customerDetail.brandName||''}}</p>
+                <p class="col-md-4">所属企业：{{customer.customerDetail.companyName||''}}</p>
+                <p class="col-md-4">门店编号：{{customer.customerDetail.code||''}}</p>
+                <p class="col-md-4">菜系：{{customer.customerDetail.dishStyleName||''}}</p> 
+                <p class="col-md-4">餐饮业态：{{(customer.customerDetail.flag == '1'?'正餐':'快餐')||''}}</p>
+                <p class="col-md-4">省市区：{{customer.customerDetail.provinceName || ''}}-{{customer.customerDetail.cityName || ''}}-{{customer.customerDetail.districtName || ''}}</p>
+                <p class="col-md-4">门店地址：{{customer.customerDetail.address||''}}<img ng-click="customer.openMap()" src="../../../images/positiion.png" alt="位置"></p>
+                <p class="col-md-4">经纬度：{{customer.customerDetail.poiLng || ''}},{{customer.customerDetail.poiLat ||''}}</p>
+                <p class="col-md-4">所属商圈：{{customer.customerDetail.businessArea||''}}</p>
+                <p class="col-md-4">楼层信息：{{customer.customerDetail.floor||'暂无楼'}}层</p>
+                <p class="col-md-4">地点归属：{{customer.attribution[customer.customerDetail.attribution]||''}}</p>
+                <p class="col-md-4">门店电话：{{customer.customerDetail.linkTel||''}}</p>
+                <p class="col-md-4">面积：{{customer.customerDetail.area ||''}}</p>
+                <p class="col-md-4">人均：{{customer.customerDetail.perCapita ||''}}</p>
+                <p class="col-md-4">座位数：{{customer.customerDetail.seatNumber ||''}}</p>
+                <p class="col-md-4">收银机数：{{customer.customerDetail.posNumber ||''}}</p>
+                <p class="col-md-4">服务人员数：{{customer.customerDetail.waiterNumber ||''}}</p>
+                <p class="col-md-4">后厨数：{{customer.customerDetail.chefNumber ||''}}</p>
+                <p class="col-md-4">日交易流水（元）：{{customer.customerDetail.dailyTransactionAmount ||''}}</p>
+                <p class="col-md-4">评分：{{customer.customerDetail.grade||''}}</p>
+                <p class="col-md-4">营业时间说明：{{customer.customerDetail.shopHours||''}}</p>
+                <p class="col-md-4">门店属性：{{(customer.customerDetail.storeProperty == '1'?'直营':'加盟')||''}}</p>
+                <p class="col-md-4">门店状态：{{customer.status[customer.customerDetail.status]||''}}</p>
+                <p class="col-md-4">门店说明：{{customer.customerDetail.remark||''}}</p>
+                <p class="col-md-4">业务类型：<span ng-repeat="bus in customer.customerDetail.business">{{bus.businessName || ''}}<span ng-if="!$last">,</span></span></p>               
+              </div>
+            </div>
+            <div class="customerDetail-btn">
+              <button class="btn btn-normal" type="button" ng-if="btnlist.CRM_0404" ui-sref="store.modifyStore({id:customer.customerDetail.id})">编辑修改</button>
+            </div>
+          </div>
+          <h4>联系人信息：</h4>
+          <div class="border-radius-box padding20">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>联系人</th>
+                  <th width="50">性别</th>
+                  <th width="120">手机</th>
+                  <th>职位</th>
+                  <th width="80">是否kp</th>
+                  <th width="120">生日</th>
+                  <th>微信</th>
+                  <th>邮箱</th>
+                  <th width="120">备用号码</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="customer.customerDetail.linkMans.length==0">
+                  <td colspan="9" class="empty-box">
+                    暂无联系人
+                  </td>
+                </tr>
+                <tr ng-repeat="item in customer.customerDetail.linkMans">
+                  <td class="text-break">{{item.name||'匿名'}}</td>
+                  <td>{{item.sex == '1' ? '男':'女' ||'保密'}}</td>
+                  <td>{{item.mobile||'保密'}}</td>
+                  <td class="text-break">{{item.position||'保密'}}</td>
+                  <td>{{item.isKp == '1' ? '是':'否 '||'保密'}}</td>
+                  <td>{{(item.birthday|date:'yyyy-MM-dd')||'保密'}}</td>
+                  <td class="text-break">{{item.wechat||'保密'}}</td>
+                  <td class="text-break">{{item.email||'保密'}}</td>
+                  <td>{{item.phone||'保密'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>维护人信息：</h4>
+          <div class="border-radius-box padding20">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>业务类型</th>
+                  <th>销售维护人</th>
+                  <th>技术维护人</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="customer.customerDetail.business.length==0">
+                  <td colspan="3" class="empty-box">
+                    暂无维护人
+                  </td>
+                </tr>
+                <tr ng-repeat="item in customer.customerDetail.business">
+                  <td>{{item.businessName}}</td>
+                  <td>{{item.saleServiceUserName||''}}</td>
+                  <td>{{item.technologyServiceUserName||''}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>其他信息：</h4>
+          <div class="border-radius-box padding20">
+            <div class="container-fluid">
+              <div class="row">
+                <p class="col-md-6">宽带运营商：{{customer.otherInfo.broadbandIsp||''}}</p>
+                <p class="col-md-6">在用订单叫号系统名：{{customer.otherInfo.callingSystem||''}}</p>
+                <p class="col-md-6">宽带带宽：{{customer.otherInfo.broadbandWidth||''}}</p>
+                <p class="col-md-6">叫号机图片：
+                  <span ng-repeat="item in customer.otherInfo.callingSystemImageUrl track by $index">
+                    <a  ng-click="customer.openLightboxModal(customer.callingSystemImageUrlList, $index)"  target="_black" class="text-success" > 图片{{$index+1}} </a><span ng-if="!$last">,</span>
+                  </span>
+                </p>
+                <p class="col-md-6">在用收银系统名：{{customer.otherInfo.posSystem||''}}</p>
+                <p class="col-md-6">在用厨显系统名：{{customer.otherInfo.kitchenSystem||''}}</p>
+                <p class="col-md-6">在用收银系统版本：{{customer.otherInfo.posSystemVersion||''}}</p>
+                <p class="col-md-6">厨显系统图片：<span ng-repeat="item in customer.otherInfo.kitchenSystemImageUrl track by $index">
+                    <a  ng-click="customer.openLightboxModal(customer.kitchenSystemImageUrlList, $index)"  target="_black" class="text-success" > 图片{{$index+1}} </a><span ng-if="!$last">,</span>
+                </span>
+                </p>
+                <p class="col-md-6">收银电脑是否可以上网：{{(customer.otherInfo.posSystemNetwork===1?'是':'否')||''}}</p>
+                <p class="col-md-6">在用的点餐系统：{{customer.otherInfo.orderSystem||''}}</p>
+                <p class="col-md-6">收银系统图片：<span ng-repeat="item in customer.otherInfo.posSystemImageUrl track by $index">
+                    <a  ng-click="customer.openLightboxModal(customer.posSystemImageUrlList, $index)"  target="_black" class="text-success" > 图片{{$index+1}} </a><span ng-if="!$last">,</span>
+                </span>
+                </p>
+                <p class="col-md-6">在用点餐系统二维码：<span ng-repeat="item in customer.otherInfo.orderSystemImageUrl track by $index">
+                    <a  ng-click="customer.openLightboxModal(customer.orderSystemImageUrlList, $index)"  target="_black" class="text-success" > 图片{{$index+1}} </a><span ng-if="!$last">,</span>
+                </span>
+                </p>
+                <p class="col-md-6">打印机类型：{{customer.printerType[customer.otherInfo.printerType]||''}}</p>
+                <p class="col-md-6">打印机品牌：{{customer.otherInfo.printerBrand||''}}</p>
+                <p class="col-md-6">打印机来源：{{customer.printerSource[customer.otherInfo.printerSource]||''}}</p>
+                <p class="col-md-6">支付签约协议：<a href="javascript:void(0)" ng-if="customer.otherInfo.payBusinessAgreement" ng-click="customer.openLightboxModal(customer.payBusinessAgreementArr,0)" target="_black" class="text-success">查看</a></p>   
+                <p class="col-md-6">快餐业务协议：<a href="javascript:void(0)" ng-if="customer.otherInfo.businessAgreement" ng-click="customer.openLightboxModal(customer.businessAgreementArr,0)" target="_black" class="text-success">查看</a></p>   
+                <p class="col-md-6">会员业务协议：<a href="javascript:void(0)" ng-if="customer.otherInfo.vipBusinessAgreement" ng-click="customer.openLightboxModal(customer.vipBusinessAgreementArr,0)" target="_black" class="text-success">查看</a></p>            
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab index="1" heading="服务费有效期"  ng-click="customer.tabIndex=1">
+          <p>门店名称： <strong>{{customer.customerDetail.name||''}}</strong>　　　所属品牌： <strong>{{customer.customerDetail.brandName||''}}</strong>　　　所属企业：<strong>{{customer.customerDetail.companyName||''}}</strong></p>
+          <table class="table table-bordered text-center">
+            <thead>
+              <th>服务类目名</th>
+              <th>业务类型</th>
+              <th>服务开始时间</th>
+              <th>服务结束时间</th>
+              <th>操作</th>
+            </thead>
+            <tbody>
+              <tr ng-if="customer.services.length===0">
+                  <td colspan="5" class="empty-box">
+                  暂无服务查询！
+                </td>
+              </tr>
+              <tr ng-repeat="item in customer.services">
+                <td>{{item.serviceName}}</td>
+                <td>{{item.businessType}}</td>
+                <td>{{item.serviceStart|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{(item.serviceEnd|date:'yyyy')-2017>=50 ? '永久': (item.serviceEnd|date:'yyyy-MM-dd HH:mm:ss')}}</td>
+                <td><a ng-if="item.applyTryDays && btnlist.ORDER_MGR_0106 && !item.passedDate" class="btn btn-link" ng-click="customer.editServiceCharge(item)">修改</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pull-right">
+            <ul uib-pagination total-items="customer.total" ng-if="customer.total>customer.storeService.pageSize" items-per-page="customer.storeService.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="customer.storeService.pageNo" ng-change="customer.pageChanged()"
+            class="pull-right"></ul>
+            <b class="pagination-text pull-right" ng-if="customer.total>customer.storeService.pageSize">共{{customer.total}}条</b>
+          </div>
+        </uib-tab>
+        <uib-tab index="2" heading="门店二维码" ng-click="customer.newcode()">
+          <div class="table-overflow">
+            <p>该门店共使用 {{customer.qrcodeTotal}} 张二维码</p>
+            <ul>
+              <li ng-repeat="item in customer.qrcodeList" ng-class="{'no-bg': customer.tabIndex==2}" >
+                  <div class="qr-top">
+                    <!-- <span >
+                        <img  ng-src="{{item.url}}" />
+                    </span> -->
+                    <div  class="show-ID pull-left ver-center" ng-click="customer.qrmodel(item)">
+                      <!-- <span class="qrcode-type" ng-if="item.type=='DESK_PAY1'">聚合支付</span> -->
+                      <div> 
+                        <span class="qrcode-type" ng-if="item.type">{{item.businessType}} </span>
+                        <span uib-tooltip="{{item.deskName}}" 
+                          tooltip-placement="top"
+                          tooltip-trigger="'mouseenter'"
+                          tooltip-class="gray" class="qrcode-table" ng-if="item.type=='DESK_PAY2'&&item.deskName">桌名：{{item.deskName | maxString:true:16:'...'}}</span>
+                       </div>
+                     </div> 
+
+                  </div>
+                 
+              </li>
+            </ul>
+            <div ng-if="customer.qrcodeList[customer.tabIndex].noList" class="empty-box">暂无任何内容</div>
+          </div>
+          <div class="clearfix">
+            <ul ng-if="customer.qrcodeTotal > customer.param.pageSize" uib-pagination total-items="customer.qrcodeTotal" items-per-page="customer.param.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="customer.param.pageNo" ng-change="customer.pageQrcodeChanged()"
+              class="pull-right"></ul>
+          </div>
+        </uib-tab>
+        <uib-tab index="3" heading="数据统计" ng-click="customer.stats=7">
+            <div class="table-head form-inline">
+                <form>
+                  <div class="form-group">
+                    <span class="form-control">日期选择：</span>
+                    <div class="input-group date-form">
+                      <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="customer.beginDate" is-open="customer.startOpen" on-open-focus="false"  datepicker-options="customer.startDateOps" ng-change="customer.selDate()" current-text="今天"
+                        clear-text="清除" close-text="关闭" placeholder="开始时间" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="customer.startOpen=!customer.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                        </span>
+                    </div>
+                    <span class="form-control"> - </span>
+                    <div class="input-group date-form">
+                      <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="customer.endDate" is-open="customer.endOpen" on-open-focus="false"  datepicker-options="customer.endDateOps" ng-change="customer.selDate()" current-text="今天"
+                        clear-text="清除" close-text="关闭" placeholder="结束时间" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="customer.endOpen=!customer.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                        </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary1" ng-class="{true:'btn-primary',false:'btn-gray'}[customer.stats==7]"  ng-click="customer.searchBt(7)">7天</button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary1"  ng-class="{true:'btn-primary',false:'btn-gray'}[customer.stats==14]"  ng-click="customer.searchBt(14)">14天</button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary1"  ng-class="{true:'btn-primary',false:'btn-gray'}[customer.stats==30]" ng-click="customer.searchBt(30)">30天</button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" ng-if="btnlist.CRM_040801" class="btn btn-primary" ng-click="customer.export()">导出</button>
+                  </div>
+                </form>
+              </div>  
+              <div class="chartInfo">
+               <!-- <div ng-if="customer.source">      -->
+                  <echart-line  height="550" source="customer.source" end="customer.endDay" days="customer.days"></echart-line>
+               <!-- </div>  -->
+                    <!-- <div class="no-data" ng-if="!customer.source[0]">暂无数据</div> -->
+              </div>
+             
+          
+        </uib-tab>
+        <uib-tab index="4" heading="门店大事件" ng-click="customer.tabIndex=4">
+          <div class="store-wrapper">
+            <ul>             
+              <li ng-repeat="(key,item) in customer.storeLog track by $index" class="pull-left">
+               
+                   <i ng-if="$first" class="iconfont icon-Group2 "></i>
+                   <i ng-if="!$first&&!$last" class="iconfont icon-GroupCopy"></i>  
+                   <i ng-if="$last&&(key!=0)" class="iconfont icon-GroupCopy1"></i> 
+               
+                <div class="store-group">
+                  <p>{{customer.storeType[item.type]}}</p>
+                  <p ng-if='item.user'>{{item.user+' '+(item.occurrenceTime | date:'yyyy-MM-dd HH:mm:ss')}}</p>
+                  <p ng-if='item.usedTime!=null'>{{'用时 【'+item.usedTime+'小时】'}}</p>
+                  <p ng-if='item.orderNo'>{{'订单号 【'+item.orderNo+'】'}}</p>
+                  <p ng-if='item.amount'>{{'金额 【'+item.amount+'】'}}</p>
+                  <p ng-if='item.tableNo'>{{'桌台号 【'+item.tableNo+'】'}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">地图</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+      <div class="mapContainer">
+          <address addxy="$ctrl.addXY"></address>
+      </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="editServiceCharge.html">
+  <form class="form-horizontal datetime-picker-form" >
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">修改有效期</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label class="col-sm-4 text-right">服务费类目名：</label>
+        <div class="col-sm-7 row">
+          {{$ctrl.charge.serviceName}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 text-right">开始时间：</label>
+        <div class="col-sm-7 row">
+          {{$ctrl.charge.serviceStart|date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">结束时间：</label>
+        <div class="input-group col-sm-7 row dateTimePicker">
+          <input type="text" readonly="readonly" class="form-control" ng-value="$ctrl.charge.serviceEnd|date:'yyyy-MM-dd HH:mm:ss'" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="$ctrl.showDateTimePicker=!$ctrl.showDateTimePicker">
+              <i class="iconfont icon-CombinedShape1"></i>
+            </button>
+          </span>
+          <datetimepicker class="dateTimeBox" ng-if="$ctrl.showDateTimePicker" data-ng-model="$ctrl.charge.serviceEnd" data-on-set-time="$ctrl.onTimeSet(newDate, oldDate)"></datetimepicker>
+        </div>
+      </div>
+      <div class="isEmpty" ng-if="$ctrl.showDateTimePicker"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-disabled="$ctrl.submitTime || $ctrl.showDateTimePicker" type="button" ng-click="$ctrl.ok()">确 定</button>
+    </div>
+  </form>
+</script>
+
+<script type="text/ng-template" id="preview.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">二维码</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <!-- <p>移动端（扫码预览）</p> -->
+    <!-- <hr> -->
+    <div style="margin:35px;width:350px;height:350px">
+      <img ng-src="{{$ctrl.qrImg}}" alt=""  style="width:100%;height:100%">
+    </div>
+    <div>
+      
+    </div>
+    <!-- <p>电脑端（点击预览）</p> -->
+    <hr>
+    <!-- <div>
+      <a class="btn btn-link btn-link-success" href="{{$ctrl.faqUrl}}" target="_blank">预览</a>
+    </div> -->
+  </div>
+  <!-- <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-disabled="addFaqType.$invalid" ng-click="$ctrl.ok()">确 定</button>
+  </div> -->
+</script>

@@ -1,0 +1,61 @@
+<ul class="breadcrumb">
+  <li>账户管理</li>
+  <li class="active">角色管理</li>
+</ul>
+<div class="mainContent">
+  <div class="content-box" ng-controller="roleListsCtrl as role">
+    <div class="table-overflow">
+    <table class="table table-hover table-theadbg table-text-center">
+      <thead>
+        <tr>
+          <th>
+            <div>角色</div>
+          </th>
+          <th>
+            <div>成员数</div>
+          </th>
+          <th>
+            <div>操作</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="roleInfo in role.roleLists">
+          <td class="text-overflow">
+            {{roleInfo.name}}
+          </td>
+          <td class="text-overflow">
+            {{roleInfo.members}}
+          </td>
+          <td class="text-overflow">
+            <button ng-if="btnlist.ACCOUNT_0202" type="button" class="btn btn-link" ui-sref="account.modifyRole({id:roleInfo.id})">修改</button>
+            <button ng-if="btnlist.ACCOUNT_0203" type="button" class="btn btn-link btn-link-danger" ng-click="role.deleteRole(roleInfo)">删除</button>
+          </td>
+        </tr>
+        <tr ng-if="!role.roleLists || role.roleLists.length == 0" class="empty-tr">
+          <td colspan="3" class="empty-box">暂无任何内容</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div>
+      <button ng-if="btnlist.ACCOUNT_0201" type="button" class="btn btn-primary" ui-sref="account.addRole">添加角色</button>
+      <ul uib-pagination total-items="role.totalItems" ng-if="role.totalItems>role.params.pageSize" max-size="5" boundary-link-numbers="true" items-per-page="10" previous-text="<" next-text=">" ng-model="role.params.pageNo"
+        ng-change="role.pageChanged()" class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="role.totalItems>role.params.pageSize">共{{role.totalItems}}条</b>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="deleteRole.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">删除角色</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>确定要删除{{$ctrl.name}}吗？</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+  </div>
+</script>

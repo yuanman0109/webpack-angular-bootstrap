@@ -1,0 +1,31 @@
+<div class="">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title"><span ng-repeat="(key, val) in ctrl.opts.obj">{{ctrl.typeName[key]}}</span>对应门店</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <div class="content-overflow"> 
+      <table class="table table-bordered text-center">
+        <thead>
+          <tr>
+            <th ng-repeat="(key, val) in ctrl.opts.obj">{{ctrl.typeName[key]}}</th>
+            <th>门店名称</th>
+            <th>所属品牌</th>
+            <th>所属企业</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in ctrl.assist">
+            <td ng-repeat="(key, val) in ctrl.opts.obj">{{item[key]}}</td>
+            <td><a href="javascript:void(0)" class="btn-link btn-link-success" ng-click="ctrl.goStoreDetail(item.storeId)">{{item.storeName}}</a></td>
+            <td>{{item.brandName}}</td>
+            <td>{{item.companyName}}</td>
+          </tr>
+          <tr ng-if="!(ctrl.assist.length > 0)">
+            <td colspan="4" class="empty-box">暂无任何内容</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+  </div>
+  </div>

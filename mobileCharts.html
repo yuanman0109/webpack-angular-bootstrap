@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <!--<link rel="stylesheet" href="app/pages/mobie/echart/echart.css"> -->
+</head>
+
+<body>
+  <div  class="container ">
+    <!-- <div class="row head_dark">
+        <div class="col-xs-3">
+            <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+        </div>
+        <div class="col-xs-8 col-xs-offset-1">数据统计</div>
+    </div>  -->
+     <div class="ech_nav"> 
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active" id="myTabs1" ><a href="#">7天</a></li>
+            <li role="presentation" id="myTabs2"><a href="#">14天</a></li>
+            <li role="presentation" id="myTabs3"><a href="#">30天</a></li>
+        </ul>
+        
+       
+     </div> 
+    <div  class="row date_right">
+              <!-- <span id="beginDate"></span>-<span id="endDate"></span>   -->
+              <div class="col-xs-6">开始时间:<input type="date" name="" value="" id="beginDate" class="time" onchange="changeDay(this)"/></div>
+              <div class="col-xs-6">结束时间:<input type="date" name="" value="" id="endDate" class="time" onchange="changeDay(this)"/></div>  
+        </div>
+    
+     <div id="main" style="width: 100%;height:450px;"></div>
+    
+     <!-- <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>      -->
+  </div> 
+</body>
+
+</html>

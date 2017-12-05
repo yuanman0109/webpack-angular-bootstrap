@@ -1,0 +1,53 @@
+<!--修改维护人弹窗-->
+<div class="storeModal-modifyUser">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">修改维护人</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body model-overflow" id="modal-body">
+    <form class="form-horizontal" ng-repeat="item in ctrl.opts.item.business">
+      <h2>{{item.businessName}}</h2>
+      <hr/>
+      <div class="form-group">
+        <label class="col-md-4 control-label">销售维护人：</label>
+        <div class="col-md-8 row">
+          <div class="col-md-11 row">
+            <ui-select ng-model="item.saleServiceUser" name="saleServiceUser" theme="bootstrap" reset-search-input="false" title="选择销售维护人">
+              <ui-select-match placeholder="输入销售维护人" ng-click="ctrl.focus()">{{$select.selected.name || item.saleServiceUserName}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                    工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                    部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-md-4 control-label">技术维护人：</label>
+        <div class="col-md-8 row">
+          <div class="col-md-11 row">
+            <ui-select ng-model="item.technologyServiceUser" name="technologyServiceUser" theme="bootstrap" reset-search-input="false" title="选择技术维护人">
+              <ui-select-match placeholder="输入技术维护人" ng-click="ctrl.focus()">{{$select.selected.name || item.technologyServiceUserName}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                    工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                    部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+  </div>
+</div>

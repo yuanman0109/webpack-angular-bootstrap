@@ -1,0 +1,96 @@
+<div class="page-order-newOrder">
+  <div class="clearfix">
+    <ul class="breadcrumb">
+      <li class="active">工单中心</li>
+      <li class="active"><a ui-sref="order.pool">工单池</a></li>
+      <li class="active">新建工单</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="content-box">
+      <form class="form-horizontal clearfix" name="newOrder">
+        <div class="form-group"  ng-class="{'has-success':newOrder.storeName.$valid,'has-error':newOrder.storeName.$invalid && newOrder.storeName.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>客户名称：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <ui-select ng-model="ctrl.getParame.storeId" name="storeName" required theme="bootstrap" 
+              reset-search-input="false" title="选择门店名称">
+              <ui-select-match placeholder="请搜选门店名称" ng-click="ctrl.store()">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="store.id as store in ctrl.storeList track by $index" refresh="ctrl.getStoreName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="store.name | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">接单人：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <ui-select ng-model="ctrl.getParame.transitUser" name="transitUser" theme="bootstrap" 
+              reset-search-input="false" title="选择用户">
+              <ui-select-match placeholder="请搜选接单人" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+              <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':newOrder.selType.$valid,'has-error':newOrder.selType.$invalid && newOrder.selType.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>业务类型：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <select class="form-control selectList" name="selType" ng-options="item.dataCode as item.dataName for item in ctrl.businessType" ng-model="ctrl.getParame.businessId" required>
+              <option value="">请选择业务类型</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':newOrder.taskName.$valid,'has-error':newOrder.taskName.$invalid && newOrder.taskName.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>任务类型：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <select class="form-control selectList" name="taskName" ng-options="item.dataCode as item.dataName for item in ctrl.taskType" ng-model="ctrl.getParame.taskType" required>
+              <option value="">请选择任务类型</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':newOrder.expectDate.$valid,'has-error':newOrder.expectDate.$invalid && newOrder.expectDate.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>期望完成日期：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <div class="input-group input-date">
+              <input readonly="readonly" type="text" name="expectDate" ng-model="ctrl.getParame.expectDate" class="form-control" placeholder="日期选择" uib-datepicker-popup="yyyy-MM-dd" is-open="ctrl.endIsopen" on-open-focus='false' datepicker-options="ctrl.endDateOps" ng-change="ctrl.selDate('end')"
+              current-text="今天" clear-text="清除" close-text="关闭" required/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.endIsopen=!ctrl.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':newOrder.content.$valid,'has-error':newOrder.content.$invalid && newOrder.content.$dirty}">
+          <label for="" class="col-md-3 col-xs-3 col-sm-3 control-label"><strong class="text-danger">*</strong>派单说明：</label>
+          <div class="col-md-5 col-xs-5 col-sm-5">
+            <textarea rows="" cols="" name="content" class="form-control"  ng-model="ctrl.getParame.orderDesc" maxlength="500" placeholder="不能超过500个字符" required></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-xs-3 col-sm-3 control-label">其他：</label>
+          <div class="col-md-5 col-xs-5 col-sm-5">
+            <input type="hidden" ng-model="ctrl.params.fileId" name="fileId">
+            <div class="form-control-static">
+              <button type="file" ngf-select="ctrl.uploadFiles($file, $invalidFiles)" accept="image/jpg,image/jpeg,image/png" ngf-model-invalid="errorFile" class="btn btn-shallow">附件上传</button>
+              <!--<span class="text-warning">(最大限制30MB)</span>-->
+              <span class="text-success" ng-if="ctrl.getParame.fileId"><i class="iconfont icon-nb-w1"></i>上传成功!</span>
+              <!--<p class="help-block text-danger" ng-show="errorFile.$error=='maxSize'">文件太大！ 当前文件：{{errorFile.size / 1000000|number:1}}MB，最大30MB</p>-->
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-3 col-sm-offset-3  col-xs-offset-3  col-md-9 col-sm-9 col-xs-9">
+            <button type="button" class="btn btn-primary"  ng-click="ctrl.getSubmit()"  ng-disabled="newOrder.$invalid">确认提交</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

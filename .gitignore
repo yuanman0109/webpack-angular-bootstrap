@@ -3,4 +3,22 @@
 node_modules/
 npm-debug.log
 npm-debug.log.*
+dist/
 bower_components/
+*.rar
+app/js/conf.js
+proxy/
+build/
+
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+#IDE
+.idea/
+.vscode/
+data.json

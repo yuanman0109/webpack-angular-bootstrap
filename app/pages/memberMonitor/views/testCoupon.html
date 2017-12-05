@@ -1,0 +1,94 @@
+<div class="page-monitor-coupon">
+  <div class="clearfix">
+    <ul class="breadcrumb">
+      <li>会员监控</li>
+      <li>验券记录</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="form-inline table-head">
+      <form name="coupon">
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="优惠券号码、优惠券名称" ng-model="ctrl.getParame.couponName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="会员卡号、手机号">
+        </div>
+        <!-- <div class="form-group">
+          <input class="form-control" type="text" placeholder="验券门店、所属品牌">
+        </div> -->
+        <div class="form-group ui-select">
+          <ui-select ng-model="ctrl.getParame.shopId" name="storeName" required theme="bootstrap" 
+            reset-search-input="false" title="验券门店、所属品牌" item-width="180">
+            <ui-select-match placeholder="请输入验券门店或品牌" ng-click="ctrl.store()">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="store.id as store in ctrl.storeList track by $index" refresh="ctrl.getStoreName($select.search)"
+              refresh-delay="500">
+              <div ng-bind-html="store.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-options="item.dataCode as item.dataName for item in ctrl.couponType" ng-model="ctrl.getParame.couponType">
+            <option value="">优惠券类型</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <date-picker date="ctrl.getParame.startTime" holder="验券起始时间" max="ctrl.getParame.endTime"></date-picker>          
+        </div>
+        <div class="form-group">
+          <date-picker date="ctrl.getParame.endTime" holder="验券结束时间" min="ctrl.getParame.startTime"></date-picker>
+        </div>
+        <div class="form-group">
+          <button type="button" name="btn" class="btn btn-white" ng-click="ctrl.searchBt()" ng-disabled="coupon.$invalid">搜索</button>          
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-theadbg">
+          <thead>
+            <tr>
+              <th><div>优惠券名称</div></th>
+              <th><div>优惠券号码</div></th>
+              <th><div>会员卡号</div></th>
+              <th><div>手机号</div></th>
+              <th><div>验券时间</div></th>
+              <th><div>类型</div></th>
+              <th><div>验券门店</div></th>
+              <th><div>所属品牌</div></th>
+              <th><div>城市</div></th>
+            </tr>
+          </thead>
+          <tbody ng-if="!ctrl.getParame.storeId && !ctrl.couponList || !ctrl.couponList">
+            <tr class="expty-tr">
+              <td colspan="9" class="empty-box">请输入验券门店或所属品牌!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-if="ctrl.couponList.length === 0" class="empty-tr">
+              <td colspan="9" class="empty-box">没有找到您要查询的门店信息!</td>
+            </tr>
+            <tr ng-repeat="item in ctrl.couponList">
+              <td class="text-overflow">{{item.couponName || '-'}}</td>
+              <td class="text-overflow">{{item.code || '-'}}</td>
+              <td class="text-overflow">{{item.userId || '-'}}</td>
+              <td class="text-overflow">{{item.phone || '-'}}</td>
+              <td class="text-overflow">{{(item.createTime | date:'yyyy-MM-dd') || '-'}}</td>
+              <td class="text-overflow">{{(item.couponType |couponType) || '-'}}</td>
+              <td class="text-overflow">{{item.storeName || '-'}}</td>
+              <td class="text-overflow">{{item.brandName || '-'}}</td>
+              <td class="text-overflow">{{item.city	 || '-'}}</td>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+      <div class="clearfix">
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.size" items-per-page="ctrl.getParame.size" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNum" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.size">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

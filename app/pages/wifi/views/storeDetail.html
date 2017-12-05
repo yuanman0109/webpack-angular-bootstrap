@@ -1,0 +1,88 @@
+<ul class="breadcrumb">
+	<li>wifi管理</li>
+	<li class="active">设备监控</li>
+	<li class="active">门店模式</li>
+	<li class="active">门店详情</li>
+</ul>
+<div class="mainContent">
+	<div class="content-box customerDetail-box" ng-controller="StoreDetailCtrl as storeM">
+		<h4>基本信息</h4>
+		<div class="clearfix border-radius-box padding20">
+			<div class="pull-left customerDetail-basic-img">
+				<img src="../../../images/normal.png" alt="绿茶餐厅">
+			</div>
+			<div class="container-fluid customerDetail-basic-text" ng-repeat="brand in storeM.storesList">
+				<div class="row">
+					<p class="col-md-6">门店名称：{{brand.storeName||'暂无'}}</p>
+					<p class="col-md-6">所属品牌：{{brand.name||'暂无'}}</p>
+					<p class="col-md-6">所属企业：{{'暂无'}}</p>
+					<p class="col-md-6">所在楼层：{{'暂无'}}</p>
+					<p class="col-md-6">所属商圈：{{'暂无'}}</p>
+					<p class="col-md-6">营业时间：{{brand.time||'9:00-22:00'}}</p>
+					<p class="col-md-6">门店编号：{{brand.storeId||'暂无'}}</p>
+					<p class="col-md-6">门店地址：{{brand.address||'暂无'}}<img src="../../../images/positiion.png" alt="位置"></p>
+				</div>
+			</div>
+		</div>
+		<h4>联系人信息：</h4>
+		<div class="container-fluid border-radius-box padding20">
+			<div class="row" ng-repeat="brand in storeM.storesList">
+				<p class="col-md-4">门店联系人：{{brand.contactName||'暂无'}}</p>
+				<p class="col-md-8">联系人职务：{{brand.contactPosition||'暂无'}}</p>
+				<p class="col-md-4">联系人手机：{{brand.contactPhone||'暂无'}}</p>
+				<p class="col-md-8">联系人电话：{{brand.contactPhone||'暂无'}}</p>
+				<p class="col-md-4">联系人邮箱：{{brand.contactEmail||'暂无'}}</p>
+				<p class="col-md-8">联系人微信：{{brand.contactWechart||'暂无'}}</p>
+			</div>
+		</div>
+		<h4>负责人信息：</h4>
+		<div class="container-fluid border-radius-box padding20">
+			<div class="row" ng-repeat="brand in storeM.storesList">
+				<p class="col-md-4">BD：{{brand.bdName||'暂无'}}({{brand.bdPhone||'暂无'}})</p>
+				<p class="col-md-8">BD区域负责人：{{brand.bdName||'暂无'}}({{brand.bdPhone||'暂无'}})</p>
+				<p class="col-md-4">FAE：{{brand.faeName||'暂无'}}({{brand.faePhone||'暂无'}})</p>
+				<p class="col-md-8">FAE区域负责人：{{brand.faeName||'暂无'}}({{brand.faePhone||'暂无'}})</p>
+				<p class="col-md-4">录审：{{'暂无'}}</p>
+				<p class="col-md-8">录审区域负责人：{{'暂无'}}</p>
+			</div>
+		</div>
+		<h4>餐厅详情：</h4>
+		<div class="border-radius-box">
+			<div class="container-fluid padding20">
+				<h5>餐厅布局相关信息：</h5>
+				<div class="row">
+					<p class="col-md-4">餐厅层数：{{'暂无'}}</p>
+					<p class="col-md-4">餐厅面积：{{'暂无'}}</p>
+					<p class="col-md-4">餐厅桌数：{{'暂无'}}</p>
+				</div>
+			</div>
+			<hr/>
+			<div class="container-fluid padding20">
+				<h5>WIFI 相关信息：</h5>
+				<div class="row">
+					<p class="col-md-6">
+						其他商业WiFi：<span ng-if="storeM.storeDetail.otherWifiBrands.length==0">暂无</span>
+					</p>
+					<p class="col-md-6">宽带信息：{{'暂无'}}</p>
+					<p class="col-md-4">电源接口：{{'暂无'}}</p>
+					<p class="col-md-4">LAN接口：{{'暂无'}}</p>
+					<p class="col-md-4">期望安装维护时间：{{'暂无'}}</p>
+					<p class="col-md-4">所需设备数量：{{'暂无'}}</p>
+					<p class="col-md-8">现场实施联系人：{{'暂无'}}</p>
+				</div>
+			</div>
+			<hr/>
+			<div class="container-fluid padding20">
+				<h5>餐厅系统相关信息：</h5>
+				<p class="col-md-6">其他点餐系统：【{{'暂无'}}】</p>
+				<p class="col-md-6">收银系统信息：{{'暂无'}}</p>
+				<p class="col-md-6">打印机信息：{{'暂无'}}</p>
+			</div>
+			<hr/>
+			<div class="padding20">
+				<h5>备注说明：</h5>
+				<p>{{storeM.storesList.remark||'暂无'}}</p>
+			</div>
+		</div>
+	</div>
+</div>

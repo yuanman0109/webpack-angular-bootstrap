@@ -1,0 +1,113 @@
+<ul class="breadcrumb">
+  <li>运营中心</li>
+  <li class="active">移动应用管理</li>
+</ul>
+<div class="mainContent" ng-controller="AppListsCtrl as app">
+  <div class="table-head form-inline">
+    <form class='form-inline'>
+      <div class="form-group">
+        <sel-allapp ng-model="app.getParame.name" holder="全部" type="APP_NAME"></sel-allapp>
+      </div>
+      <div class="form-group">
+        <div class="input-group date-form">
+          <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="app.startTime" is-open="app.startOpen" on-open-focus="false"  datepicker-options="app.startDateOps" ng-change="app.selDate( 'start')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="更新开始时间" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="app.startOpen=!app.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+        </div>
+        <div class="input-group date-form">
+          <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="app.endTime" is-open="app.endOpen" on-open-focus="false"  datepicker-options="app.endDateOps" ng-change="app.selDate( 'end')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="更新结束时间" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="app.endOpen=!app.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="请输入对外版本号" ng-model="app.getParame.displayVersion" ng-keyup="app.enterKeyup($event)">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-white" ng-click="app.searchBt()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <div class="content-box">
+    <div class="table-overflow">
+      <table class="table table-hover table-theadbg text-center table-common-theme">
+        <thead>
+          <tr>
+            <th>
+              <div>应用名称</div>
+            </th>
+            <th width="100">
+              <div>APP类型</div>
+            </th>
+            <th width="150">
+              <div>是否强制更新</div>
+            </th>
+            <th width="100">
+              <div>对外版本号</div>
+            </th>
+            <th width="100">
+              <div>实际版本号</div>
+            </th>
+            
+            <th>
+              <div>安装文件</div>
+            </th>
+            <th width="100">
+              <div>添加人</div>
+            </th>
+            <th width="160">
+              <div>更新时间</div>
+            </th>
+            <th width="150">
+              <div>操作</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in app.appLists">
+            <td class="text-overflow" title="{{item.name||'暂无'}}">
+              {{item.name||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{item.type=='ANDROID'?'安卓':item.type}}
+            </td>
+            <td class="text-overflow">
+              {{item.forceUpdated?'是':'否'}}
+            </td>
+            <td class="text-overflow">
+              {{item.displayVersion||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{item.version||'暂无'}}
+            </td>
+            <td class="text-overflow" title="{{item.url||'暂无'}}">
+              {{item.url||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{item.createUser||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{item.createTime |date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+            <td class="text-overflow">
+              <a ui-sref="application.appDetail({id:item.id})" ng-if="btnlist.APP_MGR_0103" class="btn btn-link btn-link-success">详情</a>
+              <a ng-click="app.deleteApp(item)" ng-if="btnlist.APP_MGR_0104" class="btn btn-link btn-link-danger">删除</a>
+            </td>
+          </tr>
+          <tr ng-if="!app.appLists || app.appLists.length == 0">
+            <td colspan="9" class="empty-box">暂无任何内容</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <button ng-if="btnlist.APP_MGR_0101" type="button" class="btn btn-primary" ui-sref="application.addApp">新增应用</button>
+      <ul uib-pagination total-items="app.total" ng-if="(app.total/app.getParame.pageSize)>1" items-per-page="app.getParame.pageSize" previous-text="<" max-size="5" boundary-link-numbers="true" next-text=">" ng-model="app.getParame.pageNo" ng-change="app.pageChanged()" class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="app.total>app.getParame.pageSize">共{{app.total}}条</b>
+    </div>
+  </div>
+</div>

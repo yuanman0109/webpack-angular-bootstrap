@@ -1,0 +1,83 @@
+<div class="page-store">
+  <div class="clearfix">
+    <ul class="breadcrumb pull-left">
+      <li>考勤管理</li>
+      <li>考勤打卡设置</li>
+    </ul>
+    <div class="pull-right">
+      <a ui-sref="store.compList" class="switch-link"><i class="iconfont icon-nb-w10"></i>企业模式</a>
+    </div>
+  </div>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="请输入考勤组名称搜索..." ng-model="ctrl.getParame.attendanceName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-theadbg table-customer table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>
+                <div>考勤组名称</div>
+              </th>
+              <th>
+                <div>考勤部门</div>
+              </th>
+              <th>
+                <div>打卡班次</div>
+              </th>
+              <th >
+                <div>修改人</div>
+              </th>
+              <th >
+                <div>修改时间</div>
+              </th>
+              <th >
+                <div>操作</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.list.length == 0">
+            <tr class="empty-tr">
+              <td colspan="7" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.list" ng-if="ctrl.list && ctrl.list.length > 0">
+              <td class="text-overflow"><span title="{{item.name|| '暂无'}}">{{item.name || '暂无'}}</span></td>
+              <td>
+                <span ng-if="item.business.length==0"> 暂无</span>
+                <busin-label business="item.business"></busin-label>
+              </td>
+              <td class="text-overflow"><span title="{{item.brandName|| '暂无'}}">{{item.brandName || '暂无'}}</span></td>
+              <td>{{item.provinceName+'-'+item.cityName+'-'+item.districtName}}</td>
+              <td>{{item.dishStyleName || '暂无'}}</td>
+              <td>
+                <button type="button" class="btn btn-link btn-link-success" ng-if="btnlist.CRM_0401" ui-sref="attendance.attendanceDetail({id:item.id,pageType:'detail'})">详情</button>
+                <button type="button" class="btn btn-link" ng-if="btnlist.CRM_0407" ng-click="ctrl.modifyUser(item)">删除</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group">
+              <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0403" ui-sref="attendance.addAttendance({chargeId:0,pageType:'addNew'})">新建考勤打卡设置</button>
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

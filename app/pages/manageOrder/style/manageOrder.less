@@ -1,0 +1,271 @@
+/*公用表格*/
+.content-table-manage-order{
+  .chargeMoudleSection{
+    width:100%;
+    min-width:1050px;
+    max-width:100%;
+    .theTableHead{
+      line-height: 26px;
+      margin-bottom:10px;
+      border-bottom:1px solid #ECECEC;
+      .content{
+        color:#2A2A2A;
+        margin-right:20px;
+      }
+      .right-link-btn{
+        margin:-5px 50px;
+      }
+    }
+    .sectionTable{        
+      tr{
+        td{
+          vertical-align: middle;
+          word-wrap:break-word;  
+        }
+        .hadPay{
+          color:#EEA465 ;
+        }
+        .noPay{
+          color:#333;
+        }
+        .canceled{
+          color:#999;
+        }
+        .haveOneBtn{
+          padding:0;
+        }
+        .special{
+          padding:0;
+          text-align: left;
+          .btn{
+            padding:8px;
+          }
+        }
+      } 
+    }
+  }
+  .btnMouleCharges{
+    margin-top:70px;
+  }
+}
+/*服务费订单*/
+.page-charge-order{
+  .mainContent{
+    .table-head{
+      select.selectPrice{
+        width:140px;
+      }
+      input.searchBox{
+        width:280px;
+      }
+      .date-form{
+        width:140px;
+        input{
+          width:125px;
+        }
+      }
+    }
+  }
+  .content-box{
+    .table-theadbg{
+      // thead tr th:first-child div{
+      //   padding-left:35px;
+      // }
+    }
+  }
+}
+
+/*订单详情*/
+.chargesOrderDetail{
+  .warmColor{
+    color:#EEA465;
+  }
+  .waitColor{
+    color:#DF7878;
+  }
+  .noPay{
+    color:#333;
+  }
+  .content-box{
+    .charges-content-list{
+      overflow:auto;
+      margin-bottom:15px;
+      dl{
+        dt.changeFeeTitle{
+          line-height:32px;
+        }
+        dd{
+          .chargesTable-detail{
+            margin-bottom:0;
+            thead tr th{
+              width:100px;
+            }
+            tbody td{
+              word-wrap:break-word;
+            }
+          }
+          .change-order-fee{
+            width:250px;
+            display: inline-block;
+            -moz-appearance: textfield;
+          }
+          .change-order-fee::-webkit-inner-spin-button,
+          .change-order-fee::-webkit-outer-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+          }
+          .validateInput{
+            display: inline-block;
+            padding-left:20px;
+          }
+        }
+      } 
+         
+    }
+  }
+}
+
+/*服务费配置*/
+.chargesConfigContent{
+  .content-box{
+    .table-theadbg{
+      thead tr th:first-child div{
+        padding-left:44px;
+      }
+    }
+  }
+}
+
+/*新增服务费*/
+.addChargesContent{
+  .content-box{
+    padding:60px 20px;
+    overflow:auto;
+    // .remindTime{
+    //   padding-right:10px;
+    //   .form-control{
+    //     width:32%;
+    //     min-width:72px;
+    //     display:inline-block;
+    //     padding:6px;
+    //   }
+    // }
+    .choostTime{
+      padding-right:0;
+      padding-left:10px;
+      position: relative;
+      .timeBtn{
+        cursor: pointer;
+        user-select: none;
+      }
+      .timeBtn:disabled{
+        cursor: not-allowed;
+      }
+      .timeControl{
+        position: absolute;
+        right:-220px;
+        top:-34px;
+      }
+    }
+    .chargeConfigDetail{
+      padding:25px 20px 0;
+      table{
+        thead{
+          tr{
+            th{
+              vertical-align: middle;
+            }
+          }          
+        }
+        tbody{ 
+          tr{
+            td{
+              overflow: hidden;
+              .addNewLine{
+                display:none;
+              }
+            }
+            td:last-child{
+              border:none;
+              text-align: left;
+            }
+            .newAndOld{
+              text-align:center;
+              .form-control{
+                display:inline-block;
+                width:48%;
+                padding:6px;
+              }
+            }
+            .specialFormControl{
+              padding:6px 3px;
+            }
+            .deleteData{
+              text-align: center;
+              padding:8px 6px;
+              .form-control{
+                display:inline-block;
+                width:40px;
+                margin-right:3px;
+                padding:6px 3px;
+              }
+              .specialSelect{
+                width:30%;
+              }
+            }
+            .goShow{
+              text-align:center;
+            } 
+          }
+          tr:last-child{
+            td:last-child{
+              .addNewLine{
+                display:inline-block;
+              }
+            }
+          } 
+        }  
+        .hadBorder{
+          border: 1px solid #D3DCE1;
+        }
+        
+      }
+    }
+  }
+}
+
+// 试用费设置
+.trialFeeContent{
+  .content-box{
+    padding:60px 20px;
+    overflow:auto;
+    .tipWord{
+      font-size:12px;
+      color:#999;
+      float:right;
+      padding-right:246px;
+      padding-top:8px;
+    }
+    .choostTime{
+      padding-right:0;
+      padding-left:10px;
+      position: relative;
+      .timeBtn{
+        cursor: pointer;
+        user-select: none;
+      }
+      .timeControl{
+        position: absolute;
+        right:-220px;
+        top:-34px;
+      }
+    }
+  }
+}
+// 试用费订单
+.page-TrialOrdersList{
+  .searchText input{
+    min-width:240px;
+  }
+}
+

@@ -1,113 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//at.alicdn.com/t/font_jbm0zyecuxwp14i.css">
-    </head>
-    <body ng-app="app" ng-controller="appCtrl">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">后台管理</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <div class="formSel navbar-left">
-                        <select class="form-control">
-                            <option>全部模块</option>
-                            <option>全部模块</option>
-                            <option>全部模块</option>
-                            <option>全部模块</option>
-                            <option>全部模块</option>
-                        </select>
-                        <div class="selIcon">
-                            <i class="iconfont icon-xiala"></i>
-                        </div>
-                    </div>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                        <input type="text" class="form-control" placeholder="输入关键词......">
-                        </div>
-                        <button type="submit" class="btn btn-primary">搜索</button>
-                    </form>
-                    <div class="userInfo  navbar-right">
-                        <div class="btn-group navbar-user pull-left" uib-dropdown>
-                            <button id="userinfo-button" type="button" class="btn btn-default" uib-dropdown-toggle>
-                                <span>李雷雷...<br/><small>超级管理员</small></span> <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="userinfo-button">
-                                <li role="menuitem"><a href="#">Action</a></li>
-                                <li role="menuitem"><a href="#">Another action</a></li>
-                                <li role="menuitem"><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li role="menuitem"><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                        <div class="userHead pull-left">
-                            <img src="./app/images/userdef.jpg" alt="李雷雷">
-                        </div>
-                    </div>
-                    <button type="button" class="navbar-right btn noticeBt" ui-sref="messageCenter"><i class="iconfont icon-xingzhuang5kaobei2"></i><span class="badge">6</span></button>
-                </div>
-            </div>
-        </nav>
-        <div class="container-fluid">
-        <div class="row">
-            <div class="sidebar">
-                <div class="nav-sidebar" >
-                    <h4 ng-class="{active: $state.includes('userLists')||$state.includes('roleManagerLists')}"><i class="iconfont icon-shenfenzheng"></i><span>账户管理</span></h4>
-                    <div class="list-group">
-                        <a ui-sref-active-eq="active" ui-sref="userLists" class="list-group-item">账户列表</a>
-                        <a ui-sref-active-eq="active" ui-sref="roleManagerLists" class="list-group-item">角色管理</a>
-                        <a href="#" class="list-group-item">操作记录</a>
-                    </div>
-                </div>
-                <div class="nav-sidebar">
-                    <h4 ng-class="{active: $state.includes('customerLists')||$state.includes('addStore')||$state.includes('customerManager')}" ui-sref="customerManager"><i class="iconfont icon-tie-o"></i><span>客户管理</span></h4>
-                    <div class="list-group">
-                        <a ui-sref-active-eq="active" ui-sref="customerLists" class="list-group-item">客户列表</a>
-                    </div>
-                </div>
-                <div class="nav-sidebar">
-                    <h4><i class="iconfont icon-naozhong1"></i><span>资产管理</span></h4>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">资产列表</a>
-                    </div>
-                </div>
-                <div class="nav-sidebar">
-                    <h4><i class="iconfont icon-canyinHD"></i><span>餐厅设置</span></h4>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">餐厅列表</a>
-                    </div>
-                </div>
-                <div class="nav-sidebar">
-                    <h4 ng-class="{active: $state.includes('networkManager')}"><i class="iconfont icon-diannao"></i><span>WiFi管理</span></h4>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">设备监控</a>
-                        <a href="#" ui-sref="networkManager" class="list-group-item">网络管理</a>
-                        <a href="#" class="list-group-item">WiFi广告</a>
-                    </div>
-                </div>
-                <div class="nav-sidebar">
-                    <h4><i class="iconfont icon-caiwu"></i><span>财务管理</span></h4>
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">提现申请</a>
-                        <a href="#" class="list-group-item">采购审批</a>
-                    </div>
-                </div>
-            </div>
-            <div class="main">
-                <ui-view></ui-view>
-            </div>
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit"/>
+  <meta name="description" content=""/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta http-equiv="pragma" content="no-cache"/> 
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/>
+  <link rel="stylesheet" href="/tpl/bootstrap-3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_m2zoljxn06yldi.css"/>  
+
+  <script async charset="utf-8" src="//at.alicdn.com/t/font_m2zoljxn06yldi.js"></script>
+
+</head>
+
+<body ng-app="app" ng-strict-di>
+  <div ng-controller="appCtrl">
+    <div class="loading-container" ng-show="isLoading">
+      <div class="loadImg"></div>
+    </div>
+    <div ui-view="header"></div>
+    <div class="container-fluid">
+      <div class="row">
+        <div ui-view="sidebar"></div>
+        <div class="main" ng-class="{'main-large':sidebarBt}">
+          <div ui-view="main" class="main-wrapper"></div>
         </div>
-        <script src="./bundle.js"></script>
-    </body>
+      </div>
+    </div>
+    <script type="text/ng-template" id="group-template.html">
+      <h4 tabindex="0" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+        <uib-accordion-header>
+          {{heading}}
+        </uib-accordion-header>
+      </h4>
+      <div class="panel-collapse collapse" uib-collapse="!isOpen">
+        <div ng-transclude></div>
+      </div>
+    </script>
+    <!--提示-->
+    <script type="text/ng-template" id="remind.html">
+      <div class="modal-body modal-box">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href='' ng-href='{{$ctrl.status==0 ? "#icon-nb-l12":"#icon-nb-l14"}}'></use>
+        </svg>
+        <p>{{$ctrl.message}}</p>
+      </div>
+    </script>
+  </div>
+  <toaster-container toaster-options="{'animation-class': 'toast-top-left'}"></toaster-container>
+</body>
+
 </html>

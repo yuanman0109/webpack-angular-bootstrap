@@ -1,0 +1,229 @@
+<ul class="breadcrumb">
+    <li>考勤管理</li>
+    <li><a ui-sref="attendance.set">考勤打卡设置</a></li>
+    <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent attendance">
+    <div class="content-box" ng-controller="AddAttendanceCtrl as ctrl">
+      <div class="container">
+        <form class="form-horizontal" role="form" name="addAttendance" id="addAttendance" novalidate>
+          
+          <div class="form-group" ng-class="{'has-success':addAttendance.name.$valid && addAttendance.name.$dirty,'has-error':addAttendance.name.$invalid && addAttendance.name.$dirty}">
+            <label class="col-sm-4 control-label"><span class="text-danger">* </span>考勤组名称：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-8 row">
+                    <input ng-disabled="ctrl.btnStatus" type="text" class="form-control" name="name"  placeholder="" ng-model="ctrl.basicInfo.name" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="50" maxlength="50" required>
+                </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addAttendance.depts.$valid && addAttendance.depts.$dirty,'has-error':addAttendance.depts.$invalid && addAttendance.depts.$dirty}">
+              <label class="col-sm-4 control-label"><span class="text-danger">* </span>考勤部门：</label>
+              <div class="col-sm-7 row">
+                  <div class="col-xs-8 row">
+                      <input ng-disabled="ctrl.btnStatus" type="text" readonly="readonly" class="form-control" name="depts" placeholder="" ng-model="ctrl.deptsName" ng-maxlength="100" maxlength="100" required> 
+                  </div>
+                  <div class="col-xs-3 row margin-l10p">
+                    <button type="button" class="btn btn-shallow" ng-click="ctrl.selDepts()">选择部门</button>
+                </div>
+              </div>
+          </div>
+          
+          <div class="form-group">
+                <label class="col-sm-4 control-label"><span class="text-danger">* </span>打卡班次：</label>
+                <div class="col-sm-7 row">
+                  <label class="checkbox-inline">
+                    <input ng-disabled="ctrl.btnStatus" type="checkbox" name="flag"   ng-model="ctrl.selectIn"><i class="iconfont"></i> 上班打卡
+                  </label>
+                  <label class="checkbox-inline">
+                    <input ng-disabled="ctrl.btnStatus" type="checkbox" name="flag"  ng-model="ctrl.selectOut"><i class="iconfont"></i> 下班打卡
+                  </label>
+                </div>
+              </div>
+
+          <div ng-if="ctrl.selectIn" class="form-group" ng-class="{'has-success':addAttendance.onAddress.$valid && addAttendance.onAddress.$dirty,'has-error':addAttendance.onAddress.$invalid && addAttendance.onAddress.$dirty}">
+            <label for="" class="col-sm-4 control-label">上班打卡地址：</label>
+            <div class="col-sm-8 row">
+                <div class="col-xs-7 row">
+                    <input type="text" ng-disabled="ctrl.btnStatus" class="form-control" name="onAddress" readonly="readonly" placeholder="请点击标记考勤点获取考勤地址，不填则不限制范围" ng-maxlength="500" maxlength="500" irregular="[\s\r\n\'\0x34‘“”’]" ng-model="ctrl.checkIn.onAddress" >
+                </div>
+                <div class="col-xs-3 row margin-l10p">
+                    <button type="button" class="btn btn-shallow" ng-click="ctrl.openMap('onAddress')">标记考勤地址</button>
+                    <!-- <span>　若没有找到对应门店，请先在高德地图上进行标示。<a href="http://map.amap.com/help/index.html?type=addpoi" target="_blank">点击查看标注方式</a></span> -->
+                    <input type="hidden" name="poiId" ng-model="ctrl.checkIn.poiId">
+                    <span class="help-block" ng-if="addAttendance.cityCode.$invalid && addAttendance.cityCode.$dirty">考勤地址是否正确！</span>checkIn
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="ctrl.selectOut" class="form-group" ng-class="{'has-success':addAttendance.offAddress.$valid && addAttendance.offAddress.$dirty,'has-error':addAttendance.offAddress.$invalid && addAttendance.offAddress.$dirty}">
+            <label for="" class="col-sm-4 control-label">下班打卡地址：</label>              
+            <div class="col-sm-7 row">
+                <div class="col-xs-8 row">
+                    <input ng-disabled="ctrl.btnStatus" readonly="readonly" type="text" class="form-control" name="offAddress" ng-maxlength="30" maxlength="30" placeholder="请点击标记考勤点获取考勤地址，不填则不限制范围" ng-model="ctrl.checkOut.offAddress">
+                </div>
+                <div class="col-xs-3 row margin-l10p">
+                    <button type="button" class="btn btn-shallow" ng-click="ctrl.openMap('offAddress')">标记考勤地址</button>
+                    <!-- <span>　若没有找到对应门店，请先在高德地图上进行标示。<a href="http://map.amap.com/help/index.html?type=addpoi" target="_blank">点击查看标注方式</a></span> -->
+                    <input type="hidden" name="poiId" ng-model="ctrl.checkOut.poiId">
+                    <span class="help-block" ng-if="addAttendance.cityCode.$invalid && addAttendance.cityCode.$dirty">考勤地址是否正确！</span>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="ctrl.selectIn||ctrl.selectOut" class="form-group" ng-class="{'has-success':addAttendance.punchRange.$valid && addAttendance.punchRange.$dirty,'has-error':addAttendance.punchRange.$invalid && addAttendance.punchRange.$dirty}">
+            <label for="" class="col-sm-4 control-label">打卡误差范围：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-3 row">
+                    <input ng-disabled="ctrl.btnStatus" type="number" step='0.01' ng-max="9999.99"  ng-model="ctrl.basicInfo.punchRange" name="punchRange" class="form-control">
+                </div>
+                <div class="col-xs-7">
+                    <p class="form-control-static">米</p>
+                </div>
+            </div>
+        </div>
+        <div ng-if="ctrl.selectIn" class="form-group" ng-class="{'has-success':addAttendance.logo.$valid,'has-error':addAttendance.logo.$invalid && addAttendance.logo.$dirty}">
+            <label for="" class="col-sm-4 control-label"><span class="text-danger">* </span>上班打卡时间范围：</label>
+            <div class="col-sm-7 row margin-b10p">
+                <div class="col-xs-5 row">
+                    <!-- <input class="form-control timeBtn" type="text" ng-disabled="ctrl.btnStatus" readonly="readonly" ng-value="ctrl.resultTime" placeholder="选择时间" ng-click="ctrl.inputBtn()" required/> -->
+                    <time-picker time="ctrl.checkInBeginTime" is-seconds="true" class="" callback="ctrl.changedTime('checkIn','beginTime','checkInBeginTime')" ng-disabled="ctrl.btnStatus"></time-picker>
+                </div>
+                <div class="col-xs-1 row margin-t10p" >-</div>
+                <div class="col-xs-5 row">
+                    <time-picker time="ctrl.checkInEndTime" is-seconds="true" class="" callback="ctrl.changedTime('checkIn','endTime','checkInEndTime')"  ng-disabled="ctrl.btnStatus"></time-picker>
+                </div>
+            </div>
+        </div>
+        <div ng-if="ctrl.selectOut" class="form-group" ng-class="{'has-success':addAttendance.logo.$valid,'has-error':addAttendance.logo.$invalid && addAttendance.logo.$dirty}">
+            <label for="" class="col-sm-4 control-label"><span class="text-danger">* </span>下班打卡时间范围：</label>
+            <div class="col-sm-7 row margin-b10p">
+                <div class="col-xs-5 row">
+                    <time-picker time="ctrl.checkOutBeginTime" is-seconds="true" class="" callback="ctrl.changedTime('checkOut','beginTime','checkOutBeginTime')"  ng-disabled="ctrl.btnStatus"></time-picker>
+                </div>
+                <div class="col-xs-1 row margin-t10p" >-</div>
+                <div class="col-xs-5 row">
+                    <time-picker time="ctrl.checkOutEndTime" is-seconds="true" class="" callback="ctrl.changedTime('checkOut','endTime','checkOutEndTime')" ng-disabled="ctrl.btnStatus"></time-picker>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success':addAttendance.week.$valid && addAttendance.week.$dirty,'has-error':addAttendance.week.$invalid && addAttendance.week.$dirty}">
+            <label class="col-sm-4 control-label">工作周期：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-12 row">
+                    <label class="checkbox-inline" ng-repeat="bus in ctrl.week">
+                        <input ng-disabled="ctrl.btnStatus" type="checkbox" name="week" ng-model="bus.select" ng-change="ctrl.weekChange(bus)"><i class="iconfont"></i> {{bus.name}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-success':addAttendance.addWork.$valid && addAttendance.addWork.$dirty,'has-error':addAttendance.addWork.$invalid && addAttendance.addWork.$dirty}">
+            <label for="" class="col-sm-4 control-label">添加工作日期：</label>
+            <div class="col-sm-6 row">
+                <div class="input-group col-xs-9  form-control">
+                    <p ng-repeat="(key,item) in ctrl.addWorkArr" class="col-xs-2 addWork" >
+                            <span  class="margin-r10p" readonly="readonly"   ng-bind="item.workDay"></span>
+                            <i class="iconfont icon-shanchu-copy" ng-click="ctrl.deleteAdd(key,'addWorkArr')"></i>
+                    </P>
+                    <input ng-disabled="ctrl.btnStatus"  type="hidden" readonly="readonly" class="" uib-datepicker-popup="MM/dd" ng-model="ctrl.addWork" is-open="ctrl.addWorkOpen"
+                        on-open-focus="false" datepicker-options="ctrl.dateOptions" ng-change="ctrl.selDate('addWorkArr','addWork')"
+                        current-text="今天" clear-text="清除" close-text="关闭" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="ctrl.isAddOpen()"><i class="iconfont icon-CombinedShape1"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':addAttendance.removeWork.$valid && addAttendance.removeWork.$dirty,'has-error':addAttendance.removeWork.$invalid && addAttendance.removeWork.$dirty}">
+            <label for="" class="col-sm-4 control-label">排除工作日期：</label>
+            <div class="col-sm-6 row">
+                <div class="input-group col-xs-12  form-control">
+                    <p ng-repeat="(key,item) in ctrl.removeWorkArr" class="col-xs-2 addWork" >
+                        <span  class="margin-r10p" readonly="readonly"   ng-bind="item.workDay"></span>
+                        <!-- <input type="text" class="col-xs-9" readonly="readonly"  uib-datepicker-popup="MM/dd" ng-model="item.workDay"/> -->
+                        <i class="iconfont icon-shanchu-copy" ng-click="ctrl.deleteAdd(key,'removeWorkArr')"></i>
+                    </P>
+                    <input ng-disabled="ctrl.btnStatus"  type="hidden" readonly="readonly" class="" uib-datepicker-popup="MM/dd" ng-model="ctrl.removeWork" is-open="ctrl.removeWorkOpen"
+                        on-open-focus="false" datepicker-options="ctrl.removeOptions" ng-change="ctrl.selDate('removeWorkArr','removeWork')"
+                        current-text="今天" clear-text="清除" close-text="关闭" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.isRmoveOpen()"><i class="iconfont icon-CombinedShape1"></i></button>
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':addAttendance.adminUsers.$valid,'has-error':addAttendance.adminUsers.$invalid && addAttendance.adminUsers.$dirty}">
+            <label for="" class="col-sm-4 control-label">考勤管理员：</label>
+            <div class="col-sm-7 row">
+                <div class="col-xs-8 row">
+                    <ui-select ng-disabled="ctrl.btnStatus" multiple ng-model="ctrl.basicInfo.adminUsers" name="adminUsers" theme="bootstrap" 
+                    title="考勤管理员" sortable="true" close-on-select="false">
+                    <ui-select-match placeholder="" ng-click="">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="user.id as user in ctrl.userList | filter: $select.search" refresh="ctrl.getUserName($select.search)"
+                    refresh-delay="500">
+                    <div ng-bind-html="user.name | highlight: $select.search"></div>
+                    <small>
+                        工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                        部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                    </small>
+                    </ui-select-choices>
+                </ui-select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-7 row">
+                <div class="row">
+                    <button ng-if="btnlist.ORDER_MGR_0102 && ctrl.btnStatus" type="button" class="btn btn-primary" ui-sref="attendance.modifyAttendance({id:ctrl.id,pageType:'edit'})">编辑修改</button>                        
+                    <button ng-if='!ctrl.btnStatus' type="submit" class="btn btn-primary"  ng-click="ctrl.saveAttendance()">确认提交</button>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+<script type="text/ng-template" id="openMap.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">地图</h4>
+        <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="mapContainer">
+            <a-map sel="$ctrl.sel()" seldata="$ctrl.seldata"></a-map>
+            <div class="searchmap">
+                <input type="text" id="keywords" class="form-control" name="addressInp" placeholder="请输入关键字：(回车后搜索)"/>
+            </div>
+            <div class="searchList">
+              <div id="panel">
+                <ul id="myList"></ul>
+                <div class="pagin-wrapper">
+                  <ul id="pagination-demo" class="pagination-sm"></ul>
+                </div>
+              </div>
+            </div>
+            <div id="tip">
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="selDepts.html">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">选择部门</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body selCity-box" id="modal-body">
+      <label class="checkbox-inline">
+                <input type="checkbox" ng-model="$ctrl.isAllcities" ng-change="$ctrl.selectAllCities($ctrl.isAllcities)">
+                <i class="iconfont"></i>
+                <span>全国</span>
+            </label>
+      <div ivh-treeview="$ctrl.depts" ivh-treeview-options="$ctrl.cityOpts" ivh-treeview-on-cb-change="$ctrl.changeCallback(ivhNode)" ivh-treeview-node-tpl="$ctrl.tpl">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="$ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+    </div>
+  </script>

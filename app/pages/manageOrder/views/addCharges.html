@@ -1,0 +1,129 @@
+<ul class="breadcrumb">
+  <li>订单管理</li>
+  <li><a ui-sref="manageOrder.chargesConfig">基础服务费设置</a></li>
+  <li class="active">{{ctrl.pageType | configTopFilter}}</li>
+</ul>
+<div class="mainContent addChargesContent">
+  <div class="content-box">
+    <form class="form-horizontal" name="chargesConfig" novalidate>
+      <div class="container">
+        <div class="form-group" ng-class="{'has-success':chargesConfig.chargeName.$valid && chargesConfig.chargeName.$dirty,'has-error':chargesConfig.chargeName.$invalid && chargesConfig.chargeName.$dirty}">
+          <label for="chargeName" class="col-sm-5 control-label"><strong class="text-danger">*</strong>服务费类目名：</label>
+          <div class="col-sm-4 row">
+            <input type="text" name="chargeName" ng-model="ctrl.configDetail.name" id="chargeName" maxlength="200" class="form-control" placeholder="服务费类目名" ng-disabled="ctrl.btnStatus" required>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':chargesConfig.businessType.$valid && chargesConfig.businessType.$dirty,'has-error':chargesConfig.businessType.$invalid && chargesConfig.businessType.$dirty}">
+          <label for="businessType" class="col-sm-5 control-label"><strong class="text-danger">*</strong>业务类型：</label>
+          <div class="col-sm-4 row">
+            <select class="form-control" name="businessType" id="businessType" ng-disabled="ctrl.btnStatus" ng-model="ctrl.configDetail.businessId" ng-options="type.dataCode as type.dataName for type in ctrl.businessTypes" required>
+              <option value="">请选择业务类型</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div ng-class="{'has-success':chargesConfig.remind.$valid && chargesConfig.remind.$dirty,'has-error':chargesConfig.remind.$invalid && chargesConfig.remind.$dirty}">
+              <label for="remind" class="col-sm-5 control-label"><strong class="text-danger">*</strong>到期提醒：</label>
+              <div class="col-sm-3 row">
+                <input type="number" id="remind" name="remind" class="form-control" ng-model="ctrl.configDetail.aheadDays" min="1" max="30" ng-pattern="/^[0-9]+$/" ng-disabled="ctrl.btnStatus" placeholder="请输入提前提醒天数" required>
+              </div>
+          </div>
+          <div class="col-sm-1 choostTime">
+              <input class="form-control timeBtn" type="text" ng-disabled="ctrl.btnStatus" readonly="readonly" ng-value="ctrl.resultTime" placeholder="选择时间" ng-click="ctrl.inputBtn()" required/>
+              <div class="timeControl" ng-show="ctrl.showTimeControl" uib-timepicker ng-model="ctrl.chooseTime" ng-change="ctrl.changedTime()" hour-step="1" minute-step="1" show-seconds="true" second-step="1" show-meridian="false"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comments" class="col-sm-5 control-label">备注说明：</label>
+          <div class="col-sm-4 row">
+            <textarea class="form-control" id="comments" rows="3" ng-model="ctrl.configDetail.description" ng-disabled="ctrl.btnStatus" maxlength="600"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="admin" class="col-sm-5 control-label">服务费管理员：</label>
+          <div class="col-sm-3 row">
+            <ui-select ng-model="ctrl.userData.name" name="admin" theme="bootstrap" ng-disabled="ctrl.btnStatus" on-select="ctrl.selCallback($select.selected)"
+              reset-search-input="false" title="选择管理员">
+              <ui-select-match placeholder="输入姓名，设置后用于接受到期提醒">{{$select.selected.name || ctrl.userData.name}}</ui-select-match>
+              <ui-select-choices repeat="user.name as user in ctrl.userList track by $index" refresh="ctrl.getInfoFormName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+              </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-1 choostTime">
+              <input type="button" ng-disabled="ctrl.btnStatus" class="form-control" value="清空" ng-click="ctrl.resetChargeManger()">
+          </div>
+        </div>
+      </div>
+        
+      <div class="form-group chargeConfigDetail">
+          <table class="table  text-center">
+            <thead>
+            <tr>
+              <th class="hadBorder" width="100px"><strong class="text-danger">*</strong>服务有效期</th>
+              <th class="hadBorder" width="200px"><strong class="text-danger">*</strong>销售单价</th>
+              <th class="hadBorder" width="75px">试用期</th>
+              <th class="hadBorder" width="75px">到期延期</th>
+              <th class="hadBorder" width="120px">状态</th>
+              <th class="hadBorder" width="150px">说明</th>
+              <th width="150px">
+                <!--<a ng-if='!ctrl.btnStatus && ctrl.configDetail.periodConfigs.length===ctrl.controlNumber && ctrl.addControl' class="btn btn-link btn-link-success" ng-click="ctrl.addNewLine()">+添加</a>-->
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="period in ctrl.configDetail.periodConfigs" ng-if="!period.isHidden">
+                <td class="hadBorder" ng-class="{'has-success':chargesConfig.validPeriod.$valid && chargesConfig.validPeriod.$dirty,'has-error':chargesConfig.validPeriod.$invalid && chargesConfig.validPeriod.$dirty}">
+                  <select ts="{{$index}}" class="form-control specialFormControl" name="validPeriod" ng-disabled="ctrl.btnStatus" ng-model="period.validPeriod" ng-options="per.dataCode as per.dataName for per in ctrl.validPeriodListItem" ng-change="ctrl.changeValidPeriod()" required>
+                    <option value="">请选择</option>
+                  </select>
+                </td>
+                <td class="hadBorder newAndOld">
+                  <span ng-class="{'has-success':chargesConfig.price1.$valid && chargesConfig.price1.$dirty,'has-error':chargesConfig.price1.$invalid && chargesConfig.price1.$dirty}">
+                    <input class="form-control" name="price1" type="text" ng-model="period.unitPrice" placeholder="现价(0~999999.99)" ng-disabled="ctrl.btnStatus" ng-pattern="/^([1-9]\d{0,5}(\.\d{0,2})?|0\.(([1-9]\d?)|(\d[1-9])))$/" required>
+                  </span>
+                  <span ng-class="{'has-success':chargesConfig.price2.$valid && chargesConfig.price2.$dirty,'has-error':chargesConfig.price2.$invalid && chargesConfig.price2.$dirty}">
+                    <input class="form-control" name="price2" type="text" ng-model="period.originPrice" placeholder="原价(0~999999.99)" ng-disabled="ctrl.btnStatus" ng-pattern="/^([1-9]\d{0,5}(\.\d{0,2})?|0\.(([1-9]\d?)|(\d[1-9])))$/" required>
+                  </span>                 
+                </td>
+                <td class="hadBorder deleteData">
+                  <input class="form-control" type="text" ng-model="period.freePeriod" ng-pattern="/^[0-9]\d{0,2}$/" ng-keyup="ctrl.validDay(ctrl.configDetail.periodConfigs[$index].freePeriod)" ng-disabled="ctrl.btnStatus" maxlength="3">天                  
+                </td>
+                <td class="hadBorder deleteData">
+                  <input class="form-control" type="text" ng-model="period.delayPeriod" ng-pattern="/^[0-9]\d{0,2}$/" ng-keyup="ctrl.validDay(ctrl.configDetail.periodConfigs[$index].delayPeriod)" ng-disabled="ctrl.btnStatus" maxlength="3">天
+                </td>
+                <td class="hadBorder goShow">
+                  <label class="radio-inline">
+                    <input type="radio" name="goShow{{$index}}" value="true" ng-value="true" ng-model="period.status"  ng-disabled="ctrl.btnStatus">
+                    <i class="iconfont"></i>上架
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="goShow{{$index}}" value="false" ng-value="false" ng-model="period.status"  ng-disabled="ctrl.btnStatus">
+                    <i class="iconfont"></i>下架
+                  </label>
+                </td>
+                <td class="hadBorder">
+                  <input class="form-control" type="text" placeholder="说明" ng-model="period.description" maxlength="600" ng-disabled="ctrl.btnStatus">
+                </td>
+                <td>
+                  <a ng-if='!ctrl.btnStatus && ctrl.configDetail.periodConfigs.length-ctrl.controlNumber!==1' class="btn btn-link btn-link-danger" ng-click="ctrl.deleteLine($index)">-删除</a>
+                  <a ng-if='!ctrl.btnStatus && ctrl.addControl' class="btn btn-link btn-link-success addNewLine" ng-click="ctrl.addNewLine()">+添加</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>      
+      </div>
+      <p ng-if="ctrl.validDayStatus" class="text-danger text-center">**请输入正确天数，不能大于365天**</p>
+      <p ng-if="ctrl.itSamePeriod" class="text-danger text-center">**不能设置相同的服务有效期**</p>
+      <div class="text-center">
+        <button ng-if="btnlist.ORDER_MGR_0102 && ctrl.btnStatus" type="button" class="btn btn-primary" ui-sref="manageOrder.addCharges({chargeId:ctrl.chargeId,pageType:'edit'})">编辑修改</button>
+        <button ng-if='!ctrl.btnStatus' type="button" class="btn btn-primary"  ng-disabled="chargesConfig.$invalid || ctrl.commitStatus || ctrl.timeCommit || ctrl.itSamePeriod || ctrl.validDayStatus" ng-click="ctrl.saveEdit()">确认提交</button>
+      </div>
+    </form>
+  </div>
+</div>

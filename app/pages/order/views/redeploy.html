@@ -1,0 +1,74 @@
+<div class="page-order-redeploy">
+  <ul class="breadcrumb">
+    <li class="active">工单中心</li>
+    <li class="active">一键转派</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <form class="form-horizontal" name="redeform">
+        <div class="remark">
+          <p class="redeploy-reminder">
+            <i class="span4 iconfont icon-icon116"></i>
+            <span>备注：此功能将把原接单人所有待处理的任务全部转派给新接单人，主要用于员工离职工作交接，请确认无误再操作。</span>
+          </p>
+        </div>
+
+        <div class="auto-form">
+          <div class="form-group">
+            <label class="col-md-3 col-xs-2 col-sm-2 col-lg-2 control-label"><strong class="text-danger">*</strong>原接单人：</label>
+            <div class="col-md-7 col-xs-4 col-sm-4 col-lg-10">
+              <div class="col-xs-12 col-sm-10 col-md-6 col-lg-5">
+                <ui-select name="oldReceiverName" ng-model="ctrl.getParame.oldReceiverName" ng-maxlength="10" maxlength="10" ng-pattern="/^[a-zA-Z\u4e00-\u9fa5]{1,10}$/" on-select="ctrl.selCallback($select.selected,1)" required>
+                  <ui-select-match>{{$select.selected}}</ui-select-match>
+                  <ui-select-choices style="overflow:scroll" repeat="item in ctrl.oldList | filter:$select.search" refresh="ctrl.getUserResearch($select.search,true)">
+                    <div>
+                      <span ng-bind-html="item.name | highlight: $select.search"></span>&nbsp;-&nbsp;
+                      <span ng-bind-html="item.deptName | highlight: $select.search"></span>&nbsp;-&nbsp;
+                      <span ng-bind-html="item.userNo | highlight: $select.search"></span>
+                    </div>
+                  </ui-select-choices>
+                </ui-select>
+
+              </div>
+            </div>
+          </div>
+          <div class="form-group clearfix">
+            <label class="col-md-3 col-xs-2 col-sm-2 col-lg-2 control-label"><strong class="text-danger">*</strong>现接单人：</label>
+            <div class="col-md-7 col-xs-4 col-sm-4 col-lg-10">
+              <div class="col-xs-12 col-sm-10 col-md-6 col-lg-5">
+                <ui-select name="newReceiverName" ng-model="ctrl.getParame.newReceiverName" ng-maxlength="10" maxlength="10" ng-pattern="/^[a-zA-Z\u4e00-\u9fa5]{1,10}$/" on-select="ctrl.selCallback($select.selected,2)" required>
+                  <ui-select-match>{{$select.selected}}</ui-select-match>
+                  <ui-select-choices style="overflow:scroll" repeat="item in ctrl.newList | filter:$select.search" refresh="ctrl.getUserResearch($select.search)">
+                    <div>
+                      <span ng-bind-html="item.name | highlight: $select.search"></span>&nbsp;-&nbsp;
+                      <span ng-bind-html="item.deptName | highlight: $select.search"></span>&nbsp;-&nbsp;
+                      <span ng-bind-html="item.userNo | highlight: $select.search"></span>
+                    </div>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+              <span class="text-danger col-sm-6" ng-if="ctrl.getParame.oldReceiverName == ctrl.getParame.newReceiverName && redeform.newReceiverName.$dirty && ctrl.getParame.oldReceiverName!=null">
+                原接单人和现接单人不能是同一个人
+              </span>
+            </div>
+
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-3 col-xs-2 col-sm-2 col-lg-2 control-label">说&nbsp;&nbsp;明：</label>
+            <div class="col-md-7 col-xs-4 col-sm-4 col-lg-10">
+              <div class="col-xs-12 col-sm-10 col-md-6 col-lg-5">
+                <textarea rows="" cols="" class="form-control" ng-model="ctrl.getParame.forwardDesc" maxlength="500" placeholder="不能超过500个字符"></textarea>
+                <!--<span class="text-danger" ng-if="!ctrl.getParame.forwardDesc && ctrl.getParame.forwardDesc!=''">不能超过500个字符</span>-->
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-9 col-xs-7 col-sm-7 col-lg-8 text-center">
+              <button type="button" class="btn btn-primary" ng-disabled="redeform.$invalid" ng-click="ctrl.getRedeploy()">确认提交</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

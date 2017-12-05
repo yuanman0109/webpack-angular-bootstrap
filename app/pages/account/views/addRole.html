@@ -1,0 +1,44 @@
+<!--添加角色-->
+<ul class="breadcrumb">
+  <li>账户管理</li>
+  <li><a ui-sref="account.roleManagerLists">角色管理</a></li>
+  <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent">
+  <div class="content-box" ng-controller="AddRoleCtrl as role">
+    <div class="rolebox">
+      <form class="form-horizontal" name="roleform" role="form">
+        <div class="form-group" ng-class="{'has-success':roleform.rolename.$valid,'has-error':roleform.rolename.$invalid && roleform.rolename.$dirty}">
+          <label for="inputEmail3" class="col-sm-3 control-label"><strong class="text-danger">*</strong>角色名：</label>
+          <div class="col-sm-9">
+            <input type="text" name="rolename" class="form-control" ng-model="role.addRoleData.name" ng-maxlength="10" maxlength="10"
+              ng-pattern="/^[a-zA-Z\u4e00-\u9fa5]{1,10}$/" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-3 control-label"><strong class="text-danger">*</strong>默认权限：</label>
+          <div class="col-sm-9">
+            <div class="rightsbox addroleBox clearfix">
+              <div ivh-treeview="role.rolePower" ivh-treeview-options="role.customOpts" class="li-inline">
+                <script type="text/ng-template">
+                  <div title="{{trvw.label(node)}}">
+                    <label class="checkbox-inline">
+                                        <span ivh-tree-checkbox-helper="node"></span>
+                                        <span>{{trvw.label(node)}}</span>
+                                    </label>
+                    <div ng-if="trvw.isExpanded(node)" ivh-treeview-children></div>
+                  </div>
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-9">
+            <button type="button" class="btn btn-primary" ng-disabled="roleform.$invalid" ng-click="role.saveRole()">确定</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<!--释放私海弹窗-->
+<div class="storeModal-modifyUser">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-title">释放私海</h4>
+          <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+        </div>
+        <div class="modal-body" id="modal-body">
+              <p>确认释放【{{ctrl.opts.item.serviceUserName}}】跟进的【{{ctrl.opts.item.name}}】的门店至公海！</p> 
+              <p> 释放后【{{ctrl.opts.item.serviceUserName}}】将在其私海列表看不到该门店记录！</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+          <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+        </div>
+      </div>

@@ -1,0 +1,153 @@
+.thumbnail-small {
+  position:relative;
+  width: 92px;
+  display: inline-block;
+  height: 92px;
+  padding: 4px;
+  border: 1px solid #D3DCE1;
+  border-radius: 4px;
+  background-color: #fff;
+  .img-thumbnail {
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .deleteImg{
+    position:absolute;
+    top:-10px;
+    right:0;
+    cursor: pointer;
+  }
+}
+
+.thumbnail-mid {
+  width: 150px;
+  display: inline-block;
+}
+
+.tabs-default {
+  .tab-content {
+    padding: 20px 0;
+  }
+  .nav-tabs {
+    border-bottom: 2px solid #ECEFF0;
+    &>li {
+      margin: 0 45px 0 0;
+      position: relative;
+      &.active:after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        width: 40px;
+        height: 2px;
+        background: #3CB6AF;
+        left: 50%;
+        margin-left: -20px;
+        z-index: 2;
+      }
+      a {
+        border: none;
+        color: #999;
+        padding: 10px 0;
+        &:hover {
+          background: none;
+        }
+      }
+      &.active>a {
+        border: none;
+        color: #666;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+
+.tabs-vertical {
+  .tab-content {
+    padding: 0px 0 0 210px;
+
+    /******messageList*******/
+    .messageList{
+      list-style-type: none;
+      padding: 0;
+      margin-bottom:30px;
+      li{
+        position: relative;
+        padding: 10px 15px 5px;;
+        border-bottom: 1px solid #EDEDED;
+        color: #333333;
+        cursor: pointer;
+        a{ color: #3CB6AF}
+        .mark{
+          position: absolute;
+          left: 5px;
+          top: 50%;
+          margin-top: -4px;
+          width: 8px;
+          height: 8px;
+          background: #FF8888;
+          border-radius: 50%;
+        }
+        .message-time {
+          font-family: PingFangSC-Regular;
+          font-size: 14px;
+          color: #999999;
+          letter-spacing: 0.2px;
+        }
+      }
+      >li:hover {
+        background-color: #EFF3F4;
+      }
+    }
+    // .messageEmpty{
+
+    // }
+  }
+  .nav-tabs {
+    width:200px;
+    background: #eee;
+    // position: absolute;
+    // top: 110px;
+    // bottom: 0;
+    // left: 170px;
+    min-height: 700px;
+    float: left;
+    padding: 1px;
+    // border-right: 2px solid #ECEFF0;
+    &>li {
+      // margin: 0 45px 0 0;
+      text-align: center;
+      position: relative;
+      // &.active:after {
+      //   content: '';
+      //   position: absolute;
+      //   bottom: -2px;
+      //   width: 40px;
+      //   height: 2px;
+      //   background: #3CB6AF;
+      //   left: 50%;
+      //   margin-left: -20px;
+      //   z-index: 2;
+      // }
+      a {
+        border: none;
+        color: #666;
+        padding: 10px 0;
+        font-weight: bold;
+        &:hover {
+          background: #fff;
+        }
+      }
+      &.active>a {
+        border: none;
+        color: #29A19C;
+        font-size: 16px;
+        // background: none;
+      }
+    }
+  }
+}

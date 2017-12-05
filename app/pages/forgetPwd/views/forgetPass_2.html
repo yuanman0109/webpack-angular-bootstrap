@@ -1,0 +1,42 @@
+<div class="forgetPass-box">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ng-click="ctrl.goHome()">
+          <i class="iconfont icon-icon-test10"></i>
+        </a>
+      </div>
+      <h3 class="page-title">找回密码</h3>
+    </div>
+  </nav>
+  <div class="container-login">
+    <div class="mainContent">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="login-steps clearfix">
+            <div class="login-step login-step-active">
+              <div class="step-item">
+                <div class="step-head-num">1</div>
+                <div class="step-text">输入账号和邮箱</div>
+              </div>
+              <div class="stet-line"></div>
+            </div>
+            <div class="login-step">
+              <div class="step-item clearfix">
+                <div class="step-head-num">2</div>
+                <div class="step-text">设置新密码</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+
+          <div class="sendMail">
+            修改密码的安全链接已经发送到您的邮箱：<a ng-click="ctrl.getEmailCode()" ng-href="http://imap.niwodai.net?uid={{ctrl.email}}" target="_blank">{{ctrl.email}}</a>。请点击链接设置新的密码。
+          </div>
+        </div>
+      </div>
+      <div class="copyright-footer">BSS_v1.0.0 Copyright by Eparty @2016</div>
+    </div>
+  </div>
+</div>

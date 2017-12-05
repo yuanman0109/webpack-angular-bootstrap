@@ -1,0 +1,79 @@
+<div class="page-application-feedback">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li>意见反馈</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <!--<div class="form-group">
+          <select class="form-control" ng-model="ctrl.getParame.resource">
+            <option value="">请输入反馈来源</option>
+            <option value="云小二快餐版">云小二快餐版</option>
+            <option value="云小二-正餐版">云小二-正餐版</option>
+            <option value="">请输入反馈来源</option>
+          </select>
+        </div>-->
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="版本号" ng-model="ctrl.getParame.version" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="输入企业/门店名称" ng-model="ctrl.getParame.orgName" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="反馈账号" ng-model="ctrl.getParame.user" ng-keyup="ctrl.enterKeyup($event)"> 
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="反馈内容" ng-model="ctrl.getParame.content"  ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-hover table-responsive text-center table-common-theme table-striped">
+          <thead>
+            <tr>
+              <th width="200">反馈来源</th>
+              <th>版本号</th>
+              <th>反馈企业/门店</th>
+              <th width="200">反馈账号</th>
+              <th width="200">反馈时间</th>
+              <th>反馈内容</th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.feedBack.length == 0">
+            <tr class="empty-tr">
+              <td colspan="6" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.feedBack">
+              <td class="text-overflow">{{item.resource || '暂无'}}</td>
+              <td class="text-overflow">{{item.version || '暂无'}}</td>
+              <td class="text-overflow"><span title="{{item.orgName}}">{{item.orgName || '暂无'}}</span></td>
+              <td class="text-overflow">{{item.user || '暂无'}}</td>
+              <td class="text-overflow">{{item.time | date:'yyyy-MM-dd HH:mm:ss' || '暂无'}}</td>
+              <td class="text-overflow"><span title="{{item.content}}">
+                    {{item.content | maxString:true:20:' ...' || '暂无'}}
+                  </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix">
+        <div class="pull-left">
+          <button ng-if="btnlist.APP_MGR_0201" type="button" class="btn btn-primary" ng-click="ctrl.exportCsv()">导出</button>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>   
+  </div>
+</div>

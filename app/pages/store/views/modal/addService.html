@@ -1,0 +1,44 @@
+<div class="">
+  <form class="form-horizontal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">新增服务费有效期</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="container-fluid">
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">业务类型：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+            <select class="form-control" ng-options="bus.businessType for bus in ctrl.businessType" ng-model="ctrl.bus" ng-change="ctrl.selBus(ctrl.bus)">
+              <option value="">请选择业务类型</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">服务费类目名：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+            <input type="text" class="form-control" name="serviceName" placeholder="服务费类目名" ng-model="ctrl.params.serviceName" disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label">服务开始时间：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+            <date-picker date="ctrl.params.serviceStart" holder="服务开始日期" max="ctrl.params.serviceEnd" class="col-md-6 col-sm-6 col-xs-6 row"></date-picker>
+            <time-picker time="ctrl.params.serviceStart" is-seconds="true" class="col-md-6 col-sm-6 col-xs-6"></time-picker>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="" class="col-md-3 col-sm-3 col-xs-3 control-label">服务结束时间：</label>
+          <div class="col-md-9 col-sm-9 col-xs-9 row">
+            <date-picker date="ctrl.params.serviceEnd" holder="服务结束日期" min="ctrl.params.serviceStart" class="col-md-6 col-sm-6 col-xs-6 row"></date-picker>
+            <time-picker time="ctrl.params.serviceEnd" is-seconds="true" class="col-md-6 col-sm-6 col-xs-6"></time-picker>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,144 @@
+<ul class="breadcrumb">
+  <li>账户管理</li>
+  <li><a ui-sref="account.userLists">账户列表</a></li>
+  <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent" ng-controller="AddUserCtrl as user">
+  <div class="content-box">
+    <div class="clearfix">
+      <div class="pull-left userDetail-left">
+        <form class="form-horizontal" role="form" name="addUser">
+          <div class="form-group" ng-class="{'has-success':addUser.realName.$valid,'has-error':addUser.realName.$invalid && addUser.realName.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>姓名：</label>
+            <div class="col-sm-9 row">
+              <!--<input type="text" class="form-control" id="" placeholder="姓名" ng-disabled="user.isModify" ng-model="user.addUserData.user.realName">-->
+              <ui-select ng-model="user.userData.realName" name="realName" required theme="bootstrap" ng-disabled="user.isModify" on-select="user.selCallback($select.selected)"
+                reset-search-input="false" title="选择用户">
+                <ui-select-match placeholder="输入用户姓名">{{$select.selected.realName || user.userData.realName}}</ui-select-match>
+                <ui-select-choices repeat="user.realName as user in user.userList track by $index" refresh="user.getInfoFormName($select.search)"
+                  refresh-delay="500">
+                  <div ng-bind-html="user.realName | highlight: $select.search"></div>
+                  <small>
+                      工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                      部门：<span ng-bind-html="user.position | highlight: $select.search"></span>
+                  </small>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addUser.userNo.$valid,'has-error':addUser.userNo.$invalid && addUser.userNo.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>工号：</label>
+            <div class="col-sm-9 row">
+              <input type="text" class="form-control" required name="userNo" placeholder="工号" ng-disabled="user.isModify" ng-change="user.getInfoFormNo(user.userData.userNo)"
+                ng-model="user.userData.userNo">
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addUser.dept.$valid && addUser.dept.$dirty,'has-error':addUser.dept.$invalid && addUser.dept.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>部门：</label>
+            <div class="col-sm-9 row">
+              <select class="form-control" ng-model="user.userData.deptId" name="dept" ng-options="dept.id as dept.name for dept in user.deptLists" ng-disabled="true" required>
+                <option value="">选择部门</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>办公所在地：</label>
+            <div class="col-sm-9 row">
+              <div class="col-sm-6 row"><prov-select province="user.userData.officeProvince"></prov-select></div>
+              <div class="col-sm-6 pull-right"><city-select province="user.userData.officeProvince" city="user.userData.officeCity"></city-select></div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>邮箱：</label>
+            <div class="col-sm-9 row">
+              <input type="email" class="form-control" id="" placeholder="邮箱" ng-model="user.userData.email" ng-disabled="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>手机：</label>
+            <div class="col-sm-9 row">
+              <input type="text" class="form-control" id="" placeholder="手机" ng-model="user.userData.mobilePhone" ng-disabled="true">
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addUser.userName.$valid,'has-error':addUser.userName.$invalid && addUser.userName.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>账号：</label>
+            <div class="col-sm-9 row">
+              <input type="text" class="form-control" name="userName" ng-disabled="user.isModify" placeholder="账号" ng-model="user.addUserData.userName"
+                ng-maxlength="32" ng-pattern="/^[a-zA-Z0-9_]+[^\u4e00-\u9fa5]{0,}$/" required>
+                <p class='text-danger' ng-if="addUser.userName.$invalid && addUser.userName.$dirty">数字、字母或下划线开头，长度不超过32位，不能含中文</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>初始密码：</label>
+            <div class="col-sm-9 row">
+              <input type="text" class="form-control" id="" placeholder="初始密码" ng-model="user.userData.password" ng-disabled="true">
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':addUser.role.$valid,'has-error':addUser.role.$invalid && addUser.role.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>角色：</label>
+            <div class="col-sm-9 row">
+              <ui-select multiple ng-model="user.addUserData.roleIds" name="role" required ng-change="user.selectRole(user.addUserData.roleIds)" theme="bootstrap"
+                sortable="true" close-on-select="false">
+                <ui-select-match placeholder="选择角色">{{$item.name}}</ui-select-match>
+                <ui-select-choices ui-disable-choice="user.addUserData.roleIds.length>=3" repeat="role.id as role in user.roleLists | filter: $select.search">
+                  {{role.name}}
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label">绑码接单人：</label>
+            <div class="col-sm-9 row">
+              <label class="checkbox-inline">
+                <input type="checkbox" name="isSystemAllocated" ng-disabled="!user.isSetOrder" ng-model="user.addUserData.isSystemAllocated" ><i class="iconfont"></i> <small ng-if="user.isSetOrder">( 勾选后，门店所在城市的支付进件&快餐进件完成后系统自动派单的接单人将是此人 )</small><small ng-if="user.systemAllocatedUser && !user.isSetOrder">( 当前城市的接单人：{{user.systemAllocatedUser}} )</small>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="pull-right userDetail-right">
+        <h4><strong class="text-danger">*</strong>权限信息</h4>
+        <div class="rightsbox clearfix power-tree">
+          <div ivh-treeview="user.rolePower" ivh-treeview-options="user.customOpts" class="li-inline">
+            <script type="text/ng-template">
+              <div class="ivh-treeview-node-content" title="{{trvw.label(node)}}">
+                <label class="checkbox-inline input-disabled" is-enabled>
+                    <span ivh-tree-checkbox-helper="node"></span>
+                    <span>{{trvw.label(node)}}</span>
+                </label>
+                <div ivh-treeview-children></div>
+              </div>
+            </script>
+          </div>
+        </div>
+        <h4><strong class="text-danger">*</strong>业务范围</h4>
+        <div class="rightsbox clearfix busin-tree">
+          <label class="checkbox-inline busin-all">
+                        <input type="checkbox" ng-model="user.isAllcities" ng-change="user.selectAllCities(user.isAllcities)">
+                        <i class="iconfont"></i>
+                        <span>全国</span>
+                    </label>
+          <div ivh-treeview="user.busincessScope" ivh-treeview-on-cb-change="user.changeCallback(ivhNode)" ivh-treeview-options="user.busiOpts"
+            class="li-inline">
+            <script type="text/ng-template">
+              <div title="{{trvw.label(node)}}">
+                <span ivh-treeview-toggle>
+                  <span ivh-treeview-twistie></span>
+                </span>
+                <label class="checkbox-inline">
+                  <span ivh-tree-checkbox-helper="node"></span>
+                  <span>{{trvw.label(node)}}</span>
+                </label>
+                <div ng-if="trvw.isExpanded(node)" ivh-treeview-children></div>
+              </div>
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-pd">
+      <button type="button" class="btn btn-primary" ng-click="user.saveUser()" ng-disabled="addUser.$invalid || user.addUserData.businessScope.scopeCodes.length==0">保存</button>
+    </div>
+  </div>
+</div>

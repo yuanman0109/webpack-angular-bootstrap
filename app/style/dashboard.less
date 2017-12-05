@@ -1,0 +1,93 @@
+/*
+ * Base structure
+ */
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+@defColor: #29A19C;
+
+body {
+  padding-top: 64px;
+  font-family: "Hiragino Sans GB", "华文细黑", STHeiti, "微软雅黑", "Microsoft YaHei", SimHei, "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+  background: #f4f4f4;
+  color: #666;
+  min-width: 1346px;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+}
+a:focus {
+outline: none;
+}
+
+hr {
+  margin: 0
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.box-pd {
+  padding: 10px 0;
+}
+
+@import './button.less';
+@import './text.less';
+@import './forms.less';
+@import './uiSelect.less';
+@import './pagination.less';
+@import './switch.less';
+@import './navbar.less';
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+
+@import './sidebar.less';
+@import './mainContent.less';
+@import './thumbnail.less';
+@import './table.less';
+
+/************** uib-tabset searchwrap style ********************/
+
+.tabs-default {
+  .search-wrap {
+    float: right;
+    .form-group {
+      margin-left: 5px;
+    }
+  }
+}
+@import './modal.less';
+@import './dialog.less';
+@import './tree.less';
+@import './bssGlobal.less';
+@import './access.less';
+
+/* Specify styling for tooltip contents */
+.tooltip.gray .tooltip-inner {
+  color: #fff;
+  background-color: rgba(0,0,0,0.8);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  word-break: break-all;
+}
+/* Hide arrow */
+.tooltip.gray .tooltip-arrow {
+  display: block;
+  border-bottom-color: rgba(0,0,0,0.8);
+}

@@ -1,0 +1,112 @@
+<ul class="breadcrumb">
+  <li>账户管理</li>
+  <li class="active">账户列表</li>
+</ul>
+<div class="mainContent" ng-controller="UserListsCtrl as userli">
+  <div class="table-head form-inline">
+    <form class='form-inline'>
+      <div class="form-group">
+        <select class="form-control" ng-options="role.id as role.name for role in userli.roleLists" ng-model="userli.getParame.roleId">
+                    <option value="">按角色</option>
+                </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="dept.id as dept.name for dept in userli.deptLists" ng-model="userli.getParame.deptId">
+                    <option value="">按部门</option>
+                </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="state.dataCode as state.dataName for state in userli.stateLists" ng-model="userli.getParame.status">
+                    <option value="">按状态</option>
+                </select>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="按姓名／账号／工号搜索..." ng-model="userli.getParame.searchWord" ng-keyup="userli.enterKeyup($event)">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-white" ng-click="userli.searchBt()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <div class="content-box">
+    <div class="table-overflow">
+    <table class="table table-hover table-theadbg">
+      <thead>
+        <tr>
+          <th width="60">
+            <div>&nbsp;</div>
+          </th>
+          <th width="100">
+            <div>姓名</div>
+          </th>
+          <th width="100">
+            <div>工号</div>
+          </th>
+          <th width="100">
+            <div>角色</div>
+          </th>
+          <th width="100">
+            <div>部门</div>
+          </th>
+          <th width="100">
+            <div>账户</div>
+          </th>
+          <th width="100">
+            <div>状态</div>
+          </th>
+          <th width="200">
+            <div>办公所在地</div>
+          </th>
+          <th width="200">
+            <div>操作</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in userli.userLists">
+          <td>
+            <img src="../../../images/userdef.png" alt="陈良" class="userImg">
+          </td>
+          <td class="text-overflow">
+            {{user.realName|| '暂无'}}
+          </td>
+          <td class="text-overflow">
+            {{user.userNo|| '暂无'}}
+          </td>
+          <td class="text-overflow">
+            <span title="{{user.roleName|| '暂无'}}">{{user.roleName|| '暂无'}}</span>
+          </td>
+          <td class="text-overflow">
+            {{user.deptName|| '暂无'}}
+          </td>
+          <td class="text-overflow">
+            {{user.userName|| '暂无'}}
+          </td>
+          <td class="text-overflow">
+            {{user.status=='DISABLED'? '禁用' : '启用'}}
+          </td>
+          <td>
+            {{user.officeProvinceName+'-'+user.officeCityName}}
+          </td>
+          <td>
+            <button ng-if="btnlist.ACCOUNT_0102" type="button" class="btn btn-link" ui-sref="account.userDetail({userId:user.id})">详情</button>
+            <button ng-if="btnlist.ACCOUNT_0103" type="button" class="btn btn-link" ui-sref="account.modifyUser({userId:user.id})">修改</button>
+            <button type="button" class="btn btn-link btn-link-danger" ng-if="(btnlist.ACCOUNT_0105 && user.status == 'DISABLED') || (btnlist.ACCOUNT_0104 && user.status == 'ENABLED')"
+              ng-click="userli.disableBt(user.id,user.status,$index)" ng-bind="user.status == 'DISABLED' ? '启用':'禁用'"></button>
+            <!--<button type="button" class="btn btn-link btn-link-danger">记录</button>-->
+          </td>
+        </tr>
+        <tr ng-if="!userli.userLists || userli.userLists.length == 0" class="empty-tr">
+          <td colspan="9" class="empty-box">暂无任何内容</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="clearfix">
+      <button ng-if="btnlist.ACCOUNT_0101" type="button" class="btn btn-primary" ui-sref="account.addUser">添加账号</button>
+      <ul uib-pagination total-items="userli.totalItems" ng-if="userli.totalItems>userli.getParame.pageSize" items-per-page="userli.getParame.pageSize"
+            previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="userli.getParame.pageNo" ng-change="userli.pageChanged()"  class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="userli.totalItems>userli.getParame.pageSize">共{{userli.totalItems}}条</b>
+    </div>
+  </div>
+</div>

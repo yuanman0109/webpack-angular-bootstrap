@@ -1,0 +1,80 @@
+<div class="page-store-verify">
+  <ul class="breadcrumb">
+    <li class="active">客户管理</li>
+    <li class="active">一键转店</li>
+  </ul>
+  <div class="mainContent changeStore-wrapper">
+    <p class="bg-warning"><i class="iconfont icon-icon116"></i><span>备注：该功能是将销售维护人&技术维护人做变更，如店A.B.C三家店的销售维护人都是张三，可通过该功能全部修改为李四。</span></p>
+    <div class="content-box">
+      <div class="container">
+        <form class="form-horizontal" role="form" name="changeStore">
+          <div class="form-group" ng-class="{'has-success':changeStore.type.$valid,'has-error':changeStore.type.$invalid && changeStore.type.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>类型：</label>
+            <div class="col-sm-9 row">
+              <div class="col-sm-6 row">
+                <select class="form-control" name="type" ng-options="type.dataCode as type.dataName for type in ctrl.typeList" ng-model="ctrl.storeData.type" required>
+                  <option value="">请选择类型</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':changeStore.oldUser.$valid,'has-error':changeStore.oldUser.$invalid && changeStore.oldUser.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>原维护人：</label>
+            <div class="col-sm-9 row">
+              <div class="col-sm-6 row">
+                <!--<input type="text" class="form-control" id="" placeholder="姓名" ng-disabled="user.isModify" ng-model="user.changeStoreData.user.realName">-->
+                <ui-select ng-model="ctrl.storeData.oldUser" name="oldUser" required theme="bootstrap" 
+                  reset-search-input="false" title="选择用户">
+                  <ui-select-match placeholder="输入用户姓名" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                    refresh-delay="500">
+                    <div ng-bind-html="user.name | highlight: $select.search"></div>
+                    <small>
+                        工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                        部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                    </small>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':changeStore.newUser.$valid,'has-error':changeStore.newUser.$invalid && changeStore.newUser.$dirty}">
+            <label for="" class="col-sm-3 control-label"><strong class="text-danger">*</strong>现维护人：</label>
+            <div class="col-sm-9 row">
+              <div class="col-sm-6 row">
+                <!--<input type="text" class="form-control" id="" placeholder="姓名" ng-disabled="user.isModify" ng-model="user.changeStoreData.user.realName">-->
+                <ui-select ng-model="ctrl.storeData.newUser" name="newUser" required theme="bootstrap" 
+                  reset-search-input="false" title="选择用户">
+                  <ui-select-match placeholder="输入用户姓名" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                    refresh-delay="500">
+                    <div ng-bind-html="user.name | highlight: $select.search"></div>
+                    <small>
+                        工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                        部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                    </small>
+                  </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':changeStore.remark.$valid && changeStore.remark.$dirty,'has-error':changeStore.remark.$invalid && changeStore.remark.$dirty}">
+            <label for="" class="col-sm-3 control-label">说明：</label>
+            <div class="col-sm-9 row">
+              <div class="col-sm-6 row">
+                <textarea class="form-control" name="remark" rows="3" ng-maxlength="400" maxlength="400" ng-model="ctrl.storeData.remark"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+              <div class="row">
+              <button type="submit" class="btn btn-primary" ng-disabled="changeStore.$invalid" ng-click="ctrl.changeBt()">确认提交</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

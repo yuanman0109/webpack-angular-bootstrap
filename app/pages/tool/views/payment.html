@@ -1,0 +1,50 @@
+<div class="page-tool-payment">
+  <ul class="breadcrumb">
+    <li class="active">工具中心</li>
+    <li class="active">订单查询</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <form name="payForm">
+        <div class="form-group">
+          <p class="redeploy-reminder">
+            <i class="span4 iconfont icon-icon116"></i>
+            <span>备注：如果用户或商户对于交易有疑问，请输入交易单号查询交易状态，比如快餐业务的订单号17071100002928</span>
+          </p>
+        </div>
+        <div class="auto-form row">
+          <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4">
+            <div class="col-md-6 col-xs-6 col-sm-6 col-lg-12 order-number" ng-class="{'has-success':payForm.orderNo.$valid,'has-error':payForm.orderNo.$invalid && payForm.orderNo.$dirty}">
+              <input type="text" name="orderNo" ng-model="ctrl.getParame.no" class="form-control" ng-change="ctrl.showNo()" placeholder="请输入交易单号" ng-keyup="ctrl.enterKeyup($event)" required>
+            </div>
+          </div>
+          <div class="col-md-3 col-xs-3 col-sm-3 col-lg-4 pay-button">
+            <button class="btn btn-primary" ng-click="ctrl.inquireBtn(ctrl.getParame)" ng-disabled="ctrl.getParame.no === '' || payForm.orderNo.$invalid" type="button">查询交易明细</button>
+          </div>
+        </div>
+        <div class="content-pay">
+          <div class="row tool-detail" ng-if="ctrl.toolDeatil && !payForm.orderNo.$invalid">
+            <div class="text col-md-3 col-xs-3 col-sm-3 col-lg-12">
+              <p>交易单号：{{ctrl.toolDeatil.tradeNo || '暂无'}}</p>
+              <p>付款方式：{{ctrl.toolDeatil.payType || '暂无'}}</p>
+              <p>收款业务：{{ctrl.toolDeatil.businessType || '暂无'}}</p>
+              <p>收款商户：{{ctrl.toolDeatil.storeName || '暂无'}}</p>
+              <p>收款金额：{{ctrl.toolDeatil.gatheredAmount || '暂无'}}</p>
+              <p>收款时间：{{ctrl.toolDeatil.gatheredTime | date:'yyyy-MM-dd HH:mm:ss'  || '暂无'}}</p>
+              <p>收款账户：{{ctrl.toolDeatil.gatheredAccount || '暂无'}}</p>
+              <p>支付状态：{{ctrl.toolDeatil.status || '暂无'}}</p>
+              <p>退款金额：{{ctrl.toolDeatil.refundedAmount || '暂无'}}</p>
+              <p>退款时间：{{ctrl.toolDeatil.refundedTime | date:'yyyy-MM-dd HH:mm:ss'  || '暂无'}}</p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-xs-12" ng-if="ctrl.noList && !payForm.orderNo.$invalid">
+            <div class="text-center">
+              <h3 class="col-md-7 col-lg-9 col-xs-5 col-sm-3">订单号不存在</h3>
+            </div>
+          </div>
+        </div>       
+      </form>
+      <!--{{ctrl.toolDeatil.gatheredTime}}用来测试的-->
+    </div>
+  </div>
+</div>

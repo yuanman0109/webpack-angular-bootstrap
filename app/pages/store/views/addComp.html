@@ -1,0 +1,165 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="store.compList">企业列表</a></li>
+    <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent addComp-wrapper">
+    <div class="content-box" ng-controller="AddCompCtrl as comp">
+      <div class="container">
+        <form class="form-horizontal" role="form" name="addcomp">
+        <p><strong>基本信息：</strong></p>
+        <div class="panel panel-default">
+          <div class="panel-body">
+              <div class="form-group" ng-class="{'has-success':addcomp.compName.$valid && addcomp.compName.$dirty,'has-error':addcomp.compName.$invalid && addcomp.compName.$dirty}">
+                <label class="col-md-5 control-label"><strong class="text-danger">*</strong>企业名称：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                      <input type="text" class="form-control" name="compName" placeholder="" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="100" maxlength="100" ng-model="comp.saveData.name" required>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="" class="col-md-5 control-label">企业规模：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                        <select class="form-control" ng-model="comp.saveData.scale">
+                          <option value="">选择企业规模</option>
+                          <option value="{{dic.dataCode}}" ng-repeat="dic in comp.scales">{{dic.dataName}}</option>
+                        </select>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':addcomp.registeredAssets.$valid && addcomp.registeredAssets.$dirty,'has-error':addcomp.registeredAssets.$invalid && addcomp.registeredAssets.$dirty}">
+                <label class="col-md-5 control-label">注册资本：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                        <input type="text" class="form-control" placeholder="" name="registeredAssets" ng-model="comp.saveData.registeredAssets" ng-maxlength="100" maxlength="100">
+                    </div>
+                    <!--<div class="col-xs-1 form-control-static">
+                        万
+                    </div>-->
+                </div>
+              </div>
+              
+              <div class="form-group" ng-class="{'has-success':addcomp.artificialPerson.$valid && addcomp.artificialPerson.$dirty,'has-error':addcomp.artificialPerson.$invalid && addcomp.artificialPerson.$dirty}">
+                <label for="" class="col-md-5 control-label">企业法人：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                        <input type="text" class="form-control" placeholder="" name="artificialPerson" ng-model="comp.saveData.artificialPerson" ng-maxlength="80" maxlength="80">
+                    </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':addcomp.status.$valid && addcomp.status.$dirty,'has-error':addcomp.status.$invalid && addcomp.status.$dirty}">
+                <label class="col-sm-5 control-label"><span class="text-danger">* </span>企业状态：</label>
+                <div class="col-sm-7 row">
+                  <label class="radio-inline">
+                    <input type="radio" name="status" ng-value="0" ng-init="comp.saveData.status=0" ng-model="comp.saveData.status"><i class="iconfont"></i> 正常
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="status" ng-value="1" ng-model="comp.saveData.status"><i class="iconfont"></i> 禁用
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="status" ng-value="2" ng-model="comp.saveData.status"><i class="iconfont"></i> 删除
+                  </label>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':addcomp.linkTel.$valid && addcomp.linkTel.$dirty,'has-error':addcomp.linkTel.$invalid && addcomp.linkTel.$dirty}">
+                <label for="" class="col-md-5 control-label">总部电话：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                        <input type="text" class="form-control" placeholder="" name="linkTel" ng-model="comp.saveData.linkTel" ng-maxlength="100" maxlength="100">
+                    </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':addcomp.address.$valid && addcomp.address.$dirty,'has-error':addcomp.address.$invalid && addcomp.address.$dirty}">
+                <label for="" class="col-md-5 control-label">总部地址：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                        <input type="text" class="form-control" placeholder="" name="address" irregular="[\s\r\n\'\0x34‘“”’]" ng-model="comp.saveData.address" ng-maxlength="100" maxlength="100">
+                    </div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{'has-success':addcomp.website.$valid && addcomp.website.$dirty,'has-error':addcomp.website.$invalid && addcomp.website.$dirty}">
+                <label for="" class="col-md-5 control-label">企业官网：</label>
+                <div class="col-md-7 row">
+                    <div class="col-md-7 row">
+                      <input type="text" class="form-control" placeholder="" name="website" ng-model="comp.saveData.website" ng-maxlength="100" maxlength="100">
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+                <div class="col-sm-7 row">
+                  <label class="checkbox-inline" ng-repeat="bus in comp.businessList">
+                    <input type="checkbox" name="business" ng-model="bus.select"><i class="iconfont"></i> {{bus.dataName}}
+                  </label>
+                </div>
+              </div>
+          </div>
+        </div>
+        <p><strong>品牌信息：</strong></p>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <!--<th width="80">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" ng-true-value="true" ng-false-value="false" name="brands"><i class="iconfont"></i> 全选
+                    </label>
+                  </th>-->
+                  <th>品牌LOGO</th>
+                  <th>品牌名称</th>
+                  <!-- <th>品牌菜系</th>
+                  <th>客户类型</th> -->
+                  <th>品牌状态</th>
+                  <th><button type="button" class="btn btn-link btn-link-success" ng-click="comp.addBrand()">+添加</button></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="brand in comp.saveData.brands">
+                  <td>
+                    <img ng-src="{{brand.logoUrl || comp.defLogo}}" alt="logo" class="brand-image" uib-tooltip="请上传图片" tooltip-is-open="tooltipIsOpen" tooltip-trigger="'focus'">
+                    <input type="hidden" class="form-control" name="{{'logo'+$index}}" ng-model="brand.logo" required>
+                    <button type="file" ngf-select="comp.uploadFiles($file, $invalidFiles,$index)" class="btn btn-link">更换</button>
+                  </td>
+                  <td ng-class="{'has-success':addcomp['brandName'+$index].$valid && addcomp['brandName'+$index].$dirty,'has-error':addcomp['brandName'+$index].$invalid && addcomp['brandName'+$index].$dirty}">
+                    <input type="text" class="form-control" name="{{'brandName'+$index}}" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="100" maxlength="100" placeholder="" ng-model="brand.name" required>
+                  </td>
+                  <!-- <td ng-class="{'has-success':addcomp['dishStyle'+$index].$valid && addcomp['dishStyle'+$index].$dirty,'has-error':addcomp['dishStyle'+$index].$invalid && addcomp['dishStyle'+$index].$dirty}">
+                    <select class="form-control" ng-model="brand.dishStyleCode" name="{{'dishStyle'+$index}}" required>
+                      <option value="">选择菜系</option>
+                      <option ng-repeat="dishes in comp.dishes" value="{{dishes.dataCode}}">{{dishes.dataName}}</option>
+                    </select>
+                  </td> -->
+                  <!-- <td ng-class="{'has-success':addcomp['customerType'+$index].$valid && addcomp['customerType'+$index].$dirty,'has-error':addcomp['customerType'+$index].$invalid && addcomp['customerType'+$index].$dirty}">
+                    <select class="form-control" ng-model="brand.customerTypeCode" name="{{'customerType'+$index}}" required>
+                      <option value="">选择客户类型</option>
+                      <option ng-repeat="type in comp.customerType" value="{{type.dataCode}}">{{type.dataName}}</option>
+                    </select>
+                  </td> -->
+                  <td ng-class="{'has-success':addcomp['status'+$index].$valid && addcomp['status'+$index].$dirty,'has-error':addcomp['status'+$index].$invalid && addcomp['status'+$index].$dirty}">
+                    <select class="form-control" ng-model="brand.status" name="{{'status'+$index}}" required>
+                      <option ng-value="">选择品牌状态</option>
+                      <option ng-value="0">正常</option>
+                      <option ng-value="1">禁用</option>
+                      <option ng-value="2">删除</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-link btn-link-danger" ng-if="(!$last || comp.saveData.brands.length>1)" ng-click="comp.deleteBrand($index,brand.storeCount)">-删除</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-5 col-sm-7">
+            <button type="submit" class="btn btn-primary" ng-disabled="addcomp.$invalid" ng-click="comp.saveComp()">确认提交</button>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+</div>

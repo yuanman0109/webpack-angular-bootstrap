@@ -1,0 +1,455 @@
+<div class="clearfix">
+  <ul class="breadcrumb pull-left">
+    <li>wifi管理</li>
+    <li class="active">设备监控</li>
+    <li class="active">门店模式</li>
+  </ul>
+  <div class="pull-right">
+    <a ui-sref="wifi.devMonitor"><i class="iconfont icon-nb-w10">设备模式</i></a>
+  </div>
+</div>
+<div class="mainContent" ng-controller="StoreModelCtrl as storeM">
+  <div class="table-head form-inline">
+    <form>
+      <div class="form-group">
+        <prov-select province='storeM.searchData.province'></prov-select>
+        <city-select province='storeM.searchData.province' city='storeM.searchData.city'></city-select>
+        <county-select city='storeM.searchData.city' county='storeM.searchData.county'></county-select>
+      </div>
+      <div class="form-group">
+        <prov-select province="adv.getParame.province"></prov-select>
+        <city-select province="adv.getParame.province" city="adv.getParame.cityCode"></city-select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="dishes.dataCode as dishes.dataName for dishes in storeM.dishesLists" ng-model="storeM.searchData.dishStyleCode">
+					<option value="">按设备型号</option>
+				</select>
+        <select class="form-control" ng-options="status.dataCode as status.dataName for status in storeM.statusLists" ng-model="storeM.searchData.deviceStatus">
+					<option value="">按设备状态</option>
+				</select>
+      </div>
+      <div class="form-group">
+        <div class="input-group date-form">
+          <input type="text" class="form-control" placeholder="开始时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="his.begin" is-open="his.startIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+          <span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="his.startIsopen=!his.startIsopen">
+							<i class="iconfont icon-CombinedShape1"></i>
+						</button>
+					</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <span class="dateText">-</span>
+      </div>
+      <div class="form-group">
+        <div class="input-group date-form">
+          <input type="text" class="form-control" placeholder="结束时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="his.end" is-open="his.endIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+          <span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="his.endIsopen=!his.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+					</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" name="" value="" class="form-control cusSearch-input" placeholder="按门店、编号、品牌、人员搜索...">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-white" ng-click="storeM.searchList()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <div class="content-box">
+    <div class="table-overflow">
+      <table class="table table-hover table-theadbg table-customer">
+        <thead>
+          <tr>
+            <th>
+              <div>状态</div>
+            </th>
+            <th>
+              <div>名称</div>
+            </th>
+            <th>
+              <div>型号</div>
+            </th>
+            <th>
+              <div>序列号</div>
+            </th>
+            <th>
+              <div>MAC</div>
+            </th>
+            <th colspan="2">
+              <div>最后上报时间</div>
+            </th>
+            <th>
+              <div>尝试连接（次）</div>
+            </th>
+            <th>
+              <div>出portal（次）</div>
+            </th>
+            <th>
+              <div>成功认证（次）</div>
+            </th>
+            <th>
+              <div>上传流量（G）</div>
+            </th>
+            <th>
+              <div>下载流量（G）</div>
+            </th>
+            <th>
+              <div>内存（G）</div>
+            </th>
+            <th>
+              <div>操作</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-if="storeM.storesList.length==0">
+          <tr>
+            <td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+          </tr>
+        </tbody>
+        <tbody ng-repeat="brand in storeM.storesList">
+          <tr class="table-header">
+            <td>
+              <label class="checkbox-inline">
+								<input type="checkbox" name="Subordinate" ng-model="brand.sigleCheck" ng-checked="storeM.allCheck" ng-change="brand.sigleCheck==false?storeM.allCheck=false:return" ng-click="storeM.chk(brand.gatewayMAC,brand.sigleCheck,storeM.storesList)">
+								<i class="iconfont"></i></label>
+              <i class="iconfont icon-wifi-on" ng-class="{'text-success':brand.status=='NORMAL','text-danger':brand.status=='ABNORMAL','text-muted':brand.status=='NO_NETWORK'|| !brand.status}"></i>
+            </td>
+            <td colspan="2">{{brand.storeName||'暂无'}}</td>
+            <td colspan="3">现场联系人：{{brand.contactName||'暂无'}} ( {{brand.contactPosition||'暂无'}}|{{brand.contactPhone||'暂无'}} )</td>
+            <td colspan="2">BD：{{brand.bdName||'暂无'}} ( {{brand. bdPhone||'暂无'}} )</td>
+            <td colspan="4">FAE：{{brand.faeName||'暂无'}} ( {{brand.faePhone||'暂无'}} )</td>
+            <td><button type="button" class="btn btn-link" ui-sref="wifi.storeDetail()">详情</button></td>
+            <td><button type="button" class="btn btn-link">统计</button></td>
+          </tr>
+          <tr ng-repeat="stores in brand.deviceMonitors">
+            <td class="text-center">
+              <i class="iconfont icon-wifi-on" ng-class="{'text-success':brand.status=='NORMAL','text-danger':brand.status=='ABNORMAL','text-muted':brand.status=='NO_NETWORK'|| !brand.status}"></i>
+            </td>
+            <td class="text-overflow">
+              {{stores.name||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{stores.model||'暂无'}}
+            </td>
+            <td>
+              {{stores.serialNum||'暂无'}}
+            </td>
+            <td>
+              {{stores.gatewayMAC||'暂无'}}
+            </td>
+            <td>
+              {{stores.lastReportTime||'暂无'}}
+            </td>
+            <td>
+              {{stores.attemptConnect||'暂无'}}
+            </td>
+            <td>
+              {{stores.outPortal||'暂无'}}
+            </td>
+            <td class="text-overflow">
+              {{stores.curCertSuccess||'暂无'}}
+            </td>
+            <td>
+              {{stores.curUploadRate||'暂无'}}
+            </td>
+            <td>
+              {{stores.curDownloadRate||'暂无'}}
+            </td>
+            <td>
+              <div>总：{{stores.totalMemory||'暂无'}}G</div>
+              <div>剩：{{stores.freeMemory||'暂无'}}G</div>
+            </td>
+            <td colspan="2">
+              <button type="button" class="btn btn-link btn-link-success" ng-click="storeM.storeDetail(brand.id)">详情</button>
+              <button type="button" class="btn btn-link">配置</button>
+              <button type="button" class="btn btn-link btn-link-danger" ng-click="storeM.sinUnbindDev(stores.gatewayMAC)">解绑</button>
+              <button type="button" class="btn btn-link btn-link-danger" ng-click="storeM.sinRebootDev(stores.gatewayMAC)">重启</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="form-group">
+        <label class="checkbox-inline">
+					<input type="checkbox" name="Subordinate" ng-model="storeM.allCheck" ng-click="storeM.all(storeM.allCheck,storeM.storesList)"><i class="iconfont"></i>全选
+				</label>
+        <button type="button" class="btn btn-default" ng-disabled="storeM.choseArr.length==0" ng-click="storeM.configDevList(store.gatewayMAC)">批量设置</button>
+        <button type="button" ng-disabled="storeM.choseArr.length==0" class="btn btn-default" ng-click="storeM.exportDevList(store.gatewayMAC)">批量导出</button>
+        <button type="button" class="btn btn-default" ng-disabled="storeM.choseArr.length==0" ng-click="storeM.deleteDevList(store.gatewayMAC)">批量解绑</button>
+        <button type="button" class="btn btn-default" ng-disabled="storeM.choseArr.length==0" ng-click="storeM.rebootDevList(store.gatewayMAC)">批量重启</button>
+      </div>
+    </div>
+    <p class="text-right cus_icon">
+      <i class="iconfont icon-wifi-on text-success"></i>设备正常
+      <i class="iconfont icon-wifi-on text-danger"></i>有设备离线
+      <i class="iconfont icon-wifi-on text-muted"></i>设备未安装
+    </p>
+    <div>
+      <button type="button" class="btn btn-primary" ng-click="storeM.addDev()">添加设备</button>
+      <ul uib-pagination total-items="storeM.totalItems" items-per-page="10" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="storeM.currentPage" ng-change="storeM.pageChanged()" class="pull-right"></ul>
+      <b class="pagination-text pull-right" ng-if="storeM.totalItems>10">共{{storeM.totalItems}}条</b>
+    </div>
+  </div>
+</div>
+<!-- 列表操作弹窗开始 -->
+<script type="text/ng-template" id="rebootDev.html">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">设备{{$ctrl.title}}</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body devModel" id="modal-body">
+    <p>确定要{{$ctrl.title}}以下设备吗？
+      <ul>
+        <li ng-repeat="mac in $ctrl.gatewayMACList track by $index">{{mac}}</li>
+      </ul>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+  </div>
+</script>
+<!-- 列表操作弹窗结束 -->
+<!-- 添加设备弹窗开始 -->
+<script type="text/ng-template" id="addDev.html">
+  <form class="form-horizontal ng-pristine ng-scope ng-invalid" role="form" name="addDev" id="addDev">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">添加设备</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="mainContent form-inline serialDev">
+      <div class="padding20">
+        <span class="span6 padding20 text-danger" ng-if="addDev.serial.$invalid && addDev.serial.$touched">
+					<i class="span4 iconfont icon-nb-w2  text-danger"></i>
+					<span class="span6" >您输入的序列号有误</span>
+        </span>
+        <span class="span6 text-danger" ng-if="addDev.serial.value !== 0">
+					<i class="span4 iconfont icon-nb-w2 text-danger"></i>
+					<span class="span6" >请输入设备序列号或选择文件</span>
+        </span>
+      </div>
+      <div class="clearfloat" ng-class="{'has-success':addDev.name.$valid && addDev.name.$dirty,'has-error':addDev.name.$invalid && addDev.name.$dirty}">
+        <label for="name" class="col-md-3 control-label">选择门店：</label>
+        <div class="controls col-md-6" ng-class="{'has-success':addDev.name.$invalid && addDev.name.$dirty,'has-error':addDev.name.$invalid && addDev.name.$dirty}">
+          <input type="text" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength ng-touched" ng-model="$ctrl.store.storeId" placeholder="输入关键词检索...">
+        </div>
+      </div>
+      <div class="padding20 customerDetail-box">
+        <div class="container-fluid border-radius-box padding20">
+          <div class="row">
+            <p class="col-md-4">设备序列号：</p>
+            <p class="col-md-8">安装位置：</p>
+            <div class="storeSerial" ng-repeat="item in $ctrl.store.items track by $index">
+              <p class="col-sm-5" ng-disabled="addDev.$invalid">
+                <input type="text" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength ng-touched" name="serial" placeholder="请输入设备序列号" ng-disabled="!$ctrl.store.storeId" required>
+              </p>
+              <i class="col-sm-1 iconfont icon-nb-w1 text-success"></i>
+              <p class="col-sm-5" ng-disabled="addDev.$invalid">
+                <input type="text" class="form-control ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-valid-maxlength ng-touched" placeholder="店门口" ng-disabled="!$ctrl.store.storeId" required>
+              </p>
+              <div class="col-sm-1 row">
+                <button ng-if="$index != 0" type="button" class="btn btn-link btn-link-danger" ng-click="$ctrl.deleteSerial($index)" ng-disabled="!$ctrl.store.storeId">删除</button>
+                <button type="button" ng-if="$last" class="btn btn-link" ng-click="$ctrl.addSerial()" ng-disabled="!$ctrl.store.storeId">添加</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group padding20" ng-class="{'has-success':addDev.name.$invalid,'has-error':addDev.name.$invalid && addDev.$dirty}">
+        <label for="name" class="col-md-4 control-label">批量导入设备：</label>
+        <div class="col-md-8">
+          <input class="form-inline" type="file" ngf-select="$ctrl.uploadFiles($file,$invalidFiles)" id="inputfile">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-disabled="$ctrl.store.storeId" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+  </form>
+</script>
+<!-- 添加设备弹窗结束 -->
+
+
+<!-- 门店详情开始 -->
+<script type="text/ng-template" id="storeModelContent.html">
+  <div class="modal-header">
+    <h3 class="modal-title">设备详情</h3>
+  </div>
+  <div class="modal-body">
+    <uib-tabset type="pills">
+      <uib-tab index="0" heading="配置信息">
+        <!-- 配置信息开始 -->
+        <table class="table table-striped table-hover table-noborder text-left">
+          <tbody ng-if="storeM.storesList.length==0">
+            <tr>
+              <td colspan="14" class="empty-box">
+                没有找到您查询的结果！
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>场所名：</td>
+              <td>{{$ctrl.configInfo.storeName}}</td>
+              <td>安装位置：</td>
+              <td>{{$ctrl.configInfo.installPosition}}</td>
+              <td>备注：</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                镜像开关:
+              </td>
+              <td class="text-overflow">
+                {{$ctrl.configInfo.image}}
+              </td>
+            </tr>
+            <tr>
+              <td>设备编码：</td>
+              <td>{{$ctrl.configInfo.serialNum}}</td>
+              <td>MAC地址：</td>
+              <td>{{$ctrl.configInfo.gatewayMAC}}</td>
+              <td>设备型号：</td>
+              <td>{{$ctrl.configInfo.model}}</td>
+            </tr>
+            <tr>
+              <td class="text-overflow">设备模式：</td>
+              <td>{{$ctrl.configInfo.netmode}}</td>
+            </tr>
+            <tr>
+              <td>固件版本：</td>
+              <td>{{$ctrl.configInfo.firmwareVer}}</td>
+              <td>在线人数：</td>
+              <td>{{$ctrl.configInfo.onlineNum}}</td>
+              <td>剩余内存：</td>
+              <td>{{$ctrl.configInfo.freeMemory}}</td>
+            </tr>
+            <tr>
+              <td class="text-overflow">信号名称：</td>
+              <td>{{$ctrl.configInfo.ssid}}</td>
+            </tr>
+            <tr>
+              <td>SSH：</td>
+              <td>{{$ctrl.configInfo.ssh}}</td>
+              <td>MTU：</td>
+              <td>{{$ctrl.configInfo.mtu}}</td>
+              <td>自动DNS：</td>
+              <td>{{$ctrl.configInfo.autoDns}}</td>
+            </tr>
+            <tr>
+              <td class="text-overflow">路由管理密码：</td>
+            </tr>
+            <tr>
+              <td>最后上报时间：</td>
+              <td>{{$ctrl.configInfo.lastReportTime}}</td>
+              <td>公网IP：</td>
+              <td>{{$ctrl.configInfo.ip}}</td>
+              <td>网监设备类型：</td>
+              <td>{{$ctrl.configInfo.auditCrop}}</td>
+            </tr>
+            <tr>
+              <td class="text-overflow">网监状态：</td>
+              <td>{{$ctrl.configInfo.autitStatus}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- 配置信息结束 -->
+      </uib-tab>
+      <uib-tab index='1' heading="连接用户">
+        <table class="table table-hover table-theadbg table-customer">
+          <thead>
+            <tr>
+              <th width="84">
+                <div>日期</div>
+              </th>
+              <th>
+                <div>手机号</div>
+              </th>
+              <th>
+                <div>MAC地址</div>
+              </th>
+              <th>
+                <div>下载流量(M)</div>
+              </th>
+              <th>
+                <div>上传流量(M)</div>
+              </th>
+              <th>
+                <div>认证次数</div>
+              </th>
+              <th>
+                <div>累计上网时长（分钟）</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="storeM.storesList.length==0">
+            <tr>
+              <td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="user in $ctrl.connUserList">
+              <td class="text-overflow">
+                {{user.connectDate||'暂无'}}
+              </td>
+              <td>
+                {{user.mobilePhone||'暂无'}}
+              </td>
+              <td>
+                {{user.userMAC||'暂无'}}
+              </td>
+              <td>
+                {{user.downloadRate||'暂无'}}
+              </td>
+              <td>
+                {{user.uploadRate||'暂无'}}
+              </td>
+              <td>
+                {{user.authNum||'暂无'}}
+              </td>
+              <td>
+                {{user.onlineTime||'暂无'}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- 连接用户信息结束 -->
+      </uib-tab>
+      <uib-tab index="2" heading="设备日志">
+        <!-- 设备日志开始 -->
+        <table class="table table-hover text-left">
+          <thead>
+            <tr>
+              <th>
+                <div>时间</div>
+              </th>
+              <th>
+                <div>状态</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="storeM.storesList.length==0">
+            <tr>
+              <td colspan="14" class="empty-box">
+                没有找到您查询的结果
+              </td>
+            </tr>
+          </tbody>
+          <tbody ng-repeat="log in $ctrl.LogList">
+            <tr class="text-overflow">
+              <td>{{log.eventTime||'暂无'}}</td>
+              <td>{{log.eventType||'暂无'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- 设备日志结束 -->
+      </uib-tab>
+    </uib-tabset>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="$ctrl.cancel()">关闭</button>
+  </div>
+</script>
+<!-- 设备 -->

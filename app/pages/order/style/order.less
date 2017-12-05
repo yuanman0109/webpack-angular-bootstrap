@@ -1,0 +1,247 @@
+/**
+*工单池页 样式
+*/
+.page-order-pool {
+    .mainContent .table-head {
+        
+        .ui-select{
+            width:180px;
+            margin-right:4px;
+            .form-control{
+            width:180px;
+            margin-right:0;
+            }
+            .ui-select-container{
+                width: 180px;
+                .ui-select-match{
+                    width: 180px;
+                    input{
+                        width:180px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+*工单详情 样式
+*/
+.page-order-detail {
+    .mainContent {
+        .content-box {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+    }
+    form {
+        width: 960px;
+        margin: 0 auto;
+        label {
+            text-align: right;
+        }
+    }
+    .look_link{
+        height:35px;
+        line-height: 35px;
+    }
+    a{
+        cursor: pointer;
+    }
+}
+
+/**
+*新建工单样式
+*/
+.page-order-newOrder {
+    .mainContent {
+        .content-box {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+    }
+    form {
+        width: 960px;
+        margin: 0 auto;
+        label {
+            text-align: right;
+        }
+        .input-date{
+            text-align: left;
+        }
+        textarea {
+            min-height: 150px;
+        }
+    }
+}
+
+/**
+*我的工单样式
+*/
+.page-order-mine {
+    .mainContent .table-head {
+       
+        .ui-select{
+            width:180px;
+            margin-right:4px;
+            .form-control{
+                width:180px;
+                margin-right:0;
+            }
+            .ui-select-container{
+                width: 180px;
+                .ui-select-match{
+                    width: 180px;
+                    input{
+                        width:180px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+*工单中心--未处理工单详情
+*/
+.order-pend-detail {
+    .mainContent {
+        form {
+            width: 960px;
+            margin: 0 auto;
+            button {
+                margin-right:40px;
+            }
+        }
+        .look_link{
+            height:35px;
+            line-height: 35px;
+        }
+    }
+}
+
+.order-pend-detail{
+    a{
+        cursor: pointer;
+    }
+}
+
+/**
+*工单中心页 样式
+*/
+
+.page-order {}
+
+
+/**
+*工单统计页 样式
+*/
+
+.page-order-count {
+    .form-inline .input-group {
+    display: inline-table;
+    vertical-align: middle;
+}   
+    .content-box {
+        max-width:1100px;
+        margin:0 auto;
+    }
+    .send-orders-time {
+        padding-top: 80px;
+        margin-bottom: 68px;
+    }
+    .date-form {
+        .form-control {
+            color: #98A4AA;
+            background-color: #F8F9F9;
+            width: 120px;
+            height: 33px;
+        }
+    }
+    .input-group .input-group-btn .btn {
+        height: 33px;
+    }
+    .form-control-static {
+        padding: 10px 15px;
+    }
+    .ng-valid-date {
+        .col-sm-offset-5 {
+            padding-left: 0;
+        }
+    }
+    .control-label{
+        text-align: right;
+    }
+}
+
+
+/*Firefox*/
+
+@-moz-document url-prefix() {
+    .page-order-count {
+        .date-form {
+            .form-control {
+                height: 33px;
+            }
+        }
+    }
+}
+
+
+/**
+*一键转派页 样式
+*/
+
+.page-order-redeploy {
+    // padding-top: 4px
+    .mainContent .content-box {
+        padding: 24px 20px 60px;
+    }
+    .auto-form{
+        max-width:1100px;
+        margin:0 auto;
+        text-align: right;
+        padding-left:50px;
+    }
+    .redeploy-reminder {
+        background-color: #FFF5A1;
+        padding: 6px 19px;
+        margin: 0 -5px 70px;
+        span {
+            color: #FF790E;
+            font-size: 14px;
+        }
+        .icon-icon116 {
+            font-size: 16px;
+            color: #FF790E;
+        }
+    }
+    .remark{
+        margin-left:-15px;
+        margin-right:-15px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+        text-align: right;
+        .text-danger {
+            padding-top: 5px;
+        }
+        textarea {
+            min-height: 260px;
+            width: 100%;
+        }
+        button {
+            margin-top: 6px;
+        }
+    }
+    .ui-select-bootstrap>.ui-select-choices,
+    .ui-select-bootstrap>.ui-select-no-choice {
+        width: 314px;
+    }
+    .ui-select-bootstrap>.ui-select-match>.btn {
+        width: 100%;
+    }
+    input[type=search] {
+        width: 100%;
+    }
+}

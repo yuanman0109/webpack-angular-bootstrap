@@ -1,0 +1,85 @@
+<ul class="breadcrumb">
+  <li>订单管理</li>
+  <li><a ui-sref="manageOrder.chargesConfig">服务费配置</a></li>
+  <li class="active">试用费设置</li>
+</ul>
+<div class="mainContent trialFeeContent">
+  <div class="content-box">
+    <form class="form-horizontal" name="trialFeeForm" novalidate>
+      <div class="container">
+        <div class="form-group">
+          <label class="col-sm-5 control-label"><span class="text-danger">* </span>是否开启试用费：</label>
+          <div class="col-sm-7 row">
+            <label class="radio-inline">
+                <input type="radio" name="feeOpen" ng-value="true" ng-model="ctrl.params.open"><i class="iconfont"></i> 开启
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="feeOpen" ng-value="false" ng-model="ctrl.params.open"><i class="iconfont"></i> 关闭
+            </label>
+            <span class="tipWord" ng-if="ctrl.params.open">开启后，进入私海详情会弹窗收款码向商户收费</span>
+            <span class="tipWord" ng-if="!ctrl.params.open && (ctrl.params.id != '' || trialFeeForm.feeOpen.$dirty)">关闭后，进入私海详情则不会弹收款码</span>
+            <span class="tipWord" ng-if="!ctrl.params.open && ctrl.params.id === '' && !trialFeeForm.feeOpen.$dirty">该功能用于控制是否开启试用期收费</span>
+          </div>
+        </div>        
+        <div ng-if="ctrl.params.open" class="form-group" ng-class="{'has-success':trialFeeForm.businessType.$valid && trialFeeForm.businessType.$dirty,'has-error':trialFeeForm.businessType.$invalid && trialFeeForm.businessType.$dirty}">
+          <label for="businessType" class="col-sm-5 control-label"><strong class="text-danger">*</strong>业务类型：</label>
+          <div class="col-sm-4 row">
+            <select class="form-control" name="businessType" id="businessType" ng-disabled="ctrl.btnStatus" ng-model="ctrl.params.businessId" ng-options="type.dataCode as type.dataName for type in ctrl.businessTypes" required>
+              <option value="">请选择业务类型</option>
+            </select>
+          </div>
+        </div>
+        <div ng-if="ctrl.params.open" class="form-group" ng-class="{'has-success':trialFeeForm.tryDays.$valid && trialFeeForm.tryDays.$dirty,'has-error':trialFeeForm.tryDays.$invalid && trialFeeForm.tryDays.$dirty}">
+          <label for="tryDays" class="col-sm-5 control-label"><strong class="text-danger">*</strong>试用天数：</label>
+          <div class="col-sm-4 row">
+            <input type="number" id="tryDays" name="tryDays" class="form-control" ng-model="ctrl.params.tryDays" min="1" ng-pattern="/^[0-9]+$/" placeholder="请输入整数天数，如：15" required>
+          </div>
+        </div>
+        <div ng-if="ctrl.params.open" class="form-group" ng-class="{'has-success':trialFeeForm.chargeAmount.$valid && trialFeeForm.chargeAmount.$dirty,'has-error':trialFeeForm.chargeAmount.$invalid && trialFeeForm.chargeAmount.$dirty}">
+          <label for="chargeAmount" class="col-sm-5 control-label"><strong class="text-danger">*</strong>收费金额：</label>
+          <div class="col-sm-4 row">
+            <input type="number" id="chargeAmount" name="chargeAmount" class="form-control" ng-model="ctrl.params.chargeAmount" min="0.01" max="20000" ng-pattern="/^\d+(\.\d{1,2})?$/" placeholder="请输入收费金额，如：100.00" required>
+          </div>
+        </div>
+        <div ng-if="ctrl.params.open" class="form-group">
+          <div ng-class="{'has-success':trialFeeForm.remind.$valid && trialFeeForm.remind.$dirty,'has-error':trialFeeForm.remind.$invalid && trialFeeForm.remind.$dirty}">
+              <label for="remind" class="col-sm-5 control-label"><strong class="text-danger">*</strong>到期提醒：</label>
+              <div class="col-sm-3 row">
+                <input type="number" id="remind" name="remind" class="form-control" ng-model="ctrl.params.aheadDays" min="1" max="{{ctrl.params.tryDays-1}}" ng-pattern="/^[0-9]+$/" placeholder="请输入提前提醒天数" required>
+              </div>
+          </div>
+          <div ng-if="ctrl.params.open" class="col-sm-1 choostTime">
+              <input class="form-control timeBtn" type="text" readonly="readonly" ng-value="ctrl.resultTime" placeholder="选择时间" ng-click="ctrl.inputBtn()" required/>
+              <div class="timeControl" ng-show="ctrl.showTimeControl" uib-timepicker ng-model="ctrl.chooseTime" ng-change="ctrl.changedTime()" hour-step="1" minute-step="1" show-seconds="true" second-step="1" show-meridian="false"></div>
+          </div>
+        </div>
+        <div ng-if="ctrl.params.open" class="form-group">
+          <label for="admin" class="col-sm-5 control-label">试用费管理员：</label>
+          <div class="col-sm-3 row">
+            <ui-select ng-model="ctrl.userData.name" ng-disabled="ctrl.btnStatus" name="admin" theme="bootstrap"  on-select="ctrl.selCallback($select.selected)"
+              reset-search-input="false" title="选择管理员">
+              <ui-select-match placeholder="输入姓名，设置后用于接受到期提醒">{{$select.selected.name || ctrl.userData.name}}</ui-select-match>
+              <ui-select-choices repeat="user.name as user in ctrl.userList track by $index" refresh="ctrl.getInfoFormName($select.search)"
+                refresh-delay="500">
+                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                <small>
+                  工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                  部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+              </small>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-1 choostTime">
+            <input type="button" class="form-control" value="清空" ng-click="ctrl.resetChargeManger()">
+          </div>
+        </div>
+      </div>
+      <div ng-if="ctrl.params.open" class="text-center">
+        <button ng-if='true' type="button" class="btn btn-primary"  ng-disabled="trialFeeForm.$invalid || ctrl.commitStatus || ctrl.timeCommit" ng-click="ctrl.saveEdit()">确认提交</button>
+      </div>
+      <div ng-if="!ctrl.params.open" class="text-center">
+        <button ng-if='true' type="button" class="btn btn-primary" ng-click="ctrl.saveCloseEdit()">确认提交</button>
+      </div>
+    </form>
+  </div>
+</div>

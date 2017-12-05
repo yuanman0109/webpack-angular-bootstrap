@@ -1,0 +1,179 @@
+
+/******addRole******/
+.rolebox{
+  width: 600px;
+  margin: 60px auto;
+  .rightsbox{
+    max-height: 600px;
+    overflow-y: auto;
+    ul li{
+      float: none;
+      overflow: hidden;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #fff;
+      border-right: none;
+      ul{
+        padding: 0;
+      }
+      ul>li{
+        float: left;
+        padding: 0 10px 0 0 ;
+        border: none;
+        ul{
+          margin-left:20px;
+        }
+        ul>li{
+          float: none;
+          border: none;
+        }
+      }
+    }
+  }
+}
+.rightsbox{
+  background: #EFF3F4;
+  padding: 15px;
+  border-radius: 4px;
+  .li-inline{
+    i{
+      color: #3CB6AF;
+      vertical-align: middle
+    }
+    ul li{
+      float: left;
+    }
+    ul ul{
+      &>li{
+        float: none
+      }
+    }
+  }
+  ul li{
+    border-right: 1px dashed #fff;
+    padding:0 15px;
+    &:last-child{
+      border: none;
+    }
+  }
+  ul ul{
+    padding-right: 0;
+    &>li{
+      border: none;
+      float: left;
+      ul>li{
+        float: left;
+      }
+    }
+  }
+  
+  
+}
+/***addUser***/
+.userDetail-left{
+  width: 40%;
+  padding-right: 30px;
+}
+.userDetail-right{
+  width: 60%;
+  padding-left: 30px;
+  border-left: 1px solid #ECECEC;
+}
+.power-tree{
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 15px 15px 15px 0;
+  ul li ul li,ul li ul li ul li{
+    padding: 0;
+  }
+}
+.busin-tree{
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 15px 15px 15px 0;
+  ul li ul li,ul li ul li ul li{
+    padding: 0;
+  };
+  ul.ivh-treeview ul.ivh-treeview{
+    padding-left: 20px;
+  }
+}
+label.busin-all{
+  padding-left: 15px;
+}
+/******userdetail*******/
+.userdetail-box{
+  h4{
+    margin-top:25px;
+  }
+}
+.list-userdetail{
+  li{
+    width: 20%;
+    float: left;
+    padding: 10px 0;
+  }
+}
+.table-userdetail{
+  margin-top: 10px;
+  thead>tr>th{
+    background: #EFF3F4;
+    border-bottom: 1px dashed #fff;
+    padding: 10px;
+    color: #99A4AA;
+  }
+  tbody>tr>td{
+    background: #EFF3F4;
+    border: none;
+    color: #98A4AA;
+    padding: 10px;
+  }
+}
+.detail-lists{
+  border-top: 1px solid #ccc;
+  ul.ivh-treeview ul.ivh-treeview{
+    padding: 0
+  }
+  ul>li{
+    float: none;
+    label{
+      margin: 0;
+      font-weight: normal;
+    }
+  }
+  ul>li>div{
+    border: 1px solid #ccc;
+    border-top: none;
+    position: relative;
+    padding-left: 150px;
+    min-height: 40px;
+  }
+  ul>li>div>label{
+    display: block;
+    width:150px;
+    padding:10px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  ul>li>div>div>ul>li>div{
+    border-right: none;
+    position: relative;
+    padding-left: 150px;
+  }
+  ul>li>div>div>ul>li:last-child>div{
+    border-bottom: none;
+  }
+  ul>li>div>div>ul>li>div>div{
+    border-right:none;
+  }
+  ul>li>div>div>ul>li>div>div>ul>li>div>div>ul>li>div{
+    border-right:none;
+  }
+}
+/*******userdetail********/
+.userdetail-info{
+  padding: 0;
+  list-style: none;
+  margin: 10px 0 0 0;
+}

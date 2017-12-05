@@ -1,0 +1,499 @@
+<ul class="breadcrumb">
+    <li><a href="#">WIFI管理</a></li>
+    <li class="active">网络管理</li>
+</ul>
+<div class="mainContent" ng-controller="networkManagerCtrl as modal">
+    <div class="content-box">
+        <h5>设置对象：</h5>
+        <div class="row">
+            <div class="col-sm-3">
+                门店：所有门店 
+            </div>
+            <div class="col-sm-3">
+                品牌：绿茶
+            </div>
+            <div class="col-sm-6">
+                企业：上海绿茶餐饮服务有限公司
+            </div>
+        </div>
+        <hr>
+        <h5>WiFi配置：</h5>
+        <uib-tabset class="tabs-default">
+            <uib-tab index="0" heading="网络控制">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="panel panel-default panel-network">
+                            <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <li>上传限速：100kb/S</li>
+                                    <li>下载限速：120kb/S</li>
+                                    <li>上网时长：180分钟</li>
+                                    <li>免认证时长：60分钟</li>
+                                    <li>主动漫游：开</li>
+                                    <li>2G信号：开</li>
+                                    <li>5G信号：开</li>
+                                </ul>
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger" ng-click="modal.open()">删除</button>
+                                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-default panel-network">
+                            <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <li>上传限速：100kb/S</li>
+                                    <li>下载限速：120kb/S</li>
+                                    <li>上网时长：180分钟</li>
+                                    <li>免认证时长：60分钟</li>
+                                    <li>主动漫游：开</li>
+                                    <li>2G信号：开</li>
+                                    <li>5G信号：开</li>
+                                </ul>
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                                    <button type="button" class="btn btn-primary">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="panel panel-default panel-network">
+                            <div class="panel-heading">SSID：GreenTea Pravite wifi<span class="badge">私有</span></div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <li>上传限速：100kb/S</li>
+                                    <li>下载限速：120kb/S</li>
+                                    <li>上网时长：180分钟</li>
+                                    <li>免认证时长：60分钟</li>
+                                    <li>主动漫游：开</li>
+                                    <li>2G信号：开</li>
+                                    <li>5G信号：开</li>
+                                </ul>
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-link btn-link-danger">删除</button>
+                                    <button type="button" class="btn btn-primary">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-controller="userListsCtrl as pages">
+                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">添加SSID</button>
+                    <ul uib-pagination total-items="pages.totalItems" items-per-page="10" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
+                    <b class="pagination-text pull-right" ng-if="pages.totalItems>10">共{{pages.totalItems}}条</b>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Portal设置">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4>默认Portal(易趴科技)</h4>
+                        <div class="panel panel-default panel-portal">
+                            <div class="panel-body">
+                                <img src="../../../images/template.png" alt="">
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right" ng-controller="networkManagerCtrl as modal">
+                                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4>默认Portal(易趴科技)</h4>
+                        <div class="panel panel-default panel-portal">
+                            <div class="panel-body">
+                                <img src="../../../images/template.png" alt="">
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right" ng-controller="networkManagerCtrl as modal">
+                                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4>默认Portal(易趴科技)</h4>
+                        <div class="panel panel-default panel-portal">
+                            <div class="panel-body">
+                                <img src="../../../images/template.png" alt="">
+                            </div>
+                            <div class="panel-footer">
+                                <label class="switch-btn no-radius">
+                                    <input class="checked-switch" type="checkbox">
+                                    <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                                    <span class="toggle-btn"></span> 
+                                </label>
+                                <div class="pull-right" ng-controller="networkManagerCtrl as modal">
+                                    <button type="button" class="btn btn-primary" ng-click="modal.modify()">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary">添加Portal</button>
+            </uib-tab>
+            <uib-tab index="2" heading="黑白名单">
+                <p>
+                    <label class="radio-inline">
+                        <input type="radio" value="1" name="list"> 黑名单
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" value="0" name="list" checked> 白名单
+                    </label>
+                </p>
+                <table class="table table-condensed table-theadbg table-theadbg-noRadius">
+                    <thead>
+                        <tr>
+                            <th><div>&nbsp;</div></th>
+                            <th><div>用户手机号</div></th>
+                            <th><div>用户MAC</div></th>
+                            <th><div>添加时间</div></th>
+                            <th><div>操作</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="1" name=""> 
+                                </label>
+                            </td>
+                            <td>
+                                13222222222
+                            </td>
+                            <td>
+                                92:22:33:66:11
+                            </td>
+                            <td>
+                                2016.02.34.22:44
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link btn-link-danger" ng-click="modal.deletelist()">删除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="1" name=""> 
+                                </label>
+                            </td>
+                            <td>
+                                13222222222
+                            </td>
+                            <td>
+                                92:22:33:66:11
+                            </td>
+                            <td>
+                                2016.02.34.22:44
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link btn-link-danger" ng-click="modal.deletelist()">删除</button>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="1" name=""> 
+                                </label>
+                            </td>
+                            <td>
+                                13222222222
+                            </td>
+                            <td>
+                                92:22:33:66:11
+                            </td>
+                            <td>
+                                2016.02.34.22:44
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-link btn-link-danger" ng-click="modal.deletelist()">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="box-pd">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" value="1" name=""> 全选
+                    </label>
+                    <button type="button" class="btn btn-primary">批量设置</button>
+                </p>
+                <div ng-controller="userListsCtrl as pages">
+                    <button type="button" class="btn btn-primary" ng-click="modal.addlist()">添加名单</button>
+                    <ul uib-pagination total-items="pages.totalItems" items-per-page="10" previous-text="<" next-text=">" ng-model="pages.currentPage" ng-change="pages.pageChanged()" class="pull-right"></ul>
+                    <b class="pagination-text pull-right" ng-if="pages.totalItems>10">共{{pages.totalItems}}条</b>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>
+<script type="text/ng-template" id="deleteSSID.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">删除SSID</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p>确定要删除SSID：  GrennTea Free WiFi   吗？<br>删除后该品牌下所有门店此SSID都将被删除！</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>
+<script type="text/ng-template" id="addlist.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">添加名单</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+               <label for="" class="col-sm-5 control-label">分类：</label>
+               <div class="col-sm-7">
+                   <label class="radio-inline">
+                        <input type="radio" value="1" name="list"> 黑名单
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" value="0" name="list" checked> 白名单
+                    </label>
+               </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">类型：</label>
+                <div class="col-sm-7">
+                    <label class="radio-inline">
+                        <input type="radio" value="1" name="types"> 用户
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">手机号：</label>
+                <div class="col-sm-5">
+                   <input type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">MAC地址：</label>
+                <div class="col-sm-5">
+                   <input type="text" class="form-control" placeholder="">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>
+<script type="text/ng-template" id="modifySSID.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">修改SSID</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">SSID名称：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="" placeholder="lvcha-free wifi">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上传限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-5">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-5">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上网时长：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">分钟</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">上网次数：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">次</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">主动漫游：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">2.4G和5G的SSID信号区分：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">2G信号：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">5G信号：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">信号内用户隔离：</label>
+                <div class="col-sm-7">
+                    <label class="switch-btn no-radius">
+                        <input class="checked-switch" type="checkbox">
+                        <span class="text-switch" data-yes="开启" data-no="关闭"></span> 
+                        <span class="toggle-btn"></span> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">总带宽限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-5 control-label">SSID总带宽限速：</label>
+                <div class="col-sm-7 row">
+                    <div class="col-xs-6">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <p class="form-control-static">mbps</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>
+<script type="text/ng-template" id="deletelist.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">删除名单</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p>确定要删除选中的名单吗？删除后该品牌下所有门店此名单都将被删除！</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确定</button>
+    </div>
+</script>

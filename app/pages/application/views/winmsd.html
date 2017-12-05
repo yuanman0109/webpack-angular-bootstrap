@@ -1,0 +1,97 @@
+<div class="page-application-winmsd">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li>消息通知</li>
+  </ul>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="消息标题" ng-model="ctrl.getParame.title" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="消息内容" ng-model="ctrl.getParame.content" ng-keyup="ctrl.enterKeyup($event)">
+        </div>
+        <div class="form-group">
+          <sel-msg-type ng-model="ctrl.getParame.infoType" holder="请选择消息类型"></sel-msg-type>
+        </div>
+        <div class="form-group">
+          <sel-allapp ng-model="ctrl.getParame.appName" holder="请选择APP名" type="SYSINFO_APP_NAME"></sel-allapp>
+        </div>
+        
+        <div class="form-group">
+          <button class="btn btn-white" type="button" ng-click="ctrl.searchBt()">搜索</button>
+        </div>
+      </form>
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-common-theme text-center table-hover table-striped">
+          <thead>
+            <tr>
+              <th>消息标题</th>
+              <th>消息内容</th>
+              <th>消息类型</th>
+              <th>APP名称</th>
+              <th width="160">发送时间</th>
+              <th width="60">已读数</th>
+              <th>查阅率</th>
+              <th>状态</th>
+              <!-- <th>发送版本</th>
+              <th>发送范围</th> -->
+              <th ng-if="btnlist.APP_MGR_0303">操作</th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.winList.length == null">
+            <tr class="empty-tr">
+              <td colspan="{{btnlist.APP_MGR_0303 ? 9:8}}" class="empty-box">没有您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="item in ctrl.winList">
+              <td class="text-overflow" >
+                <span title="{{item.title}}">
+                    {{item.title | maxString:true:15:' ...' || '暂无'}}
+                  </span>
+              </td>
+              <td class="text-overflow">
+                <span title="{{item.content}}">
+                  {{item.content  || '暂无' }}
+                </span>
+              </td>
+              <td class="text-overflow"  title="{{ctrl.typeList[item.infoType] || '暂无'}}">{{ctrl.typeList[item.infoType] || '暂无'}}</td>
+              <td class="text-overflow">{{item.appName | winmsd:item.appName}}</td>
+              <td class="text-overflow" title="{{item.createTimeStr || '暂无'}}">{{item.createTimeStr || '暂无'}}</td>
+              <td class="text-overflow">{{item.readNum||'未知'}}</td>
+              <td class="text-overflow">{{item.readRate||'未知'}}</td>
+              <td class="text-overflow">
+               {{ctrl.statusList[item.status]}}
+              </td>
+              <!-- <td class="text-overflow">{{item.version || '所有版本'}}</td>
+              <td class="text-overflow"  title="{{item.scope || '所有城市'}}">{{item.scope || '所有城市'}}</td> -->
+              <td ng-if="btnlist.APP_MGR_0303" class="text-overflow">
+                <a ng-if="item.status === 'SENDING'" ng-click="ctrl.recall(item.id)">撤回</a>　
+                <a ng-if="item.status === 'SENDING'" class="btn-link-success" ui-sref="application.msgDetail({id:item.id})">详情</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix table-bottom">
+        <div class="pull-left form-inline">
+          <div class="form-group" ng-if="btnlist.APP_MGR_0301"> 
+            <button type="button" class="btn btn-primary" ui-sref="application.addMessage">新增消息通知</button>
+          </div>
+          <div class="form-group" ng-if="btnlist.APP_MGR_0302"> 
+            <button type="button" class="btn btn-primary" ng-click="ctrl.export()">导出</button>
+          </div>
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if="ctrl.total>ctrl.getParame.pageSize" items-per-page="ctrl.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.getParame.pageNo" ng-change="ctrl.pageChanged()"
+          class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.getParame.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

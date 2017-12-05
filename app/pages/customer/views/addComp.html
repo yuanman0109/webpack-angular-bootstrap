@@ -1,0 +1,459 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="customer.customerLists">门店列表</a></li>
+    <li class="active">{{breadcrumb}}</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box" ng-controller="AddCompCtrl as comp">
+        <uib-tabset class="tabs-default" active="comp.tabIndex">
+            <uib-tab index="0" heading="企业信息">
+                <form class="form-horizontal" role="form" name="addcomp">
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">企业名称：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control"  placeholder="" ng-model="comp.saveData.name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">企业联系人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkman">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">联系人职位：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkmanPosition"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">联系人电话：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkmanTel"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">联系人手机：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkmanMobile"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">联系人邮箱：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="email" class="form-control" placeholder="" ng-pattern="/^[a-z]([a-z0-9]*[-_]?[a-z0-9]+)*@([a-z0-9]*[-_]?[a-z0-9]+)+[\.][a-z]{2,3}([\.][a-z]{2})?$/i" ng-model="comp.saveData.linkmanEmail"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">联系人微信：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkmanWechart"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">企业规模：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <select class="form-control" ng-model="comp.saveData.companyScaleCode">
+                                    <option value="">选择企业规模</option>
+                                    <option value="{{dic.dataCode}}" ng-repeat="dic in comp.dictionory">{{dic.dataName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">注册资本：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="number" class="form-control" placeholder="" ng-model="comp.saveData.registeredAssets" ng-pattern="/^[0-9]*[1-9][0-9]*$/">
+                            </div>
+                            <div class="col-xs-1 form-control-static">
+                                万
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">企业法人：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.artificialPerson">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">总部电话：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.linkTel">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">总部地址：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.address">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label">企业官网：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="" ng-model="comp.saveData.website">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-5 control-label">客户来源：</label>
+                        <div class="col-sm-7 row">
+                            <label class="checkbox-inline" ng-repeat="sour in comp.customerSource">
+                                <input type="checkbox" ng-true-value="'{{sour.dataCode}}'" ng-false-value="null" name="customerSources" ng-model="sour.checked"><i class="iconfont"></i> {{sour.dataName}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-repeat="source in comp.customerSource" ng-if="source.checked=='CS_WBHZ'">
+                        <label class="col-sm-5 control-label">外部合作方名称：</label>
+                        <div class="col-sm-7 row">
+                            <div class="col-xs-5 row">
+                                <input type="text" class="form-control" placeholder="输入外部合作方名称" ng-model="source.partnerName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-7">
+                            <div class="row">
+                                <button type="submit" class="btn btn-primary" ng-disabled="addcomp.$invalid" ng-click="comp.saveComp()">下一步</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </uib-tab>
+            <uib-tab index="1" disable="comp.brandData.isShow" heading="品牌信息">
+                <div class="comp_ul">
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary" ng-click="comp.addBrand()">添加品牌</button>   
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4" ng-repeat="brand in comp.brandData.brands">
+                            <form class="form-horizontal" role="form" name="brands">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">品牌名称：</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control"  placeholder="" ng-model="brand.name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-md-4 control-label">品牌菜系：</label>
+                                    <div class="col-md-8">
+                                         <select class="form-control" ng-model="brand.dishStyles[0].dishStyleCode">
+                                            <option value="">选择菜系</option>
+                                            <option ng-repeat="dishes in comp.dishes" value="{{dishes.dataCode}}">{{dishes.dataName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">品牌LOGO：</label>
+                                    <div class="col-md-8">
+                                         <input type="hidden" class="form-control" placeholder="" ng-model="brand.logo">
+                                         <div class="form-control-static"> 
+                                             <button type="file" ngf-select="comp.uploadFiles($file, $invalidFiles,$index)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                         </div>
+                                         <div ng-if="brand.logo">
+                                             <img ng-src="{{brand.logo|imgUrl}}" alt="logo" class="img-thumbnail">
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-md-4 control-label">客户类型：</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" ng-model="brand.customerType">
+                                            <option value="">选择客户类型</option>
+                                            <option ng-repeat="type in comp.customerType" value="{{type.dataCode}}">{{type.dataName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">品牌联系人：</label>
+                                    <div class="col-md-8">
+                                         <input type="text" class="form-control" placeholder="" ng-model="brand.linkman"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">联系人职位：</label>
+                                    <div class="col-md-8">
+                                         <input type="text" class="form-control" placeholder="" ng-model="brand.linkmanPosition"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">联系人手机：</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" ng-model="brand.linkmanMobile"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">联系人电话：</label>
+                                    <div class="col-md-8">
+                                         <input type="text" class="form-control" placeholder="" ng-model="brand.linkmanTel"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">联系人邮箱：</label>
+                                    <div class="col-md-8">
+                                            <input type="email" class="form-control" placeholder="" ng-model="brand.linkmanEmail"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">联系人微信：</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" ng-model="brand.linkmanWechart"> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button type="submit" class="btn btn-link btn-link-danger" ng-click="comp.deleteBrand($index)">-删除</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-click="comp.saveBrand()">下一步</button>
+            </uib-tab>
+            <uib-tab index="2" disable="comp.contract.isShow" heading="签约信息">
+                <form class="form-horizontal" role="form" name="storeInfo" id="storeInfo">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>签约信息：</strong></label>
+                        <div class="col-md-10 row">
+                            <div class="formItem formItem-list clearfix" ng-repeat="conInfo in comp.contract.companyContracts">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">签约时间：</label>
+                                    <div class="col-md-8 row">
+                                        <p class="input-group col-md-6">
+                                            <input type="text" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="conInfo.showTime" on-open-focus='false' is-open="conInfo.isOpenDate" close-text="关闭" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default" ng-click="comp.datepicker($index)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">合同编号：</label>
+                                    <div class="col-md-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" placeholder="" ng-model="conInfo.contractNo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">合同上传：</label>
+                                    <div class="col-md-8 row">
+                                        <input type="hidden" ng-model="conInfo.contractFile">
+                                        <p>{{conInfo.contractFile}}</p>
+                                        <button type="file" ngf-select="comp.uploadContract($file, $invalidFiles,$index)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">签约开通业务：</label>
+                                    <div class="col-md-8 row">
+                                        <label class="checkbox-inline" ng-repeat="bus in comp.business">
+                                            <input type="checkbox" name="business" ng-false-value="null" ng-true-value="'{{bus.dataCode}}'" ng-model="conInfo.business[$index].businessTypeCode"><i class="iconfont"></i>{{bus.dataName}}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-repeat="bus in conInfo.business" ng-if="bus.businessTypeCode=='BZT_ORDER'">
+                                    <label class="col-md-4 control-label">签约费率：</label>
+                                    <div class="col-md-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" ng-pattern="/^(?:[1-9]|1[0-9]|20)$/" placeholder="" ng-model="conInfo.contractRateInt">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <p class="form-control-static">(千分之)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-danger pull-right" ng-click="comp.delContract($index)">删除</button>
+                            </div>
+                            <div class="form-control-static">
+                                <button class="btn btn-primary" ng-click="comp.addContract()">添加</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>证件信息：</strong></label>
+                        <div class="col-md-10 row">
+                            <div class="formItem">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">营业执照：</label>
+                                    <div class="col-sm-8 row">
+                                        <label class="radio-inline">
+                                            <input type="radio" value="个人" name="business"  ng-model="comp.contract.businessLicenseType"><i class="iconfont"></i> 个人
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="企业" name="business" ng-model="comp.contract.businessLicenseType"><i class="iconfont"></i> 企业
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">上传执照：</label>
+                                    <div class="col-sm-8 row">
+                                        <input type="hidden" ng-model="comp.contract.businessLicense">
+                                        <div class="form-control-static"> 
+                                            <button type="file" ngf-select="comp.uploadLicense($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                            <span ng-if="comp.contract.businessLicense" class="thumbnail-mid">
+                                                <img ng-src="{{comp.contract.businessLicense|imgUrl}}" alt="执照" class="img-thumbnail">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">法人姓名：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" ng-model="comp.contract.artificialPerson">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">法人身份证号：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" ng-model="comp.contract.artificialPersonCard">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">法人身份证：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-sm-12 row">
+                                            <input type="hidden" ng-model="comp.contract.artificialPersonCardFront">
+                                            <div class="form-control-static"> 
+                                                <button type="file" ngf-select="comp.uploadPersonCardFront($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i><br>正面图片</button>
+                                                <span ng-if="comp.contract.artificialPersonCardFront" class="thumbnail-mid">
+                                                    <img ng-src="{{comp.contract.artificialPersonCardFront|imgUrl}}" alt="正面图片" class="img-thumbnail">
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 row">
+                                            <input type="hidden" ng-model="comp.contract.artificialPersonCardBack">
+                                            <div class="form-control-static"> 
+                                                <button type="file" ngf-select="comp.uploadPersonCardBack($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i><br>反面图片</button>
+                                                <span ng-if="comp.contract.artificialPersonCardBack" class="thumbnail-mid">
+                                                    <img ng-src="{{comp.contract.artificialPersonCardBack|imgUrl}}" alt="反面图片" class="img-thumbnail">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">餐饮服务许可证：</label>
+                                    <div class="col-sm-8 row">
+                                        <input type="hidden" ng-model="comp.contract.cateringLicense">
+                                        <div class="form-control-static"> 
+                                            <button type="file" ngf-select="comp.uploadcateringLicense($file, $invalidFiles)" class="btn btn-upload"><i class="iconfont icon-nb-w7"></i></button>
+                                            <span ng-if="comp.contract.cateringLicense" class="thumbnail-mid">
+                                                <img ng-src="{{comp.contract.cateringLicense|imgUrl}}" alt="餐饮服务许可证" class="img-thumbnail">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>账户信息：</strong></label>
+                        <div class="col-md-10 row">
+                            <div class="formItem">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">账户类型：</label>
+                                    <div class="col-sm-8 row">
+                                        <label class="radio-inline">
+                                            <input type="radio" value="对公" name="otherOrder" ng-model="comp.contract.accountType"><i class="iconfont"></i> 对公
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" value="对私" name="otherOrder" ng-model="comp.contract.accountType"><i class="iconfont"></i> 对私
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-4 control-label">开户名称：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" placeholder="请输入账户名" ng-model="comp.contract.accountName"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">开户银行：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <select class="form-control" ng-model="comp.contract.bankCode" ng-options="bank.code as bank.name for bank in comp.bank" ng-change="comp.contract.subBankCode=''">
+                                                <option value="">选择银行</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label  class="col-sm-4 control-label">开户支行：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <ui-select ng-model="comp.contract.subBankCode"
+                                                        theme="bootstrap"
+                                                        ng-disabled="!comp.contract.bankCode"
+                                                        reset-search-input="false"
+                                                        title="选择一个支行">
+                                                <ui-select-match placeholder="输入支行...">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="subBank.code as subBank in comp.subBank track by $index"
+                                                        refresh="comp.getSubBank({name:$select.search})"
+                                                        refresh-delay="0">
+                                                <div ng-bind-html="subBank.name | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-4 control-label">银行账号：</label>
+                                    <div class="col-sm-8 row">
+                                        <div class="col-md-6 row">
+                                            <input type="text" class="form-control" placeholder="" ng-model="comp.contract.accountNo"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><strong>备注说明：</strong></label>
+                        <div class="col-md-10 row">
+                             <textarea class="form-control" placeholder="备注说明："  rows="5" ng-model="comp.contract.remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="row">
+                            <button type="button" class="btn btn-primary" ng-disabled="storeInfo.$invalid" ng-click="comp.saveContract()">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+</div>

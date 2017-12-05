@@ -1,0 +1,62 @@
+<ul class="breadcrumb">
+    <li>客户管理</li>
+    <li><a ui-sref="store.compList">企业列表</a></li>
+    <li class="active">公司详情</li>
+</ul>
+<div class="mainContent">
+    <div class="content-box" ng-controller="CompDetailCtrl as comp">
+      <uib-tabset class="tabs-default">
+        <uib-tab index="0" heading="基本信息">
+          <div class="border-radius-box padding20 container-fluid">
+            <div class="row">
+              <p class="col-md-4">企业名称：{{comp.compDetail.name||''}}</p>
+              <p class="col-md-4">企业规模：{{comp.scales[comp.compDetail.scale]||''}}</p>
+              <p class="col-md-4">注册资本：{{comp.compDetail.registeredAssets||''}}</p>
+              <p class="col-md-4">企业法人：{{comp.compDetail.artificialPerson||''}}</p>
+              <p class="col-md-4">企业状态：{{comp.status[comp.compDetail.status]||''}}</p>
+              <p class="col-md-4">业务类型：{{comp.compDetail.businessTypeNames||''}}</p>
+              <p class="col-md-4">总部电话：{{comp.compDetail.linkTel||''}}</p>
+              <p class="col-md-4">企业官网：{{comp.compDetail.website||''}}</p>
+              <p class="col-md-4">总部地址：{{comp.compDetail.address||''}}</p>
+            </div>
+          </div>
+          <h4>品牌信息：</h4>
+          <div class="container-fluid border-radius-box padding20">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>品牌LOGO</th>
+                  <th>品牌名称</th>
+                  <!-- <th>品牌菜系</th>
+                  <th>客户类型</th> -->
+                  <th>品牌状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="brand in comp.compDetail.brands">
+                  <td>
+                    <img ng-src="{{brand.logoUrl || comp.defLogo}}" alt="logo" class="brand-image">
+                  </td>
+                  <td>
+                    {{brand.name}}
+                  </td>
+                  <!-- <td>
+                    {{brand.dishStyleName||''}}
+                  </td>
+                  <td>
+                    {{brand.customerTypeName||''}}
+                  </td> -->
+                  <td>
+                    {{comp.status[brand.status] ||''}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box-pd">
+            <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0406" ui-sref="store.modifyComp({id:comp.compDetail.id})">修改</button>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+</div>

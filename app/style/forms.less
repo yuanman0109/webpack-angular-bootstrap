@@ -1,0 +1,177 @@
+.form-control {
+  border-color: #D3DCE1;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.form-control[readonly] {
+  background: none
+}
+
+.has-success .form-control {
+  color: #3CB67D;
+  border-color: #3CB67D;
+}
+
+.has-success .form-control:focus {
+  border-color: #3CB67D;
+}
+
+.input-group .input-group-btn .btn {
+  padding: 5px 12px 6px;
+  border-color: #D3DCE1;
+  i {
+    color: #b6c6d0;
+    display: block;
+    line-height: normal;
+    font-size: 18px;
+  }
+}
+
+.formItem {
+  border: 1px solid #ececec;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.formItem-list {
+  margin-bottom: 15px;
+}
+
+form label {
+  font-weight: normal
+}
+
+input[type=radio] {
+  margin: 2px 0 0 -25px;
+}
+
+input[type=checkbox] {
+  margin: 2px 0;
+}
+
+.input-disabled {
+  cursor: not-allowed;
+}
+
+.checkbox-inline,
+.radio-inline {
+  min-width: 20px;
+  min-height: 20px;
+  padding-left: 0;
+}
+
+.loading-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: #fefefe;
+  z-index: 9999;
+  .loadImg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    -webkit-transform: translate(-50%, -50%) scale(0.5);
+    background: url(../images/loading.gif) no-repeat center;
+    width: 200px;
+    height: 150px;
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+.form-control-static,
+.form-horizontal .form-group {
+  text-align: left
+}
+
+.break-word {
+  word-wrap: break-word;
+}
+
+label.checkbox-inline {
+  padding-left: 0;
+  // margin-top: -3px;  //操作记录 文字、点击框与其他保持对齐
+  input,
+  i,
+  span {
+    vertical-align: middle;
+    display: inline-block;
+  }
+  i {
+    margin-right: 5px;
+  }
+}
+
+.radio-inline input[type=radio],
+.checkbox-inline input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  opacity: 0;
+  &+i {
+    color: #3CB6AF;
+    background: #fff;
+    line-height: 16px;
+    vertical-align: middle;
+  }
+  &:disabled+i {
+    cursor: not-allowed
+  }
+}
+
+// table .checkbox-inline input[type=checkbox] {
+//   &+i {
+//     position: relative;
+//     top: -4px;
+//   }
+// }
+
+.checkbox-inline input[type=checkbox] {
+  &:indeterminate+i:before {
+    content: "\e636";
+  }
+  &+i:before {
+    content: "\e60e";
+  }
+  &:checked+i:before {
+    content: "\e614";
+  }
+}
+
+.radio-inline input[type=radio] {
+  &+i:before {
+    content: "\e63d";
+  }
+  &:checked+i:before {
+    content: "\e63a";
+  }
+}
+
+.table-head .checkbox-inline {
+  color: #fff;
+  margin: 0 5px;
+  input[type=checkbox]~i {
+    color: #ffffff;
+    background: none;
+  }
+}
+
+.dateform .input-group {
+  float: left;
+}
+
+.uib-time input {
+  width: 60px;
+}
+
+// input宽
+.selectList {
+  min-width:150px;
+}

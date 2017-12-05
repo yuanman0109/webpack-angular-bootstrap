@@ -1,0 +1,98 @@
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">问题反馈详情</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body addAdv-box" id="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+         <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-md-4 control-label">反馈人：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.createUser  || '-'}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">城市：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.cityName || '-'}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-4 control-label">反馈时间：</label>
+            <div class="col-md-8 row">
+              <div class="input-group">
+                <p class="form-control-static">{{$ctrl.item.createTime | date:'yyyy-MM-dd   HH:mm:ss' || '-'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-4 control-label">反馈类型：</label>
+            <div class="col-md-8 row">
+              <div class="input-group">
+                <p class="form-control-static">{{($ctrl.item.type |problemFeedbackType) || '-'}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-md-4 control-label">产品名称：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.productName || '-'}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">产品版本号：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static overflow-h150">{{$ctrl.item.productVersion || '-'}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">手机型号：</label>
+            <div class="col-md-8 row">
+               <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.mobileType || '-'}}
+            </div>
+            </div>
+          </div>
+      <!--</div>
+      <div class="col-md-6">-->
+        <form class="form-horizontal" role="form">
+          
+          <div class="form-group">
+            <label class="col-md-4 control-label">操作系统：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.systemInfo || '-'}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">浏览器：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.browserInfo || '-'}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">门店名称：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.storeName || '-'}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">反馈内容：</label>
+            <div class="col-md-8 row">
+              <p class="form-control-static">{{$ctrl.item.content || '-'}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-4 control-label">图片：</label>
+            <div class="col-md-8 row">
+              <!--<div ng-if="{{$ctrl.item.url}}" class="thumbnail-small">-->
+                <img ng-src="{{$ctrl.item.url | imgUrlWithToken}}" alt="img" class="img-thumbnail">
+              <!--</div>-->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>

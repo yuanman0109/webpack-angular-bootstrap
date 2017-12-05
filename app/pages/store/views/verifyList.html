@@ -1,0 +1,30 @@
+<div class="page-store-verify">
+  <ul class="breadcrumb">
+    <li class="active">客户管理</li>
+    <li class="active">建店审核</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <uib-tabset class="tabs-default" active="ctrl.getParame.serviceStatus">
+        <uib-tab index="'SUBMIT'" heading="待审核" ng-click="ctrl.selTab('SUBMIT')">
+          <verify-table></verify-table>
+        </uib-tab>
+        <uib-tab index="'REJECT'" heading="已退回" ng-click="ctrl.selTab('REJECT')">
+          <verify-table></verify-table>
+        </uib-tab>
+        <uib-tab index="'ONLINE'" heading="已通过" ng-click="ctrl.selTab('ONLINE')">
+          <verify-table></verify-table>
+        </uib-tab>
+        <div class="search-wrap form-inline">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="输入客户名称/客户ID..." ng-model="ctrl.getParame.searchStr" ng-keyup="ctrl.enterKeyup($event)">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-normal" ng-click="ctrl.searchBt()">搜索</button>
+          </div>
+        </div>
+      </uib-tabset>
+
+    </div>
+  </div>
+</div>

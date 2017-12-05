@@ -1,0 +1,16 @@
+<div class="sidebar-wrapper" ng-class="{'sideClose':sidebarBt}">
+  <div uib-accordion close-others="false" class="sidebar" ng-class="{false:'sidebar-mac'}[ctrl.isWin]">
+    <div uib-accordion-group is-disabled="sidebarBt"  template-url="group-template.html" class="nav-sidebar" ng-repeat="firList in menutData track by $index" is-open="firList.isopen" >
+      <uib-accordion-heading>
+        <span ng-class="{active: ctrl.$state.includes('{{firList.code|menuState}}')}"><i class="iconfont" ng-class="'{{firList.code|menuIcon}}'"></i><span>{{firList.name}}</span></span>
+        <i class="pull-right iconfont icon-CombinedShape"></i>
+      </uib-accordion-heading>
+      <div class="list-group" ng-repeat="secList in firList.children track by $index">
+        <a href="#"  class="list-group-item" ui-sref-active-eq="active" ui-sref="{{secList.code|menuState}}" ng-if="secList.code|menuState">{{secList.name}}</a>
+      </div>
+    </div>
+    <div class="sidebarBt" ng-class="{ 'menuClose':sidebarBt}" ng-click="ctrl.sidebarSwitch()">
+      <i class="iconfont icon-icon-test"></i>
+    </div>
+  </div>
+</div>

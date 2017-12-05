@@ -1,0 +1,156 @@
+<div class="clearfix">
+    <ul class="breadcrumb pull-left">
+        <li>客户管理</li>
+        <li class="active">企业列表</li>
+    </ul>
+    <div class="pull-right">
+        <a ui-sref="store.list" class="switch-link"><i class="iconfont icon-nb-w12"></i>门店模式</a>
+    </div>
+</div>
+<div class="mainContent" ng-controller="CompListsCtrl as cus">
+  <div class="table-head form-inline">
+    <form>
+      <div class="form-group">
+        <prov-select province='cus.getParame.provinceCode'></prov-select>
+        <city-select province='cus.getParame.provinceCode' city='cus.getParame.cityCode'></city-select>
+        <county-select city='cus.getParame.cityCode' county='cus.getParame.districtCode'></county-select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="item.dataCode as item.dataName for item in cus.dishesLists" ng-model="cus.getParame.dishStyleCode">
+            <option value="">按菜系分类</option>
+          </select>
+      </div>
+      <!-- <div class="form-group">
+        <select class="form-control" ng-options="item.dataCode as item.dataName for item in cus.customer" ng-model="cus.getParame.customerTypeCode">
+            <option value="">按客户类型</option>
+          </select>
+      </div> -->
+      <div class="form-group">
+        <select class="form-control" ng-model="cus.getParame.flag">
+          <option value="">按餐饮业态</option>
+          <option value="1">正餐版</option>
+          <option value="2">快餐版</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="prop.dataCode as prop.dataName for prop in cus.Properties" ng-model="cus.getParame.storeProperty">
+          <option value="">按门店属性</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="status.dataCode as status.dataName for status in cus.statuses" ng-model="cus.getParame.status">
+          <option value="">按门店状态</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-options="item.dataCode as item.dataName for item in cus.attribution" ng-model="cus.getParame.attribution">
+          <option value="">按地点属性</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="input-group date-form">
+          <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="cus.startTime" is-open="cus.startOpen" on-open-focus="false"  datepicker-options="cus.startDateOps" ng-change="cus.selDate( 'start')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="建店开始时间" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="cus.startOpen=!cus.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+        </div>
+        <div class="input-group date-form">
+          <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="cus.endTime" is-open="cus.endOpen" on-open-focus="false"  datepicker-options="cus.endDateOps" ng-change="cus.selDate( 'end')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="建店结束时间" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="cus.endOpen=!cus.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="输入搜索关键字..." ng-model="cus.searchStr" ng-keyup="cus.enterKeyup($event)">
+      </div>
+      <div class="form-group">
+        <select class="form-control" ng-model="cus.searchType">
+          <option value='0'>按企业名称</option>
+          <option value='1'>按品牌名称</option>
+          <option value='2'>按门店名称</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-white" ng-click="cus.searchCusList()">搜索</button>
+      </div>
+    </form>
+  </div>
+  <div class="content-box">
+    <div class="table-overflow">
+        <table class="table table-hover table-theadbg table-customer">
+            <thead>
+              <tr>
+                <th>
+                  <div>门店</div>
+                </th>
+                <th>
+                  <div>业务类型</div>
+                </th>
+                <th>
+                  <div>所属品牌</div>
+                </th>
+                <th width="200">
+                  <div>城市-区／县</div>
+                </th>
+                <th width="100">
+                  <div>菜系</div>
+                </th>
+                <th>
+                  <div>地址</div>
+                </th>
+                <th width="200">
+                  <div>操作</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody ng-if="cus.total===0">
+              <tr class="empty-tr">
+                <td colspan="7" class="empty-box">没有找到您查询的结果！</td>
+              </tr>
+            </tbody>
+            <tbody ng-repeat="brand in cus.customerLists">
+              <tr class="table-header">
+                <td colspan="2" class="text-overflow"><span title="{{brand.name|| '暂无'}}">品牌：{{brand.name||'暂无'}}</span></td>
+                <td colspan="4" class="text-overflow"><span title="{{brand.companyName|| '暂无'}}">企业：{{brand.companyName||'暂无'}}</span></td>
+                <td><button type="button" class="btn btn-link btn-link-success" ng-if="btnlist.CRM_0402" ui-sref="store.compDetail({id:brand.companyId})">企业详情</button></td>
+              </tr>
+              <tr ng-repeat="item in brand.stores">
+                <td class="text-overflow"><span title="{{item.name|| '暂无'}}">{{item.name || '暂无'}}</span></td>
+                <td>
+                  <span ng-if="item.business.length==0"> 暂无</span>
+                  <busin-label business="item.business"></busin-label>
+                </td>
+                <td class="text-overflow"><span title="{{item.brandName|| '暂无'}}">{{item.brandName || '暂无'}}</span></td>
+                <td>{{item.provinceName+'-'+item.cityName+'-'+item.districtName}}</td>
+                <td>{{item.dishStyleName || '暂无'}}</td>
+                <td class="text-overflow"><span title="{{item.address|| '暂无'}}">{{item.address || '暂无'}}</span></td>
+                <td>
+                  <button type="button" class="btn btn-link btn-link-success" ng-if="btnlist.CRM_0401" ui-sref="store.storeDetail({id:item.id})">详情</button>
+                  <button type="button" class="btn btn-link" ng-if="btnlist.CRM_0407" ng-click="cus.modifyUser(item)">修改维护人</button>
+                </td>
+              </tr>
+              <tr ng-if="brand.storeCount>brand.stores.length">
+                <td colspan="7" class="more-tr"><button type="button" class="btn btn-block" ng-click="cus.searchBrand(brand.name)">查看更多<i class="iconfont icon-xiala"></i></button></td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix">
+      <div class="pull-left">
+        <button type="button" class="btn btn-primary" ui-sref="store.addStore">添加门店</button>
+        <button type="button" class="btn btn-primary" ui-sref="store.addComp">添加企业</button>
+        <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0408" ui-sref="store.manageList">联系人管理</button>
+        <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0409" ng-click="cus.exportStore()">导出</button>
+      </div>
+      <div class="pull-right">
+        <ul class="pull-right" uib-pagination total-items="cus.total" ng-if="cus.total>cus.getParame.pageSize" items-per-page="cus.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="cus.getParame.pageNo" ng-change="cus.pageChanged()"
+        ></ul>
+        <b class="pagination-text pull-right" ng-if="cus.total>cus.getParame.pageSize">共{{cus.total}}条</b>                  
+      </div>
+    </div>
+  </div>
+</div>
+

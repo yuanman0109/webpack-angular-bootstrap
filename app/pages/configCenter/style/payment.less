@@ -1,0 +1,279 @@
+.page-payment-verify {
+    .table {
+        td {
+            word-wrap: break-word;
+            &.text-left {
+                text-align: left;
+            }
+        }
+    }
+   
+}
+
+.modal-payment-modal {
+  .auditRemark_tips{
+    margin-left:0;
+    margin-right:0;
+    padding:0;
+    width:100%;
+  }
+    .des {
+        margin-top: 0.5em;
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+.page-payment-verify-details {
+    .btns-wrap {
+        margin-top: 30px;
+    }
+    .mainContent{
+      overflow:hidden;
+    }
+    .alert{
+      background:#A6D3F0;
+      border:none;
+      border-top:1px dashed #5abeff;
+      border-bottom:1px dashed #5abeff;
+      padding:10px 20px;
+      border-radius:0;
+      margin-top:10px;
+      margin-bottom:0;
+    }
+}
+
+.page-payment-template-details {
+    .content-box {
+        padding-top: 100px;
+        .radio-wrap {
+            margin-left: 0;
+        }
+        .btns-wrap {
+            .btn {
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
+.log-wrapper {
+    margin: 30px 0 0 40px;
+    ul {
+        border-left: 1px solid #BDC9D0;
+        padding-left: 4px;
+    }
+    ul>li {
+        list-style: none;
+        position: relative;
+        padding-left: 45px;
+        margin-bottom: 17px;
+        color: #999;
+        p {
+            margin: 0;
+            line-height: 24px;
+        }
+        &:before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3CB6AF;
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+        &.first:before{
+          width: 14px;
+          height: 14px;
+          left: -12px;
+        }
+        &:after {
+          content: '';
+          width: 35px;
+          height: 2px;
+          background: #BDC9D0;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          -webkit-transform: translateY(-50%);
+        }
+        &.first:after{
+          left: 2px;
+        }
+    }
+}
+
+
+// 查看云餐厅账号
+.modal-restaurantAccount-modal{
+  label{
+    padding: 0 2px;
+  }
+   
+}
+//切换通道弹窗
+.paymentChannel {
+
+  .modal-body{
+    div{
+      .title{
+        padding: 10px 10px;
+        border-bottom:1px solid #EDEDED;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+        font-weight: bold;
+        &.zhifubaoColor{
+          color: #1DB4FF;
+        }
+        &.weixinColor{
+          color: #00C853;
+        }
+      }
+      div {
+        padding: 10px 10px 20px 10px;
+        text-align: left;
+        p{
+          padding-left:10px; 
+          margin-bottom: 2px;
+        }
+        div{
+          .form-control{
+            min-width:50%;
+            width: auto;
+          }
+        } 
+       
+      }
+   
+    }
+    
+  }
+  
+}
+// 支付详情
+.page-paymentDetail{
+  .has-success .form-control {
+    color: #666;
+    border-color: #3CB67D;
+}
+  .paymentContent{
+    display: block;
+     padding-top: 40px;
+     width: 900px;
+     margin: 20px auto;
+     div.zhifubao,
+     div.weixin {
+        padding: 0 10px;
+       display: inline-block;
+       width: 360px;
+       height: 368px;
+       margin: 0 40px;
+       background: #EFF3F4;
+       border-radius: 4px;  
+       overflow: hidden; 
+       &.single{
+         display: block;
+         margin: 0 auto;
+       }
+       .title{
+         margin-top: 28px;
+         padding: 10px;
+         font-size: 18px;
+         letter-spacing: 0.26px;
+         font-weight: bold;
+         text-align: center;
+          &.zhifubaoColor{
+            color: #1DB4FF;
+          }
+          &.weixinColor{
+            color: #00C853;
+          }
+       }
+        
+        .form-group{
+         margin: 0;
+         width: 100%;
+         margin: 2px;
+         label{
+           padding: 0 4px;
+           height: 36px;
+           line-height: 36px;
+           text-align: right;
+         }
+         select,input{
+           height: 36px;
+           line-height: 36px;
+           width: 218px;
+         }
+       }
+      
+     }
+     div.btns-wrap{
+       text-align: center;
+       margin: 50px auto;
+       padding: 20px;
+     }
+  }
+   
+}
+.page-fastFood-verify{
+  table>tbody>tr>td{
+    word-wrap: break-word;
+  }
+ 
+}
+// 快件审核详情
+.page-fastFood-verify-detail{
+  .alert{
+     padding: 10px 15px;
+     letter-spacing: 0.2px;
+    i.iconfont{
+      font-size: 18px;
+    }
+    &.alert-warning{
+    background: #FFF5A1;
+    color: #FF790E;
+    }
+  }
+  .menuReference{
+    margin: 0;
+    position: relative;
+    top: 10px;
+    li{
+    cursor: default;
+    display: inline-block;
+    margin-right: 10px;
+  } 
+  } 
+  
+  form{
+    width: 960px;
+    margin: 0 auto;
+    .form-group label{
+      text-align: right;
+    }
+     .marginTop{
+       min-height: 27px;
+       padding-top: 7px;
+    }
+    a{
+      text-decoration: underline;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .log-wrapper ul{
+      width: 600px;
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<div class="page-application-addMessage">
+  <ul class="breadcrumb">
+    <li>运营中心</li>
+    <li><a ui-sref="application.winmsd">消息通知</a></li>
+    <li>新增消息</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <form class="form-horizontal" name="addForm">
+        <div class="form-group" ng-class="{'has-success':addForm.selName.$valid,'has-error':addForm.selName.$invalid && addForm.selName.$dirty}">
+          <label class="col-md-4 col-sm-5 control-label"><strong class="text-danger">*</strong>APP名称</label>
+          <div class="col-md-3 col-sm-4">
+            <sel-allapp ng-model="ctrl.getParame.appName" name="selName" holder="请选择接受消息的APP" type="SYSINFO_APP_NAME" required></sel-allapp>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 col-sm-5 control-label"><strong class="text-danger">*</strong>发送版本</label>
+          <div class="col-md-3 col-sm-4">
+            <select class="form-control" ng-disabled="true" required>
+              <option>所有版本</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 col-sm-5 control-label"><strong class="text-danger">*</strong>发送范围</label>
+          <div class="col-md-3 col-sm-4">
+            <!--<input class="form-control" type="text" value="所有城市" ng-disabled="true">-->
+            <select class="form-control" ng-disabled="true" required>
+              <option>所有城市</option>
+            </select>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-md-4 col-sm-5 control-label"><strong class="text-danger">*</strong>消息类型</label>
+          <div class="col-md-3 col-sm-4">
+            <sel-msg-type ng-model="ctrl.getParame.infoType" holder="请选择消息类型" required></sel-msg-type>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 col-sm-5 control-label">消息链接</label>
+          <div class="col-md-3 col-sm-4">
+            <input type="text" class="form-control" name='infoUrl' ng-model="ctrl.getParame.infoUrl"  maxlength="500" placeholder="请输入如https://bizwell.cn/tuiguang.html">
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':addForm.titleNo.$valid,'has-error':addForm.titleNo.$invalid && addForm.titleNo.$dirty}">
+          <label class="col-md-4 col-sm-5 control-label"><strong class="text-danger">*</strong>消息标题</label>
+          <div class="col-md-3 col-sm-4">
+            <input type="text" class="form-control" name='titleNo' ng-model="ctrl.getParame.title"  maxlength="40" placeholder="不能超过40个字符集" required>
+            <!--<span class="text-danger" ng-if="!ctrl.getParame.title && ctrl.getParame.title != ''">不能超过40个字符集</span>-->
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':addForm.contentNo.$valid,'has-error':addForm.contentNo.$invalid && addForm.contentNo.$dirty}">
+          <label class="col-md-4 col-sm-5 control-label subject"><strong class="text-danger">*</strong>消息内容</label>
+          <div class="col-md-3 col-sm-4">
+            <textarea class="form-control" maxlength="600" name="contentNo" ng-model="ctrl.getParame.content" placeholder="不能超过600个字符集" required></textarea>
+            <!--<span class="text-danger" ng-if="!ctrl.getParame.content && ctrl.getParame.content != ''">不能超过600个字符集</span>-->
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-10 text-center">
+            <button ng-if="btnlist.APP_MGR_0301" type="button" class="btn btn-primary" ng-click="ctrl.getSubmit()" ng-disabled="addForm.$invalid">提交</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

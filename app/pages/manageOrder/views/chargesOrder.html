@@ -1,0 +1,132 @@
+<div class="page-charge-order">
+  <div class="clearfix">
+    <ul class="breadcrumb">
+      <li>订单管理</li>
+      <li class="active">服务费订单</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="table-head form-inline">
+      <form class="form-inline">
+        <div class="form-group">
+          <input type="text" class="form-control searchBox" ng-model='ctrl.params.search' ng-keyup="ctrl.enterKeyup($event)" placeholder="请输入订单号、门店名称、品牌名称搜索">
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-options="type.code as type.name for type in ctrl.payTypeCtrl" ng-model="ctrl.params.payType">
+            <option value="">支付方式</option>
+          </select>        
+        </div>
+        <div class="form-group">
+          <select class="form-control selectPrice" ng-options="change.code as change.name for change in ctrl.changePriceLists" ng-model="ctrl.params.isChangePrice">
+            <option value="">是否需要改价</option>
+          </select>        
+        </div>
+        <div class="form-group">
+          <select class="form-control" ng-options="statu.code as statu.name for statu in ctrl.statusLists" ng-model="ctrl.params.status" ng-change="ctrl.getPayType()">
+            <option value="">支付状态</option>
+          </select>        
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.orderStartTime" is-open="ctrl.startOpen" on-open-focus="false" datepicker-options="ctrl.startDateOps" ng-change="ctrl.selDate( 'start')" current-text="今天"
+            clear-text="清除" close-text="关闭" placeholder="订单创建开始时间">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="ctrl.startOpen=!ctrl.startOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group date-form">
+            <input type="text" readonly="readonly" class="form-control" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.orderEndTime" is-open="ctrl.endOpen" on-open-focus="false"  datepicker-options="ctrl.endDateOps" ng-change="ctrl.selDate( 'end')" current-text="今天"
+              clear-text="清除" close-text="关闭" placeholder="订单创建结束时间" />
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.endOpen=!ctrl.endOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+              </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-white" ng-click="ctrl.searchData()">搜索</button>
+        </div>
+      </form>    
+    </div>
+    <div class="content-box">
+      <div class="table-overflow">
+        <table class="table table-theadbg">
+          <thead>
+            <tr>
+              <th>
+                <div>服务费订单号</div>
+              </th>
+              <th>
+                <div>富友订单号</div>
+              </th>
+              <th>
+                <div>门店名称</div>
+              </th>
+              <th>
+                <div>所属品牌</div>
+              </th>
+              <th width='120'>
+                <div>服务费金额</div>
+              </th>
+              <th>
+                <div>订单创建时间</div>
+              </th>
+              <th>
+                <div>支付方式</div>
+              </th>
+              <th>
+                <div>是否需要改价</div>
+              </th>
+              <th>
+                <div>支付状态</div>
+              </th>
+              <th width='200'>
+                <div>操作</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody ng-if="ctrl.list.length == 0">
+            <tr class="empty-tr">
+              <td colspan="10" class="empty-box">没有找到您要查询的结果!</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-repeat="order in ctrl.list" ng-if="ctrl.list && ctrl.list.length > 0">
+              <td class="text-overflow" title="{{order.no}}">{{order.no || '--'}}</td>
+              <td class="text-overflow" title="{{order.payOrder2}}">
+                {{order.payOrder2 || '--'}}
+              </td>
+              <td class="text-overflow" title="{{order.storeName}}">{{order.storeName || '--'}}</td>
+              <td class="text-overflow" title="{{order.brandName}}">{{order.brandName || '--'}}</td>
+              <td class="text-overflow">{{order.orderAmount || '--'}}</td>
+              <td class="text-overflow" title="{{(order.createTime | date:'yyyy-MM-dd HH:mm:ss')}}">{{(order.createTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</td>
+              <td class="text-overflow">{{order.payType | payTypeFilter}}</td>
+              <td class="text-overflow">{{order.isChangePrice===true?'需要':'不需要'}}</td>
+              <td class="text-overflow" ng-class="{'hadPay':order.status==='PAYED','nopay':order.status==='NOT_PAY','canceled':order.status==='CANCELLED'}">{{order.status | statusFilter}}</td>
+              <td class="text-overflow" class="special">
+                <a ng-if="btnlist.ORDER_MGR_0201 && order.status==='PAYED'" class="btn btn-link btn-link-success" ui-sref="manageOrder.orderDetail({orderId:order.id,pageType:'payed'})">查看详情</a>
+                <a ng-if="btnlist.ORDER_MGR_0201  && order.status==='NOT_PAY'" class="btn btn-link btn-link-success" ui-sref="manageOrder.orderDetail({orderId:order.id,pageType:'noPay'})">查看详情</a>
+                <a ng-if="btnlist.ORDER_MGR_0201  && order.status==='CANCELLED'" class="btn btn-link btn-link-success" ui-sref="manageOrder.orderDetail({orderId:order.id,pageType:'cancel'})">查看详情</a>                
+                <a ng-if="btnlist.ORDER_MGR_0202 && order.isChangePrice && order.status==='NOT_PAY'" class="btn btn-link" ui-sref="manageOrder.orderDetail({orderId:order.id,pageType:'changePrice'})">改价</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="clearfix">
+        <div class="pull-left">
+          <button ng-if="btnlist.ORDER_MGR_0204" type="button" class="btn btn-primary" ng-click="ctrl.exportCsv()">导出</button>     
+        </div>
+        <div class="pull-right">
+          <ul uib-pagination total-items="ctrl.total" ng-if='ctrl.total > ctrl.params.pageSize' items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()"
+            class="pull-right"></ul>
+          <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": "standard",
+  "installedESLint": true,
+  "rules": {
+    // enable additional rules
+    "semi":["warn","always"],
+    "indent": ["warn", 2, {
+      "SwitchCase": 1,
+      "ArrayExpression": 1,
+      "ObjectExpression": 1,
+      "VariableDeclarator": 2,
+      "CallExpression": {
+        "arguments": 1
+      }
+    }],
+    "indent-legacy": "off",
+    "quotes": "warn",    
+    "arrow-spacing":"warn",
+    "key-spacing": "warn",
+    "space-before-blocks":"warn",
+    "arrow-body-style": ["error", "always"],
+
+    // override default options for rules from base configurations
+    "comma-dangle": ["error", "never"],
+    "comma-style": ["error", "last"],
+    "no-cond-assign": ["error", "always"],
+
+
+    // disable rules from base configurations
+    "no-trailing-spaces": "off",
+    "no-multi-str": "off",
+    "no-new": "warn",
+    "no-undef": "off",
+    "no-console": "off",
+    "eol-last": "off",
+    "no-debugger": "off",
+    "space-before-function-paren": "off",
+    "spaced-comment": "off",
+    "one-var": "off",
+    "no-new-func":"warn"
+  },
+  "plugins": [
+    "import",
+    "angular"
+  ]
+}

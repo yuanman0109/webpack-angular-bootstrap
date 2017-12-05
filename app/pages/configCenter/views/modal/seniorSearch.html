@@ -1,0 +1,235 @@
+<div class="">
+  <form class="form-horizontal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">高级搜索</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">客户名称：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="searchWord" placeholder="请输入客户名称" ng-model="ctrl.params.searchWord" type="text" maxlength="200" ng-maxlength='200' ng-trim="true" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label class="col-md-4 col-sm-4 col-xs-4 control-label">城市：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <div class="row">
+                      <prov-select province="ctrl.params.provinceCode"></prov-select>
+                    </div>
+                  </div>   
+                  <div class="col-md-6 col-sm-6 col-xs-6 pull-right">
+                    <div class="row">
+                      <city-select province="ctrl.params.provinceCode" city="ctrl.params.cityCode"></city-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">申请人：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <ui-select ng-model="ctrl.params.applicantUser" name="applicantUser" required theme="bootstrap" reset-search-input="false" title="请输入姓名">
+                    <ui-select-match placeholder="请输入姓名">{{$select.selected.name || ctrl.params.applicantUser}}</ui-select-match>
+                    <ui-select-choices repeat="user.id as user in ctrl.userList track by $index" refresh="ctrl.getApplyName($select.search)"
+                      refresh-delay="500">
+                      <div ng-bind-html="user.name | highlight: $select.search"></div>
+                      <small>
+                          工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                          部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group" >
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">来源：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <select class="form-control" ng-model="ctrl.params.isNewAdd">
+                    <option value="">请选择来源</option>
+                    <option ng-value="true">新增进件</option>
+                    <option ng-value="false">修改进件</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group" >
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">结算方式：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <select class="form-control" ng-model="ctrl.params.settleMethod">
+                    <option value="">请选择结算方式</option>
+                    <option value="PRIVATE">对私</option>
+                    <option value="PUBLIC">对公</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">连接机构：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <select class="form-control" ng-model="ctrl.params.connectionOrg">
+                    <option value="">请选择连接机构</option>
+                    <option value="LAKALA">拉卡拉</option>
+                    <option value="EASYPAY">易生支付</option>
+                    <option value="FUYOU">富友</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">状态：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <select class="form-control" ng-model="ctrl.params.status" ng-disabled="ctrl.selDisabled">
+                    <option value="">请选择状态</option>
+                    <option value="AUDIT">我方审核</option>
+                    <option value="REJECTED">我方驳回</option>
+                    <option value="THIRD_AUDIT">第三方审核</option>
+                    <option value="THIRD_REJECTED">第三方驳回</option>
+                    <option value="PASSED">已通过</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group" >
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">银行账号：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="bankCardNo" placeholder="请输入银行账号" ng-model="ctrl.params.bankCardNo" type="text" maxlength="200" ng-maxlength='200' ng-trim="true"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group" >
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">老板姓名：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="businessLinkman" placeholder="请输入老板姓名" ng-model="ctrl.params.businessLinkman" type="text" maxlength="200" ng-maxlength='200' ng-trim="true"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">老板手机：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="businessLinkmanMobile" placeholder="请输入老板手机号" ng-model="ctrl.params.businessLinkmanMobile" type="text" maxlength="200" ng-maxlength='200' ng-trim="true"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">证件号码：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="ownerCardNo" placeholder="请输入证件号码" ng-model="ctrl.params.ownerCardNo" type="text" maxlength="200" ng-maxlength='200' ng-trim="true"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">营业执照号码：</label>
+              <div class="col-md-8 col-sm-8 col-xs-8">
+                <div class="row">
+                  <input class="form-control" name="businessLicenseNo" placeholder="请输入营业执照" ng-model="ctrl.params.businessLicenseNo" type="text" maxlength="200" ng-maxlength='200' ng-trim="true"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label for="" class="col-md-2 col-sm-2 col-xs-2 control-label">申请日期：</label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="row">
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <div class="row">
+                      <date-picker date="ctrl.applyStartTime" holder="申请开始日期" max="ctrl.applyEndTime"></date-picker>
+                    </div>
+                  </div>
+                  <div class="col-md-1 col-sm-1 col-xs-1">
+                    <div class="form-control-static">-</div>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <div class="row">
+                      <date-picker date="ctrl.applyEndTime" holder="申请结束日期" min="ctrl.applyStartTime"></date-picker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label for="" class="col-md-2 col-sm-2 col-xs-2 control-label">最后审核日期：</label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="row">
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <div class="row">
+                      <date-picker date="ctrl.verifyStartTime" holder="审核开始日期" max="ctrl.verifyEndTime"></date-picker>
+                    </div>
+                  </div>
+                  <div class="col-md-1 col-sm-1 col-xs-1">
+                    <div class="form-control-static">-</div>
+                  </div>
+                  <div class="col-md-5 col-sm-5 col-xs-5">
+                    <div class="row">
+                      <date-picker date="ctrl.verifyEndTime" holder="审核结束日期" min="ctrl.verifyStartTime"></date-picker>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+    </div>
+  </form>
+</div>

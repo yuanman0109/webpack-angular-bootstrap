@@ -1,0 +1,45 @@
+<div class="page-tool-fastFoodDetail">
+  <ul class="breadcrumb">
+    <li class="active">工具中心</li>
+    <li class="active"><a ui-sref="tool.fastFood">快餐订单列表</a></li>
+    <li class="active">订单详情</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <h4>订单详情：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">         
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>订单号：{{ctrl.orderDetail.no || '--'}}</p>
+            <p>下单时间：{{(ctrl.orderDetail.createTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</p>
+            <p>支付方式：{{ctrl.payType[ctrl.orderDetail.payType] || '--'}}</p>
+            <p>取餐号：{{ctrl.orderDetail.takeMealNo || '--'}}</p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p class="text-overflow" title="{{ctrl.orderDetail.storeName}}">下单门店：{{ctrl.orderDetail.storeName || '--'}}</p>
+            <p>订单类型：{{ctrl.type[ctrl.orderDetail.type] || '--'}}</p>
+            <p>实收金额：￥{{ctrl.orderDetail.amount === 0 ? 0 : (ctrl.orderDetail.amount || '--')}}</p>
+            <p>退款金额：{{ctrl.orderDetail.refundedAmount === 0 ? 0 :(ctrl.orderDetail.refundedAmount || '--')}}</p>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <p>餐桌名称：{{ctrl.orderDetail.deskName || '--'}}</p>
+            <p>订单状态：{{ctrl.status[ctrl.orderDetail.status] || '--'}}</p>
+            <p>支付成功时间：{{(ctrl.orderDetail.payedTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</p>
+            <p>退款时间：{{(ctrl.orderDetail.refundedTime | date:'yyyy-MM-dd HH:mm:ss') || '--'}}</p>
+          </div>
+        </div></br>
+        <hr/></br>
+        <div class="dishes">
+          <h5>订单菜品:</h5>
+          <div ng-repeat="item in ctrl.food">
+            <div class="row">
+              <p class="col-md-2 col-sm-2 col-xs-2">{{item.name}}</p>
+              <p class="col-md-2 col-sm-2 col-xs-2 second">{{item.mount}}份</p>
+              <p class="col-md-2 col-sm-2 col-xs-2">{{item.price*item.mount}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

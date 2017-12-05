@@ -1,0 +1,44 @@
+<div class="table-overflow">
+  <ul>
+    <li ng-repeat="(key,item) in ctrl.qrcodeList[$index]" ng-class="{'no-bg': false}">
+      <div ng-mouseenter="state=1" ng-mouseleave="state=2">
+        <div class="qr-top">
+          <span ng-show="state==1">
+              <img ng-show="!ctrl.batchDownload"  ng-src="{{item.url}}?access_token={{token}}" />
+          </span>
+          <div ng-show="ctrl.batchDownload ||  state!=1" class="show-ID">
+            <span class="qrcode-type" ng-show="item.type=='PAY'">百味云支付</span>
+            <span class="qrcode-type" ng-show="item.type=='DESK_PAY1' || item.type=='DESK_PAY2'">{{item.type|qrcodeType}} </span>
+            <span uib-tooltip="{{item.deskName}}" 
+                tooltip-placement="top"
+                tooltip-trigger="'mouseenter'"
+                tooltip-class="gray" class="qrcode-table" ng-show="item.type=='DESK_PAY1' || item.type=='DESK_PAY2'">桌名：{{item.deskName | maxString:true:16:'...'}}</span>
+            
+            <i class="iconfont icon-icon-test3"></i>
+            <label class="checkbox-inline" ng-show="ctrl.batchDownload">
+				         <input type="checkbox" ng-init="item.sigleCheck=false" name="qrcodechecked"  ng-model="item.sigleCheck" ng-checked="ctrl.sigleCheck"  ng-click="ctrl.chk(item.id,item.sigleCheck, ctrl.qrcodeList[ctrl.tabIndex])" ><i class="iconfont"></i>
+            </label>
+            <i class="iconfont" ng-class="{'text-success':dev.status=='NORMAL','text-danger':dev.status=='ABNORMAL','text-muted':dev.status=='NO_NETWORK'|| !dev.status}"></i>
+          </div>
+
+        </div>
+        <div class="qr-bottom">
+          <p ng-show="state!=1">
+            {{item.storeName}}
+          </p>
+          <p ng-show="state==1" uib-tooltip="{{item.storeName}}" 
+                tooltip-placement="top"
+                
+                tooltip-class="gray">
+            <button ng-show="!ctrl.batchDownload"  class="btn" ng-click="ctrl.download='qrcodeIMG';ctrl.downloadTemplate(item.id)">下载</button>
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div ng-show="ctrl.qrcodeList[state].noList" class="empty-box">暂无任何内容</div>
+</div>
+<div class="clearfix">
+  <ul ng-show="ctrl.total > ctrl.param.pageSize" uib-pagination total-items="ctrl.total" items-per-page="ctrl.param.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.param.pageNo" ng-change="ctrl.pageChanged()"
+    class="pull-right"></ul>
+</div>

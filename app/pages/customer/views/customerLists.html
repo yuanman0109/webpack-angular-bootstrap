@@ -1,0 +1,143 @@
+<div class="clearfix">
+    <ul class="breadcrumb pull-left">
+        <li>客户管理</li>
+        <li class="active">客户列表</li>
+    </ul>
+    <!--<div class="pull-right">
+        <a href=""><i class="iconfont icon-nb-w10"></i>企业模式</a>
+        <a href=""><i class="iconfont icon-nb-w12"></i>地图模式</a>
+    </div>-->
+</div>
+<div class="mainContent" ng-controller="customerLists as cus">
+    <div class="table-head form-inline">
+        <form>
+          <div class="form-group">
+              <select class="form-control" ng-options="dishes.dataCode as dishes.dataName for dishes in cus.dishesLists" ng-model="cus.searchData.dishStyleCode">
+                  <option value="">按菜系</option>
+              </select>
+              <select class="form-control" ng-options="types.dataCode as types.dataName for types in cus.typeLists" ng-model="cus.searchData.customerType">
+                  <option value="">按分类</option>
+              </select>
+              <select class="form-control" ng-options="status.dataCode as status.dataName for status in cus.statusLists" ng-model="cus.searchData.deviceStatus">
+                  <option value="">按客户状态</option>
+              </select>
+          </div>
+          <div class="form-group">
+              <input type="text" name="" value="" class="form-control cusSearch-input" placeholder="按门店、编号、品牌、人员搜索..." ng-model="cus.searchData.name">
+          </div>
+          <div class="form-group">
+              <button type="button" class="btn btn-white" ng-click="cus.searchCusList()">搜索</button>
+          </div>
+          <div class="form-group">
+              <button class="form-control" ng-click="cus.sortBt()">按客户编号 <span class="caret-wrapper"><i class="sort-caret ascending" ng-class="{'active':cus.isAsc}"></i><i class="sort-caret descending" ng-class="{'active':cus.isDesc}"></i></span></button>
+          </div>
+        </form>
+    </div>
+    <div class="content-box">
+        <div class="table-overflow">
+            <table class="table table-hover table-theadbg table-customer">
+                <thead>
+                    <tr>
+                        <th width="84"><div>客户状态</div></th>
+                        <th><div>门店</div></th>
+                        <th width="100"><div>编号</div></th>
+                        <!--<th><div>品牌</div></th>-->
+                        <th width="50"><div>分类</div></th>
+                        <th width="60"><div>联系人</div></th>
+                        <th width="108"><div>电话</div></th>
+                        <th width="70"><div>所在区</div></th>
+                        <!--<th><div>商圈</div></th>-->
+                        <th><div>地址</div></th>
+                        <th width="60"><div>BD</div></th>
+                        <th width="60"><div>FAE</div></th>
+                        <th width="60"><div>录审</div></th>
+                        <th width="202"><div>操作</div></th>
+                    </tr>
+                </thead>
+                <tbody ng-if="cus.totalItems==0">
+                    <tr>
+                        <td colspan="13" class="empty-box">没有找到您查询的结果！</td>
+                    </tr>
+                </tbody>
+                <tbody ng-repeat="brand in cus.customerLists">
+                    <tr class="table-header">
+                        <td colspan="3">品牌：{{brand.name||'暂无'}}</td>
+                        <td colspan="3">企业：{{brand.companyName||'暂无'}}</td>
+                        <td colspan="5">品牌联系人：{{brand.linkman||'暂无'}}({{brand.linkmanPosition||'暂无'}}|{{brand.linkmanMobile||'暂无'}})</td>
+                        <td><button type="button" class="btn btn-link" ui-sref="customer.compDetail({id:brand.companyId})">企业详情</button></td>
+                    </tr>
+                    <tr ng-repeat="stores in brand.stores">
+                        <td class="text-center">
+                            <i class="iconfont icon-wifi-on" ng-class="{'text-success':stores.deviceStatus=='NORMAL','text-danger':stores.deviceStatus=='ABNORMAL','text-muted':stores.deviceStatus=='NO_NETWORK'|| !stores.deviceStatus}"></i>
+                        </td>
+                        <td class="text-overflow">
+                            {{stores.name||'暂无'}}
+                        </td>
+                        <td class="text-overflow">
+                            {{stores.code||'暂无'}}
+                        </td>
+                        <!--<td>
+                            {{brand.name||'暂无'}}
+                        </td>-->
+                        <td>
+                            {{brand.customerTypeName||'暂无'}}
+                        </td>
+                        <td>
+                            {{stores.linkman||'暂无'}}
+                        </td>
+                        <td>
+                            {{stores.linkmanMobile||'暂无'}}
+                        </td>
+                        <td class="text-overflow">
+                            {{stores.countyName||'暂无'}}
+                        </td>
+                        <!--<td>
+                            {{stores.businessAreaName}}
+                        </td>-->
+                        <td class="text-overflow">
+                            {{stores.address||'暂无'}}
+                        </td>
+                        <td>
+                            {{stores.bdUserNo||'暂无'}}
+                        </td>
+                        <td>
+                            {{stores.faeUserName||'暂无'}}
+                        </td>
+                        <td>
+                            {{stores.lsUserName||'暂无'}}
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-link btn-link-success" ui-sref="customer.customerDetail({id:stores.id})">详情</button>
+                            <button type="button" class="btn btn-link" ui-sref="customer.modifyStore({id:stores.id})">修改</button>
+                            <button type="button" class="btn btn-link btn-link-danger" ng-click="cus.deleteCustomer(stores)">删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-right cus_icon">
+            <i class="iconfont icon-wifi-on text-success"></i>设备正常
+            <i class="iconfont icon-wifi-on text-danger"></i>有设备离线
+            <i class="iconfont icon-wifi-on text-muted"></i>设备未安装
+        </p>
+        <div>
+            <button type="button" ui-sref="customer.addStore" class="btn btn-primary">添加门店</button>
+            <button type="button" class="btn btn-primary" ui-sref="customer.addComp">添加企业</button>
+            <ul uib-pagination total-items="cus.totalItems" items-per-page="10" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="cus.currentPage" ng-change="cus.pageChanged()" class="pull-right"></ul>
+            <b class="pagination-text pull-right" ng-if="cus.totalItems>10">共{{cus.totalItems}}条</b>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="deleteCustom.html">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">删除门店</h4>
+        <i class="iconfont icon-shanchu-copy"  ng-click="$ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <p>确定要删除{{$ctrl.name}}吗？</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+    </div>
+</script>

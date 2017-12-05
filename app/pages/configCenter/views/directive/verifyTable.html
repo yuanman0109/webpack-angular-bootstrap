@@ -1,0 +1,68 @@
+<div class="table-overflow">
+  <table class="table table-hover text-center table-common-theme">
+    <thead>
+      <tr>
+        <th class="col-md-1">客户名称</th>
+        <th class="col-md-1">来源</th>
+        <th class="col-md-1">状态</th>
+        <th class="col-md-1">支付方式</th>
+        <th class="col-md-1">连接方式</th>
+        <th class="col-md-1">连接机构</th>
+        <th class="col-md-1">结算类型</th>
+        <th class="col-md-1">城市</th>
+        <th class="col-md-1">申请人</th>
+        <th class="col-md-1">申请时间</th>
+        <th class="col-md-1">审核时间</th>
+        <th class="col-md-1" ng-if="btnlist.CONFIG_0101">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in ctrl.list" ng-if="ctrl.list && ctrl.list.length > 0">
+        <td class="text-overflow">
+           <span  title="{{item.storeName}}">
+                {{item.storeName | maxString:true:20:' ...'}}
+            </span>
+        </td>
+        <td>
+          <span ng-if="item.newAdd === false">修改进件</span>
+          <span ng-if="item.newAdd === true">新增进件</span>
+        </td>
+        <td>{{item.status | configStatusFilter}}</td>
+        <td class="text-overflow">{{item.payConfigs[0].payModeName}}
+          <p ng-if="item.payConfigs[1].payModeName && item.payConfigs[1].payModeName!==item.payConfigs[0].payModeName">{{item.payConfigs[1].payModeName}}</p>
+        </td>
+        <td class="text-overflow">{{item.payConfigs[0].connectionModeName}}
+          <p ng-if="item.payConfigs[1].connectionModeName && item.payConfigs[1].connectionModeName!==item.payConfigs[0].connectionModeName">{{item.payConfigs[1].connectionModeName}}</p>
+        </td>
+        <td class="text-overflow">{{item.payConfigs[0].connectionOrgName}}
+          <p ng-if="item.payConfigs[1].connectionOrgName && item.payConfigs[1].connectionOrgName!==item.payConfigs[0].connectionOrgName">{{item.payConfigs[1].connectionOrgName}}</p>
+        </td>
+        <td class="text-overflow">{{item.payConfigs[0].settleMethodName}}
+          <p ng-if="item.payConfigs[1].settleMethodName && item.payConfigs[1].settleMethodName!==item.payConfigs[0].settleMethodName">{{item.payConfigs[1].settleMethodName}}</p>
+        </td>
+        <td class="text-overflow">{{item.storeCity}}</td>
+        <td class="text-overflow"><span title="{{item.applicantName}}"> {{item.applicantName}} </span></td>
+        <td class="text-overflow">
+          <span  title="{{item.applicantTime|date:'yyyy-MM-dd HH:mm'}}">
+                {{item.applicantTime|date:"yyyy-MM-dd HH:mm"}}
+          </span>
+          </td>
+        <td class="text-overflow">
+          <span  title="{{item.auditTime|date:'yyyy-MM-dd HH:mm'}}">
+              {{item.auditTime | date:"yyyy-MM-dd HH:mm"}}
+          </span>
+        <td ng-if="btnlist.CONFIG_0101">
+          <a ui-sref="configCenter.paymentVerifyDetails({ id: item.id,tabIndex:ctrl.tabIndex})">查看详情</a>
+        </td>
+      </tr>
+      <tr ng-if="ctrl.list.length == 0" class="empty-tr">
+        <td colspan="{{btnlist.CONFIG_0101?11:10}}" class="empty-box">暂无任何支付进件</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="clearfix">
+  <button ng-if="btnlist.CONFIG_0104 " class="btn btn-primary pull-left" ng-click="ctrl.export()" type="button">导出</button>
+  <ul ng-if="ctrl.total > ctrl.params.pageSize" uib-pagination total-items="ctrl.total" items-per-page="ctrl.params.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="ctrl.params.pageNo" ng-change="ctrl.pageChanged()" class="pull-right"></ul>
+  <b class="pagination-text pull-right" ng-if="ctrl.total>ctrl.params.pageSize">共{{ctrl.total}}条</b>
+</div>

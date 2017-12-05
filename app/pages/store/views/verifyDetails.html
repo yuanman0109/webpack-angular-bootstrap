@@ -1,0 +1,100 @@
+<div class="page-store-verify-details">
+  <ul class="breadcrumb">
+    <li class="active">客户管理</li>
+    <li class="active"><a ui-sref="store.verify">建店审核</a></li>
+    <li class="active">审核详情</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box verifyList-box">
+      <h4>基本信息：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <div class="col-md-4">
+            <p>门店名称：{{ctrl.verifyDetail.name || '暂无'}}</p>
+            <p>省市区：{{ctrl.verifyDetail.provinceName+'-'+ctrl.verifyDetail.cityName+'-'+ctrl.verifyDetail.districtName}}</p>
+            <p>面积：{{ctrl.verifyDetail.area || '未知'}}</p>
+            <p>所属商圈：{{ctrl.verifyDetail.businessArea || '暂无'}}</p>
+            <p>餐饮业态：<span ng-if="!ctrl.verifyDetail.flag"></span><span ng-if="ctrl.verifyDetail.flag === 1">正餐</span><span ng-if="ctrl.verifyDetail.flag === 2">快餐</span></p>
+            <p>业务类型：{{ctrl.verifyDetail.businessName || '未知'}}</p>
+            <p>日交易流水：{{ctrl.verifyDetail.dailyTransactionAmount||'0'+'元'}}</p>
+            <p>收银机数：{{ctrl.verifyDetail.posNumber||'未知'}}</p>
+            <p>门店实景：<span ng-if="!ctrl.verifyDetail.logoUrl"></span><a ng-if="ctrl.verifyDetail.logoUrl" href="javascript:void(0)" ng-click="ctrl.openLightboxModal(ctrl.logoArr,0)" target="_black" class="text-success">查看</a></p>
+          </div>
+          <div class="col-md-4">
+            <p>门店编号：{{ctrl.verifyDetail.code || '暂无'}}</p>
+            <p>门店地址：{{ctrl.verifyDetail.address || '暂无'}}</p>
+            <p>人均：{{ctrl.verifyDetail.perCapita || '暂无'}}</p>
+            <p>楼层信息：{{ctrl.verifyDetail.floor || '暂无'}}</p>
+            <p>门店状态：{{ctrl.status[ctrl.verifyDetail.status] || '未知'}}</p>
+            <p>地点归属：{{ctrl.attribution[ctrl.verifyDetail.attribution]||'未知'}}</p>
+            <p>餐桌数：{{ctrl.verifyDetail.tableNumber||'未知'}}</p>
+            <p>服务员人数：{{ctrl.verifyDetail.waiterNumber||'未知'}}</p>
+            <p>门店说明：{{ctrl.verifyDetail.remark|| '未知'}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>营业时间说明：{{ctrl.verifyDetail.shopHours || '未知'}}</p>
+            <p>经度纬度：{{ctrl.verifyDetail.poiLng||'未知'}}<span ng-if="ctrl.verifyDetail.poiLng || ctrl.verifyDetail.poiLat">,</span>{{ctrl.verifyDetail.poiLat||''}}　<a href="javascript:void(0)" class="btn-link" ng-click="ctrl.openMap()" ng-if="(ctrl.verifyDetail.serviceStatus=='SUBMIT')">请点击获取经纬度</a></p>
+            <p>评分：{{ctrl.verifyDetail.grade || '未知'}}</p>
+            <p>菜系：{{ctrl.verifyDetail.dishStyleName || '未知'}}</p>
+            <p>门店属性：{{ctrl.property[ctrl.verifyDetail.storeProperty]||'未知'}}</p>
+            <p>门店电话：{{ctrl.verifyDetail.linkTel || '未知'}}</p>
+            <p>座位数：{{ctrl.verifyDetail.seatNumber||'未知'}}</p>
+            <p>后厨数：{{ctrl.verifyDetail.chefNumber||'未知'}}</p>
+            <p>快餐服务费服务状态：{{ctrl.verifyDetail.businessServiceStatus|| '免费使用'}}</p>
+          </div>
+        </div>
+      </div>
+      <h4>品牌信息：<span class="text-danger" ng-if="!ctrl.verifyDetail.brandId">该品牌是新建品牌</span>
+      </h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <p class="col-md-4">品牌名称：{{ctrl.verifyDetail.brandName || '暂无'}}</p>
+          <!-- <p class="col-md-4">品牌菜系：{{ctrl.verifyDetail.brandDishStyleName || '暂无'}}</p> -->
+          <p class="col-md-4">品牌logo：<a href="javascript:void(0)" ng-if="ctrl.verifyDetail.brandLogoUrl" ng-click="ctrl.openLightboxModal(ctrl.brandLogoArr,0)" target="_black" class="text-success">查看</a></p>
+          <!-- <p class="col-md-4">客户类型：{{ctrl.verifyDetail.customerTypeName || '暂无'}}</p> -->
+          <p class="col-md-4">品牌状态：{{ctrl.status[ctrl.verifyDetail.brandStatus] || '暂无'}}</p>
+        </div>
+      </div>
+      <h4>企业详情：<span class="text-danger" ng-if="!ctrl.verifyDetail.companyId">该企业是新建企业</span></h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <p class="col-md-4">所属企业：{{ctrl.verifyDetail.companyName || '暂无'}}</p>
+          <p class="col-md-4">企业规模：{{ctrl.verifyDetail.companyScale | storeScale:ctrl.verifyDetail.companyScale}}</p>
+          <p class="col-md-4">注册资本：{{ctrl.verifyDetail.registeredAssets ||'未知'}}</p>
+          <p class="col-md-4">企业法人：{{ctrl.verifyDetail.artificialPerson || '暂无'}}</p>
+          <p class="col-md-4">总部电话：{{ctrl.verifyDetail.companyLinkTel || '暂无'}}</p>
+          <p class="col-md-4">总部地址：{{ctrl.verifyDetail.companyAddress || '暂无'}}</p>
+          <p class="col-md-4">企业官网：{{ctrl.verifyDetail.companyWebsite || '暂无'}}</p>
+          <p class="col-md-4">企业状态：{{ctrl.status[ctrl.verifyDetail.companyStatus] || '暂无'}}</p>
+          <p class="col-md-4">业务类型：{{ctrl.verifyDetail.companyBusinessTypeName || '暂无'}}</p>
+        </div>
+      </div>
+      <h4>会员相关信息：</h4>
+      <div class="border-radius-box padding20">
+        <div class="row">
+          <p class="col-md-4">会员业务协议：<a href="javascript:void(0)" ng-if="ctrl.verifyDetail.vipBusinessAgreement" ng-click="ctrl.openLightboxModal(ctrl.vipBusinessAgreementArr,0)" target="_black" class="text-success">查看</a></p>
+          <p class="col-md-4">备注说明：{{ctrl.verifyDetail.vipRemark || '暂无'}}</p>
+        </div>
+      </div>
+      <div class="clearfix">
+        <div class="verify-btn pull-left">
+          <button ng-if="btnlist.CRM_0301 && (ctrl.verifyDetail.serviceStatus=='SUBMIT')" class="btn btn-primary" ng-click="ctrl.verify()" type="button">审核</button>
+        </div>
+        <div class="log-wrapper pull-left">
+          <ul>
+            <li ng-repeat="item in ctrl.verifyLog" ng-class="{'first':$first}">
+              <div ng-class="{'text-success':item.status=='ONLINE','text-danger':item.status=='REJECT'}">
+                <p>{{item.createUser+' 在'+(item.createTime | date:'yyyy-MM-dd HH:mm:ss')+(' '+ctrl.verType[item.status])+'了'}}<span ng-if="item.status=='WAIT'">{{item.businessName+'至公海'}}</span>
+                  <span ng-if="item.status=='GET'">{{item.businessName+'至私海'}}</span>
+                  <span ng-if="item.status=='SUBMIT'">建店审核申请</span>
+                  <span ng-if="item.status=='REJECT'||item.status=='ONLINE'">{{item.serviceUser+'的建店审核申请'}}</span>
+                </p>
+                <p>{{item.remark}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

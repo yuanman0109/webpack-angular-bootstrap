@@ -1,0 +1,24 @@
+<div class="modal-payment-modal">
+  <form class="form-horizontal">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">下载模板</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      {{tempList}}
+      <div class="form-group" ng-if="true">
+        <label for="" class="col-md-4 col-sm-4 col-xs-4 control-label">是否带有模板：</label>
+        <div class="col-md-8 col-sm-8 col-xs-8 row">
+          <select class="form-control"  ng-model="ctrl.templateId">
+            <option value=''>请选择模板</option>
+            <option ng-repeat="tpl in ctrl.tempList track by $index" ng-value="tpl.id">{{tpl.name}} - {{tpl.type | TemplType}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+      <button class="btn btn-primary" ng-click="ctrl.confirm()">下载</button>
+    </div>
+  </form>
+</div>

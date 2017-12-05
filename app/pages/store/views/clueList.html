@@ -1,0 +1,114 @@
+<div class="clearfix">
+  <ul class="breadcrumb pull-left">
+    <li>客户管理</li>
+    <li class="active">线索列表</li>
+  </ul>
+</div>
+<div class="mainContent" ng-controller="ClueListsCtrl as C">
+  <div class="form-inline table-head">
+    <div class="form-group">
+      <prov-select province='C.getParame.provinceCode'></prov-select>
+      <city-select province='C.getParame.provinceCode' city='C.getParame.city'></city-select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" ng-options="status.dataCode as status.dataName for status in C.statusList" ng-model="C.getParame.clueStatus">
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" ng-options="sou.dataCode as sou.dataName for sou in C.source" ng-model="C.getParame.source">
+        <option value="">按来源</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <div class="input-group date-form">
+        <input type="text" class="form-control" placeholder="创建开始时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="C.startTime" is-open="C.startIsopen" ng-change="C.selDate( 'start')" datepicker-options="C.startDateOps" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="C.startIsopen=!C.startIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <span class="dateText">-</span>
+    </div>
+    <div class="form-group">
+      <div class="input-group date-form">
+        <input type="text" class="form-control" placeholder="创建结束时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="C.endTime" is-open="C.endIsopen" ng-change="C.selDate( 'end')" datepicker-options="C.endDateOps" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="C.endIsopen=!C.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" name="" ng-model="C.getParame.searchStr" value="" class="form-control" ng-keyup="C.enterKeyup($event)" placeholder="请输入商户名称、联系人、联系电话、详细地址...">
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-white" ng-click="C.searchBt()">搜索</button>
+    </div>
+  </div>
+  <div class="content-box">
+    <div class="table-overflow">
+      <table class="table table-hover table-theadbg table-striped">
+        <thead>
+          <tr>
+            <th width="130"><div>商户名称</div></th>
+            <th width="100"><div>联系人</div></th>
+            <th width="120"><div>联系电话</div></th>
+            <th width="80"><div>城市</div></th>
+            <th width="120"><div>详细地址</div></th>
+            <th width="80"><div>线索状态</div></th>
+            <th width="120"><div>来源</div></th>
+            <th width="160"><div>创建时间</div></th>
+            <th width="100"><div>跟进人</div></th>
+            <th width="80"><div>操作</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="clue in C.clueList">
+            <td class="text-overflow">
+              <span title="{{clue.name}}">{{clue.name}}</span>
+            </td>
+            <td class="text-overflow">
+              {{clue.linkManName}}
+            </td>
+            <td class="text-overflow">
+              {{clue.linkManMobile}}
+            </td>
+            <td class="text-overflow">
+              {{clue.cityName}}
+            </td>
+            <td class="text-overflow">
+              {{clue.address}}
+            </td>
+            <td class="text-overflow">
+              {{C.status[clue.clueStatus]}}
+            </td>
+            <td class="text-overflow">
+              {{clue.sourceName}}
+            </td>
+            <td class="text-overflow">
+              {{clue.createTime| date:'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+            <td class="text-overflow">
+              {{clue.serviceUserName}}
+            </td>
+            <td class="text-overflow">
+              <button type="button" class="btn btn-link" ng-if="clue.clueStatus=='WAIT'" ui-sref='store.editClue({id:clue.id})'>编辑</button>
+            </td>
+          </tr>
+          <tr ng-if="!C.clueList || C.clueList.length == 0" class="empty-tr">
+            <td colspan="10" class="empty-box">暂无任何内容</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="clearfix">  
+      <div class="pull-left">
+        <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0602" ng-click="C.exportStore()">导出</button>
+      </div>
+      <div class="pull-right">
+        <ul uib-pagination total-items="C.total" ng-if="C.total>C.getParame.pageSize" items-per-page="C.getParame.pageSize" max-size="5" boundary-link-numbers="true" previous-text="<" next-text=">" ng-model="C.getParame.pageNo" ng-change="C.pageChanged()" class="pull-right"></ul>
+        <b class="pagination-text pull-right" ng-if="C.total>C.getParame.pageSize">共{{C.total}}条</b>  
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="page-payment-verify">
+  <ul class="breadcrumb">
+    <li class="active">配置中心</li>
+    <li class="active">进件审核</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <uib-tabset class="tabs-default" active="ctrl.params.tabIndex">
+        <!--tab切换开始-->
+        <uib-tab index="0" heading="我方审核" ng-click="ctrl.selTab('AUDIT')">
+          <vertify-table></vertify-table>
+        </uib-tab>
+        <uib-tab index="1" heading="第三方审核" ng-click="ctrl.selTab('THIRD_AUDIT')">
+          <vertify-table></vertify-table>
+        </uib-tab>
+        <uib-tab index="2" heading="全部" ng-click="ctrl.selTab('')">
+          <vertify-table></vertify-table>
+        </uib-tab>
+        <!--tab切换结束-->
+        <!--搜索开始-->
+        <div class="search-wrap form-inline">
+          <div class="form-group">
+            <input type="text" ng-model="ctrl.params.searchWord" class="form-control" placeholder="输入客户名称..." ng-keyup="ctrl.enterKeyup($event)">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-normal" ng-click="ctrl.search()">搜索</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-normal" ng-click="ctrl.searchBtn(ctrl.params.tabIndex)">高级搜索</button>
+          </div>
+        </div>
+        <!--搜索结束-->
+      </uib-tabset>
+    </div>
+  </div>
+</div>

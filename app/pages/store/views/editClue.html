@@ -1,0 +1,283 @@
+<div class="clearfix">
+  <ul class="breadcrumb pull-left">
+    <li>客户管理</li>
+    <li class="active"><a href="" ui-sref="store.clueList()">线索列表</a></li>
+    <li>编辑线索</li>
+  </ul>
+</div>
+<div class="mainContent" ng-controller="EditClueCtrl as ctrl">
+  <div class="container content-box">
+    <form class="form-horizontal" role="form" name="form" id="form" novalidate>
+        <p><strong>门店基本信息：</strong></p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group" ng-class="{'has-success':addstore.storeName.$valid && addstore.storeName.$dirty,'has-error':addstore.storeName.$invalid && addstore.storeName.$dirty}">
+                    <label class="col-sm-5 control-label"><span class="text-danger">* </span>门店名称：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <input type="text" class="form-control" name="storeName" placeholder="请输入门店名称" ng-model="ctrl.basicInfo.name" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="100" maxlength="100" required>
+                        </div>
+                    </div>
+                 </div>
+                
+                <div class="form-group" ng-class="{'has-success':form.cityName.$valid && form.cityName.$dirty,'has-error':form.cityName.$invalid && form.cityName.$dirty}">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>城市：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <ui-select ng-model="ctrl.basicInfo.cityName" name="cityName" required theme="bootstrap"  reset-search-input="false"  on-select="ctrl.CityCallback($select.selected)" title="选择城市">
+                                <ui-select-match placeholder="输入城市">{{$select.selected.areaName || ctrl.basicInfo.cityName}}</ui-select-match>
+                                <ui-select-choices repeat="city.areaName as city in ctrl.cityList track by $index" refresh="ctrl.getCity($select.search)" refresh-delay="500">
+                                    <div ng-bind-html="city.areaName | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-success':form.address.$valid && form.address.$dirty,'has-error':form.address.$invalid && form.address.$dirty}">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>详细地址：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <input type="text" class="form-control" name="address" placeholder="请输入详细地址"  ng-maxlength="500" maxlength="500" irregular="[\s\r\n\'\0x34‘“”’]" ng-model="ctrl.basicInfo.address"   required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+                    <div class="col-sm-7 row">
+                        <business-type ng-if="ctrl.basicInfo.businessType" edit="false" result ="ctrl.basicInfo.businessType"></business-type>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-5 control-label"><span class="text-danger">* </span>餐饮业态：</label>
+                    <div class="col-sm-7 row">
+                    <label class="radio-inline">
+                        <input type="radio" name="flag" ng-value="1" ng-model="ctrl.basicInfo.flag"><i class="iconfont"></i> 正餐
+                    </label>
+                    <label class="radio-inline">
+                        <input ng-init="ctrl.basicInfo.flag = 2" type="radio" name="flag" ng-value="2" ng-model="ctrl.basicInfo.flag"><i class="iconfont"></i> 快餐
+                    </label>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-success':form.businessArea.$valid && form.businessArea.$dirty,'has-error':form.businessArea.$invalid && form.businessArea.$dirty}">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>来源：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <select class="form-control" ng-disabled="true" name="status" ng-options="opts.dataCode as opts.dataName for opts in ctrl.sourceList" ng-model="ctrl.basicInfo.source" required>
+                                <option value="">选择状态</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-success':form.status.$valid && form.status.$dirty,'has-error':form.status.$invalid && form.status.$dirty}">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>线索状态：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <select class="form-control" name="status" ng-options="opts.code as opts.name for opts in ctrl.statusList" ng-model="ctrl.basicInfo.clueStatus" required>
+                            <option value="">选择状态</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="ctrl.basicInfo.clueStatus == 'WAIT'" class="form-group" ng-class="{'has-success':form.serviceUser.$valid && form.serviceUser.$dirty,'has-error':form.serviceUser.$invalid && form.serviceUser.$dirty}">
+                    <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>跟进人：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                          <ui-select ng-model="ctrl.basicInfo.serviceUserName" name="serviceUser" required theme="bootstrap" on-select="ctrl.selCallback($select.selected)" reset-search-input="false" title="选择用户">
+                            <ui-select-match placeholder="输入用户姓名">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="user.name as user in ctrl.userList track by $index" refresh="ctrl.getUserResearch($select.search)" refresh-delay="500">
+                                <div ng-bind-html="user.name | highlight: $select.search"></div>
+                                <small>
+                                    工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                                    部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                                </small>
+                            </ui-select-choices>
+                          </ui-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-success':form.remark.$valid && form.remark.$dirty,'has-error':form.remark.$invalid && form.remark.$dirty}">
+                    <label for="" class="col-sm-5 control-label">线索备注：</label>
+                    <div class="col-sm-7 row">
+                        <div class="col-xs-5 row">
+                            <textarea type="text" class="form-control" name="remark" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.remark"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div ng-if="ctrl.basicInfo.clueStatus==='WAIT'">
+          <p><strong>品牌信息：</strong></p>
+          <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="form-group" ng-class="{'has-success':form.brandId.$valid && form.brandId.$dirty,'has-error':form.brandId.$invalid && form.brandId.$dirty}">
+                      <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属品牌：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <ui-select ng-model="ctrl.basicInfo.brandName" name="brandId" required theme="bootstrap" on-select="ctrl.searchBrandsCallback($select.selected)" reset-search-input="false" title="所属品牌" required>
+                                  <ui-select-match placeholder="输入品牌">{{$select.selected.name || ctrl.basicInfo.brandName}}</ui-select-match>
+                                  <ui-select-choices repeat="brand.id as brand in ctrl.brandList track by $index" refresh="ctrl.searchBrands($select.search)" refresh-delay="500">
+                                      <div ng-bind-html="brand.name | highlight: $select.search"></div>
+                                      <small>
+                                          企业：<span ng-bind-html="brand.companyName | highlight: $select.search"></span>
+                                          菜系：<span ng-bind-html="brand.dishStyleName | highlight: $select.search"></span>
+                                      </small>
+                                  </ui-select-choices>
+                              </ui-select>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <p><strong>企业信息：</strong></p>
+          <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="form-group" ng-class="{'has-success':form.companyName.$valid && form.companyName.$dirty,'has-error':form.companyName.$invalid && form.companyName.$dirty}">
+                      <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>所属企业：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="companyName" placeholder=""  ng-model="ctrl.basicInfo.companyName"  ng-disabled="ctrl.isCompanyName" required>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-sm-5 control-label"><span class="text-danger">* </span>业务类型：</label>
+                      <div class="col-sm-7 row">
+                          <business-type ng-if="ctrl.basicInfo.companyBusinessType" edit="ctrl.isCompanyBusinessType" result ="ctrl.basicInfo.companyBusinessType"></business-type>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <p><strong>联系人信息：</strong></p>
+          <div class="panel panel-default">
+              <div class="panel-body">
+                  <div class="form-group" ng-class="{'has-success':form.linkManName.$valid && form.linkManName.$dirty,'has-error':form.linkManName.$invalid && form.linkManName.$dirty}">
+                      <label class="col-sm-5 control-label"><span class="text-danger">* </span>姓名：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="linkManName" placeholder="" ng-model="ctrl.basicInfo.linkManName" irregular="[\s\r\n\'\0x34‘“”’]" ng-maxlength="100" maxlength="100"   required>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManSex.$valid && form.linkManSex.$dirty,'has-error':form.linkManSex.$invalid && form.linkManSex.$dirty}">
+                      <label for="" class="col-sm-5 control-label">性别：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <select class="form-control" name="linkManSex" ng-options="status.code as status.name for status in ctrl.sex" ng-model="ctrl.basicInfo.linkManSex" >
+                                  <option value="">选择性别</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManAgeGroup.$valid && form.linkManAgeGroup.$dirty,'has-error':form.linkManAgeGroup.$invalid && form.linkManAgeGroup.$dirty}">
+                      <label for="" class="col-sm-5 control-label">年龄段：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <select class="form-control" name="linkManAgeGroup" ng-options="ages.code as ages.name for ages  in ctrl.changeAgeLists" ng-model="ctrl.basicInfo.linkManAgeGroup">
+                                  <option value="">选择年龄段</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkTel.$valid && form.linkTel.$dirty,'has-error':form.linkTel.$invalid && form.linkTel.$dirty}">
+                      <label for="" class="col-sm-5 control-label"><span class="text-danger">* </span>手机：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="linkTel" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManMobile"  required>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManPosition.$valid && form.linkManPosition.$dirty,'has-error':form.linkManPosition.$invalid && form.linkManPosition.$dirty}">
+                      <label for="" class="col-sm-5 control-label">职位：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="linkManPosition" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManPosition">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManIsKp.$valid && form.linkManIsKp.$dirty,'has-error':form.linkManIsKp.$invalid && form.linkManIsKp.$dirty}">
+                      <label for="" class="col-sm-5 control-label">是否KP：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <select class="form-control" name="linkManIsKp" ng-options="isKp.code as isKp.name for isKp  in ctrl.isKp" ng-model="ctrl.basicInfo.linkManIsKp">
+                                  <option value="">选择是否KP</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManBirthday.$valid && form.linkManBirthday.$dirty,'has-error':form.linkManBirthday.$invalid && form.linkManBirthday.$dirty}">
+                      <label for="" class="col-sm-5 control-label">生日：</label>
+                      <div class="col-sm-7 row">
+                          <div class="input-group col-xs-5  date-form">
+                              <input type="text" readonly="readonly" class="form-control" name="linkManBirthday" uib-datepicker-popup="yyyy/MM/dd" ng-model="ctrl.basicInfo.linkManBirthday" is-open="ctrl.birthdayOpen"
+                                  on-open-focus="false" datepicker-options="ctrl.birthday" ng-change="ctrl.selDate()"
+                                  current-text="今天" clear-text="清除" close-text="关闭" />
+                              <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default" ng-click="ctrl.birthdayOpen=!ctrl.birthdayOpen"><i class="iconfont icon-CombinedShape1"></i></button>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManPhone.$valid && form.linkManPhone.$dirty,'has-error':form.linkManPhone.$invalid && form.linkManPhone.$dirty}">
+                      <label for="" class="col-sm-5 control-label">备用号码：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="linkManPhone" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManPhone">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManWechat.$valid && form.linkManWechat.$dirty,'has-error':form.linkManWechat.$invalid && form.linkManWechat.$dirty}">
+                      <label for="" class="col-sm-5 control-label">微信：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="text" class="form-control" name="linkManWechat" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManWechat">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManEmail.$valid && form.linkManEmail.$dirty,'has-error':form.linkManEmail.$invalid && form.linkManEmail.$dirty}">
+                      <label for="" class="col-sm-5 control-label">邮箱：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <input type="email" class="form-control" name="linkManEmail" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManEmail">
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="form-group" ng-class="{'has-success':form.linkManRemark.$valid && form.linkManRemark.$dirty,'has-error':form.linkManRemark.$invalid && form.linkManRemark.$dirty}">
+                      <label for="" class="col-sm-5 control-label">备注：</label>
+                      <div class="col-sm-7 row">
+                          <div class="col-xs-5 row">
+                              <textarea type="text" class="form-control" name="linkManRemark" placeholder="" ng-maxlength="200" maxlength="200" ng-model="ctrl.basicInfo.linkManRemark"></textarea>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+        </div>
+        <div class="clearfix table-bottom">
+            <div class="text-center form-inline">
+                <div class="form-group form-group20">
+                    <button type="button" class="btn btn-primary" ng-if="btnlist.CRM_0601" ng-disabled="form.$invalid || (ctrl.basicInfo.companyBusinessType.length < 1 && ctrl.basicInfo.clueStatus==='WAIT') || ctrl.basicInfo.businessType.length < 1 || ctrl.isSave" ng-click="ctrl.save()">提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>

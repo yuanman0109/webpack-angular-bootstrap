@@ -1,0 +1,53 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" ng-click="ctrl.goHome()">
+        <i class="iconfont icon-icon-test10"></i>
+      </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <!--<div class="formSel navbar-left">
+                <select class="form-control">
+                    <option>全部模块</option>
+                    <option>全部模块</option>
+                    <option>全部模块</option>
+                    <option>全部模块</option>
+                    <option>全部模块</option>
+                </select>
+                <div class="selIcon">
+                    <i class="iconfont icon-nb-l1"></i>
+                </div>
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                <input type="text" class="form-control" placeholder="输入关键词......">
+                </div>
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>-->
+      <div class="userInfo  navbar-right">
+        
+        <div class="btn-group navbar-user pull-left" uib-dropdown>
+          <button id="userinfo-button" type="button" class="btn btn-default" uib-dropdown-toggle>
+            <span>{{loginInfo.realName}}<br/>
+                        <small ng-bind="loginInfo.position"></small></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="userinfo-button">
+            <li role="menuitem"><a href="javascript:void(0)" ng-click="ctrl.updatePwd()">修改密码</a></li>
+            <li role="menuitem"><a href="javascript:void(0)" ng-click="ctrl.loginOut()">退出</a></li>
+          </ul>
+        </div>
+        <div class="userHead pull-left">
+          <img ng-src="{{ctrl.userImg}}" alt="头像">
+        </div>
+      </div>
+      <button type="button" class="navbar-right btn noticeBt"  ng-if="messageTotal>0" ui-sref="messageCenter" ><i class="iconfont icon-nb-l5"></i>
+        <span class="badge" ng-if="messageTotal<=999&&messageTotal!=0">{{messageTotal}}</span>
+        <span class="badge" ng-if="messageTotal>999">999+</span>
+      </button>
+      <button type="button" class="navbar-right btn noticeBt"  ng-if="messageTotal==0" ><i class="iconfont icon-nb-l5"></i>
+        
+      </button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,50 @@
+<div class="modal-payment-modal">
+  <form class="form-horizontal" name="updatePwd"  ng-submit="ctrl.confirm()">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">修改密码</h4>
+      <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label">旧密码：</label>
+        <div class="col-sm-9 row" ng-class="{'has-success':updatePwd.oldPassword.$valid,'has-error':updatePwd.oldPassword.$invalid && updatePwd.oldPassword.$dirty}">
+          <div class="col-sm-11 row">
+            <input type="password" name="oldPassword" class="form-control" ng-model="ctrl.user.oldPassword" placeholder="请输入旧密码"  required/>
+             <span class="text-error" ng-show=" updatePwd.oldPassword.$invalid && updatePwd.oldPassword.$dirty">
+                <span ng-show="updatePwd.oldPassword.$error.required">请输入旧密码</span>
+             </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-3 control-label">新密码：</label>
+         <div class="col-sm-9 row" ng-class="{'has-success':updatePwd.newPassword.$valid,'has-error':updatePwd.newPassword.$invalid && updatePwd.newPassword.$dirty}">
+          <div class="col-sm-11 row">
+            <input type="password"  name="newPassword" class="form-control" ng-model="ctrl.user.newPassword" ng-pattern="/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{8,20}$/" placeholder="请输入新密码"  required/>
+            <span class="text-error" ng-show="updatePwd.newPassword.$invalid && updatePwd.newPassword.$dirty">
+               密码必须大小写字母和数字，长度8-20
+            <br/>
+            </span>
+            <span class="text-error" ng-if="ctrl.user.newPassword===ctrl.user.oldPassword && ctrl.user.newPassword">新密码不能和旧密码相同</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="repassword" class="col-sm-3 control-label">确认密码：</label>
+        <div class="col-sm-9 row" ng-class="{'has-success':updatePwd.repassword.$valid,'has-error':updatePwd.repassword.$invalid && updatePwd.repassword.$dirty}">
+          <div class="col-sm-11 row">
+              <input type="password" class="form-control" id="repassword" name="repassword" ng-model="ctrl.repassword"  ng-pattern="/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{8,20}$/"  placeholder="请再次输入新密码" required>
+              <span class="text-error" ng-show="updatePwd.repassword.$invalid && updatePwd.repassword.$dirty">
+                  密码必须大小写字母和数字，长度8-20
+              <br/>
+              </span>
+              <span class="text-error" ng-if="ctrl.user.newPassword!=ctrl.repassword && ctrl.repassword">两次密码输入不相同</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-disabled="(updatePwd.newPassword.$invalid && updatePwd.newPassword.$dirty) || (updatePwd.oldPassword.$invalid && updatePwd.oldPassword.$dirty) || (updatePwd.repassword.$invalid && updatePwd.repassword.$dirty) || ctrl.user.newPassword!=ctrl.repassword || ctrl.user.newPassword===ctrl.user.oldPassword" type="submit" >确定</button>
+    </div>
+  </form>
+</div>

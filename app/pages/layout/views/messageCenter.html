@@ -1,0 +1,34 @@
+<div class="clearfix">
+    <ul class="breadcrumb pull-left">
+      <li>消息中心</li>
+      <!-- <li class="active">线索列表</li> -->
+    </ul>
+</div>
+<div class="mainContent" ng-controller="messageCenterCtrl as mes">
+    <div class="content-box">
+      <uib-tabset class="tabs-vertical" active="mes.tabIndex" vertical="true">
+        <!--tab切换开始-->
+        <uib-tab ng-repeat="(key,item) in mes.messageGrope" index="key" heading="{{item.name}}" select="mes.getMessageList(item.type, 1)">
+          <message-tab></message-tab>
+        </uib-tab>
+        <!-- <uib-tab index="1" heading="工单中心通知" select="mes.getMessageList('ORDER', 1)">
+          <message-tab></message-tab>
+        </uib-tab>
+        <uib-tab index="2" heading="服务费通知" select="mes.getMessageList('SERVICE_ORDER', 1)">
+          <message-tab></message-tab>
+        </uib-tab> -->
+        <!--tab切换结束-->
+        <!--搜索开始-->
+        <!-- <div class="search-wrap form-inline">
+          <div class="form-group">
+            <input type="text" ng-model="mes.params.searchWord" class="form-control" placeholder="输入客户名称..." ng-keyup="mes.enterKeyup($event)">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-normal" ng-click="mes.search()">搜索</button>
+          </div>
+        </div> -->
+        <!--搜索结束-->
+      </uib-tabset>
+       
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="messageRight">
+    <ul class="messageList">
+        <li  ng-repeat=" item in mes.messageList" ng-if="mes.messageList && mes.messageList.length> 0" ng-click="mes.messageRouter(item)">
+                <p>{{item.message}} 
+                    <span class="message-time">{{item.noticeTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                        <!-- <span ng-if="item.status == 'GET'">{{'【' + item.businessName + '】 至私海'}}</span> -->
+                </p>
+        </li>
+        <!-- <li>
+            <div class="mark"></div><i class="iconfont icon-nb-w8"></i><a href="">范冰冰</a>于 2016.12.3.13:09:40申请了<a href="">网络设备-AP   MAC:56：89：OI：U9：09 </a> 需要您审批
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w13"></i><a href="">绿茶（徐家汇店）</a>的 <a href="">网络设备-AP   MAC:56：89：OI：U9：09</a>   于 2016.12.3.13:09:40 离线
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w8"></i><a href="">范冰冰</a>于 2016.12.3.13:09:40申请了<a href="">网络设备-AP   MAC:56：89：OI：U9：09 </a> 需要您审批
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w13"></i><a href="">绿茶（徐家汇店）</a>的 <a href="">网络设备-AP   MAC:56：89：OI：U9：09</a>   于 2016.12.3.13:09:40 离线
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w8"></i><a href="">范冰冰</a>于 2016.12.3.13:09:40申请了<a href="">网络设备-AP   MAC:56：89：OI：U9：09 </a> 需要您审批
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w13"></i><a href="">绿茶（徐家汇店）</a>的 <a href="">网络设备-AP   MAC:56：89：OI：U9：09</a>   于 2016.12.3.13:09:40 离线
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w8"></i><a href="">范冰冰</a>于 2016.12.3.13:09:40申请了<a href="">网络设备-AP   MAC:56：89：OI：U9：09 </a> 需要您审批
+        </li>
+        <li>
+            <i class="iconfont icon-nb-w13"></i><a href="">绿茶（徐家汇店）</a>的 <a href="">网络设备-AP   MAC:56：89：OI：U9：09</a>   于 2016.12.3.13:09:40 离线
+        </li> -->
+    </ul>
+    <div class="messageEmpty" ng-if="!mes.messageList || mes.messageList.length==0">
+            没有任何消息
+        <!-- <td ng-if="ctrl.serviceStatus==='REJECT' || ctrl.serviceStatus==='ONLINE'" colspan='8' class="empty-box">没有任何需要审核的内容</td> -->
+    </div>
+    <div class="clearfix">
+        <!-- <button type="button" class="btn btn-primary" ng-click='mes.pageChanged()'>全部标示为已读</button> -->
+        <ul uib-pagination total-items="mes.total" ng-if="mes.total>mes.getParame.pageSize"  items-per-page="mes.getParame.pageSize" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="mes.getParame.pageNo" ng-change="mes.pageChanged()"
+        class="pull-right"></ul>
+        <b class="pagination-text pull-right" ng-if="mes.total>mes.getParame.pageSize">共{{mes.total}}条</b>
+    </div>
+</div>

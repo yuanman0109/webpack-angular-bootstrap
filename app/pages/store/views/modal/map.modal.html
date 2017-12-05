@@ -1,0 +1,35 @@
+<!--审核弹窗-->
+<div class="modal-position">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">获取经纬度</h4>
+    <i class="iconfont icon-shanchu-copy" ng-click="ctrl.cancel()"></i>
+  </div>
+  <div class="modal-body" id="modal-body">
+    <p>{{ctrl.opts.name}} </p>
+    <form class="form-inline">
+      <div class="form-group">
+        <p class="form-control-static">经度：<strong>{{ctrl.location.lng||'暂无'}}</strong>　纬度：<strong>{{ctrl.location.lat||'暂无'}}</strong> <span class="text-info">(鼠标点击地图也可以获取具体经纬度)</span></p>
+      </div>
+    </form>
+    <div style="position:relative">
+      <coordinate location="ctrl.location" posi="ctrl.opts.address">
+      </coordinate>
+      <div class="searchmap">
+          <input type="text" id="keywords" class="form-control" name="addressInp" placeholder="请输入关键字：(回车后搜索)"/>
+      </div>
+      <div class="searchList">
+        <div id="panel">
+          <ul id="myList"></ul>
+          <div class="pagin-wrapper">
+            <ul id="pagination-demo" class="pagination-sm"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-gray" ng-click="ctrl.cancel()">取消</button>
+    <button class="btn btn-primary" ng-click="ctrl.confirm()">确定</button>
+  </div>
+</div>

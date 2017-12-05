@@ -1,0 +1,203 @@
+<div class="order-pend-detail">
+  <div class="clearfix">
+    <ul class="breadcrumb">
+      <li class="active">工单中心</li>
+      <li class="active"><a ui-sref="order.myOrder">我的工单</a></li>
+      <li class="active">工单详情</li>
+    </ul>
+  </div>
+  <div class="mainContent">
+    <div class="content-box">
+      <form class="form-horizontal clearfix" name="myOrderDetail" role="form">
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">客户名称：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.storeName}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.storeName">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">派单人：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.createUser}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.createUser">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">派单时间：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.createTime | date:'yyyy-MM-dd HH:mm:ss'}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-value="ctrl.poolDetail.createTime | date:'yyyy-MM-dd HH:mm:ss' || ''">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">接单人：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.transitUser}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.transitUser">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">业务类型：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.businessType}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.businessType">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">任务类型：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.taskTypeName}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.taskTypeName">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">期望完成时间：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.expectDate | date:'yyyy-MM-dd'}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-value="ctrl.poolDetail.expectDate | date:'yyyy-MM-dd'">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">派单说明：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.orderDesc}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.orderDesc">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">联系人：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.contactName}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.contactName">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">手机：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.contactPhone}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.contactPhone">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">客户地址：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <span uib-tooltip="{{ctrl.poolDetail.storeAddress}}"
+            tooltip-placement="top"
+            tooltip-class="gray"
+            tooltip-enable="true">
+              <input class="form-control" ng-disabled="true" type="text" name="" value="" ng-model="ctrl.poolDetail.storeAddress">
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label">其他：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <div class="look_link">
+              <a ng-if="ctrl.poolDetail.url !== null" target="_black" class="text-success" ng-click="ctrl.openLightboxModal(ctrl.imgUrl, 0)">查看</a>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-success':myOrderDetail.selResolve.$valid,'has-error':myOrderDetail.selResolve.$invalid && myOrderDetail.selResolve.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>完成方式：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <select class="form-control" ng-init="ctrl.getParame.resolveBySelf = true" ng-model="ctrl.getParame.resolveBySelf" required>
+              <option ng-value=true>自己解决</option>
+              <option ng-value=false>转派</option>
+            </select>
+          </div>
+        </div>
+        <div ng-if="ctrl.getParame.resolveBySelf == false">
+          <div class="form-group" ng-class="{'has-success':myOrderDetail.transmitUser.$valid,'has-error':myOrderDetail.transmitUser.$invalid && myOrderDetail.transmitUser.$dirty}">
+            <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>新接单人：</label>
+            <div class="col-md-5 col-sm-5 col-xs-5">
+               <ui-select ng-model="ctrl.transmitUser" name="transmitUser" required theme="bootstrap" 
+                  reset-search-input="false" title="选择用户">
+                  <ui-select-match placeholder="请搜选新接单人" ng-click="ctrl.focus()">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="user as user in ctrl.userList track by $index" refresh="ctrl.getSaleName($select.search)"
+                    refresh-delay="500">
+                    <div ng-bind-html="user.name | highlight: $select.search"></div>
+                    <small>
+                        工号：<span ng-bind-html="user.userNo | highlight: $select.search"></span>
+                        部门：<span ng-bind-html="user.deptName | highlight: $select.search"></span>
+                    </small>
+                  </ui-select-choices>
+                </ui-select>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{'has-success':myOrderDetail.finishDesc.$valid,'has-error':myOrderDetail.finishDesc.$invalid && myOrderDetail.forwardDesc.$dirty}">
+            <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>转派说明：</label>
+            <div class="col-md-5 col-sm-5 col-xs-5">
+              <textarea rows="" cols="" name="forwardDesc" class="form-control" ng-model="ctrl.getParame.forwardDesc" maxlength="500" placeholder="不能超过500个字符集" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.getParame.resolveBySelf == true"  ng-class="{'has-success':myOrderDetail.finishDesc.$valid,'has-error':myOrderDetail.finishDesc.$invalid && myOrderDetail.finishDesc.$dirty}">
+          <label class="col-md-3 col-sm-3 col-xs-3 control-label"><strong class="text-danger">*</strong>完成说明：</label>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <textarea rows="" cols="" name="finishDesc" class="form-control" ng-model="ctrl.getParame.finishDesc" maxlength="500" placeholder="不能超过500个字符集" required></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-3 col-sm-offset-3 col-xs-offsetset-3 col-md-9 col-sm-9 col-xs-9">
+            <button type="button" ng-disabled="myOrderDetail.$invalid" class="btn btn-primary" ng-click="ctrl.getSubmit()">确认提交</button>
+            <button ng-if="btnlist.ORDER_0101" type="button" class="btn btn-primary" ng-click="ctrl.release()">释放至工单池</button>
+          </div>
+        </div>
+        <div class="clearfix">
+          <div class="log-wrapper  pull-right col-md-9 col-sm-9 col-xs-9">
+            <ul >
+              <li ng-repeat="item in ctrl.orderLog" ng-class="{'first':$first}" ng-if="(item.status!=='WAIT')&&(item.status!=='GET')">
+                <div ng-class="{'text-success':item.status=='ONLINE','text-danger':item.status=='REJECT'}">
+                  <p ng-if="item.type !== 'FLOW'">{{item.createUser+' 在'+(item.createTime | date:'yyyy-MM-dd HH:mm:ss')+(' '+ctrl.orderType[item.type])+'了工单;'}}</p>
+                  <p ng-if="item.type === 'FLOW'">{{item.createUser+' 在'+(item.createTime | date:'yyyy-MM-dd HH:mm:ss')+(' '+ctrl.orderType[item.type])+'了工单给'+ item.transmitUser}}</p>
+                  <p ng-if="item.type === 'FLOW' || item.type === 'FINISH'">{{item.description}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

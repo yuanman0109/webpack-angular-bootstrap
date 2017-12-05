@@ -1,0 +1,242 @@
+/* Hide for mobile, show later */
+.sidebar-wrapper{
+  position: fixed;
+  top: 65px;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  width: 173px;
+  overflow: hidden;
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  /* Firefox 4 */
+  -webkit-transition: all 0.5s;
+}
+
+
+.sidebar{
+  display: none;
+  width: 185px;
+  overflow-y: scroll;
+  height: 100%;
+  display: block;
+  padding: 10px 0 0;
+  background-color: #525252;
+  color: #f0f0f0;
+  position: relative;
+  &:before{
+    content: '';
+    height: 1px;
+    background: #525252;
+    left: 0;
+    width: 168px;
+    top: 64px;
+    position: fixed;
+  }
+  .panel-group .panel+.panel {
+    margin: 0;
+  }
+  /* Sidebar navigation */
+  .nav-sidebar {
+    border-bottom: 1px solid #4a4a4a;
+    color: #888;
+    .list-group {
+      margin-bottom: 5px;
+    }
+    h4 {
+      margin: 0;
+      padding: 10px 50px 15px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      position: relative;
+      text-align: right;
+      &:focus {
+        outline: none;
+      }
+      &.pointer {
+        cursor: pointer;
+      }
+      i.pull-right {
+        font-size: 18px;
+        display: block;
+        transform: scale(0.4);
+        -webkit-transform: scale(0.4);
+        -moz-transform: scale(0.4);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        transition: transform 0.5s;
+        -moz-transition: -moz-transform 0.5s;
+        /* Firefox 4 */
+        -webkit-transition: -webkit-transform 0.5s;
+        /* Safari 和 Chrome */
+      }
+      span {
+        vertical-align: middle;
+        display: inline-block;
+        &.active {
+          color: #fff;
+        }
+        i.iconfont {
+          font-size: 18px;
+          vertical-align: middle;
+          margin-right: 20px;
+          display: inline-block;
+        }
+      }
+    }
+    a.list-group-item {
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 14px;
+      text-align: right;
+      padding-right: 50px;
+      &:last-child {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      &:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+      &:hover,
+      &.active,
+      &.active:focus,
+      &.active:hover {
+        background: #4a4a4a;
+        border-left: 6px solid @defColor;
+        color: #fff;
+      }
+    }
+  }
+  .panel {
+    background: none;
+    box-shadow: none;
+    position: relative;
+  }
+  .panel-open {
+    h4 {
+      i.pull-right {
+        transform: scale(0.4) rotate(-90deg);
+        -webkit-transform: scale(0.4) rotate(-90deg);
+        /* Safari and Chrome */
+        -moz-transform: scale(0.4) rotate(-90deg);
+      }
+    }
+  }
+  .sidebarBt {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #595D5C;
+    text-align: center;
+    margin: 20px auto 0;
+    cursor: pointer;
+    box-sizing: border-box;
+    i {
+      font-size: 17px;
+      color: #697070;
+      line-height: 40px;
+      display: block;
+      transition: transform 0.5s;
+      -webkit-transition: -webkit-transform 0.5s;
+    }
+    &:hover {
+      border: 3px solid #646868;
+      i {
+        color: #29A19C;
+        line-height: 36px;
+      }
+    }
+  }
+  .menuClose {
+    border: none;
+    i {
+      transform: rotate(-90deg);
+      -webkit-transform: rotate(-90deg);
+      line-height: 40px;
+    }
+    &:hover {
+      border: none;
+      i {
+        line-height: 40px;
+      }
+    }
+  }
+}
+.sidebar-mac{
+  width: 168px;
+}
+.sideClose{
+  width: 40px;
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  /* Firefox 4 */
+  -webkit-transition: all 0.5s;
+  overflow: visible;
+}
+.sideClose .sidebar{
+    width: 40px;
+    overflow: visible;
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    /* Firefox 4 */
+    -webkit-transition: all 0.5s;
+    /* Safari 和 Chrome */
+    &:before{
+      width: 40px;
+      transition: all 0.5s;
+      -moz-transition: all 0.5s;
+      /* Firefox 4 */
+      -webkit-transition: all 0.5s;
+    }
+    .panel:hover {
+      h4 span>i {
+        color: #fff;
+      }
+      .panel-collapse {
+        display: block;
+        height: auto!important;
+        &:before {
+          content: "";
+          width: 2px;
+          height: 100%;
+          position: absolute;
+          left: -2px;
+          top: 0;
+        }
+      }
+    }
+    .nav-sidebar h4 {
+      padding: 10px 5px;
+      text-align: center;
+      span i.iconfont {
+        margin: 0;
+      }
+    }
+    .panel-collapse {
+      display: none;
+      position: absolute;
+      left: 41px;
+      top: 0;
+      width: 126px;
+      padding: 5px 5px 0;
+      border-radius: 5px;
+      background: #525252;
+    }
+    .nav-sidebar h4 span span,
+    .nav-sidebar h4 i.pull-right {
+      display: none;
+    }
+    .nav-sidebar a.list-group-item {
+      padding: 7px 10px;
+      text-align: center;
+    }
+    .nav-sidebar a.list-group-item:hover,
+    .nav-sidebar a.list-group-item.active,
+    .nav-sidebar a.list-group-item.active:focus,
+    .nav-sidebar a.list-group-item.active:hover {
+      border: none;
+    }
+  }

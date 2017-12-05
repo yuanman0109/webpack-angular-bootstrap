@@ -1,0 +1,42 @@
+<div class="page-order-count" ng-controller="orderCountCtrl as ctrl">
+  <ul class="breadcrumb">
+    <li class="active">工单中心</li>
+    <li class="active">工单统计</li>
+  </ul>
+  <div class="mainContent">
+    <div class="content-box">
+      <form class="form-horizontal" name="timeform">
+        <div class="form-group send-orders-time">
+          <label class="col-md-5 col-sm-5 col-xs-5 control-label"><strong class="text-danger">*</strong>派单时间：</label>
+          <div class="col-md-7 col-sm-7 col-xs-7 row">
+            <div class="form-inline row">
+              <div class="input-group col-md-2 col-sm-2 col-xs-2 date-form">
+                <input readonly="readonly" type="text" name="startTime" ng-model="ctrl.startTime" class="form-control text-center" placeholder="开始时间" uib-datepicker-popup="yyyy-MM-dd" is-open="ctrl.startIsopen" on-open-focus='false' datepicker-options="ctrl.startDateOps"
+                  ng-change="ctrl.selDate('start')" current-text="今天" clear-text="清除" close-text="关闭" required/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="ctrl.startIsopen=!ctrl.startIsopen">
+                    <i class="iconfont icon-CombinedShape1"></i>
+                  </button>
+                </span>
+              </div>
+              <span class="dateText">&nbsp;-&nbsp;</span>
+              <div class="input-group  col-md-2 col-sm-2 col-xs-2 date-form">
+                <input readonly="readonly" type="text" name="endTime" ng-model="ctrl.endTime" class="form-control text-center" placeholder="结束时间" uib-datepicker-popup="yyyy-MM-dd" is-open="ctrl.endIsopen" on-open-focus='false' datepicker-options="ctrl.endDateOps" ng-change="ctrl.selDate('end')"
+                  current-text="今天" clear-text="清除" close-text="关闭" required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.endIsopen=!ctrl.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+					      </span>
+              </div>
+            </div>    
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-offset-5 col-sm-offset-5 col-xs-offset-5  col-md-7 col-sm-7 col-xs-7">
+            <button ng-if="btnlist.ORDER_04" type="submit" class="btn btn-primary" ng-click="ctrl.export()">导出</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="timeform.$invalid" ng-click="ctrl.export()">导出</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

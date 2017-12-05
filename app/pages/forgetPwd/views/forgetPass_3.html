@@ -1,0 +1,82 @@
+<div class="forgetPass-box">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ng-click="ctrl.goHome()">
+          <i class="iconfont icon-icon-test10"></i>
+        </a>
+      </div>
+      <h3 ng-if="ctrl.code" class="page-title">找回密码</h3>
+    </div>
+  </nav>
+  <h3 class="text-center link-failure" ng-if="!ctrl.code">
+    <i class="iconfont icon-nb-l14"></i>
+    <div>
+      <h4> 链接失效</h4>
+      <h5 class="text-color-ccc"> 您访问的页面已失效，请重新发送邮件</h5>
+    </div>
+  </h3>
+  <div class="container-login" ng-if="ctrl.code">
+    <div class="mainContent">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="login-steps clearfix">
+            <div class="login-step">
+              <div class="step-item">
+                <div class="step-head-num">1</div>
+                <div class="step-text">输入账号和邮箱</div>
+              </div>
+              <div class="stet-line"></div>
+            </div>
+            <div class="login-step login-step-active">
+              <div class="step-item clearfix">
+                <div class="step-head-num">2</div>
+                <div class="step-text">设置新密码</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form name="formSetPass" class="form-horizontal newPass-from" ng-submit="ctrl.setPWD()">
+            <!--<div class="form-group" ng-if="false">
+              <label for="code" class="col-sm-3 control-label" >验证码：</label>
+              <div class="col-sm-9" ng-class="{'has-success':formSetPass.code.$valid,'has-error':formSetPass.code.$invalid && formSetPass.code.$dirty}">
+                <input type="text" readonly="readonly" class="form-control" id="code" name="code" ng-model="ctrl.code"  placeholder="请输入验证码" required>
+                <span class="text-error" ng-show="formSetPass.code.$invalid && formSetPass.code.$dirty">
+                  <span ng-show="formSetPass.code.$error.required">请输入验证码</span>
+                </span>
+              </div>
+            </div>-->
+            <div class="form-group">
+              <label for="password" class="col-sm-3 control-label">输入新密码：</label>
+              <div class="col-sm-9" ng-class="{'has-success':formSetPass.password.$valid,'has-error':formSetPass.password.$invalid && formSetPass.password.$dirty}">
+                <input type="password" class="form-control" id="password" name="password" ng-model="ctrl.password" ng-pattern="/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{8,20}$/"  placeholder="请输入新密码" required>
+                <span class="text-error" ng-show=" formSetPass.password.$invalid && formSetPass.password.$dirty">
+                    密码必须大小写字母和数字，长度8-20
+                </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="repassword" class="col-sm-3 control-label">再输入一次：</label>
+              <div class="col-sm-9" ng-class="{'has-success':formSetPass.repassword.$valid,'has-error':formSetPass.repassword.$invalid && formSetPass.repassword.$dirty}">
+                <input type="password" class="form-control" id="repassword" name="repassword" ng-model="ctrl.repassword"  ng-pattern="/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{8,20}$/"  placeholder="请再次输入新密码" required>
+                <span class="text-error" ng-show="formSetPass.repassword.$invalid && formSetPass.repassword.$dirty">
+                    密码必须大小写字母和数字，长度8-20
+                <br/>
+                </span>
+                 <span class="text-error" ng-if="ctrl.password!=ctrl.repassword">两次密码输入不相同</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit"  ng-disabled="(formSetPass.password.$invalid && formSetPass.password.$dirty) || (formSetPass.repassword.$invalid && formSetPass.repassword.$dirty) || ctrl.password!=ctrl.repassword " class="btn btn-primary btn-block">确定</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <div class="copyright-footer">BSS_v1.0.0 Copyright by Eparty @2016</div>
+    </div>
+  </div>
+</div>

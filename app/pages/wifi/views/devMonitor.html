@@ -1,0 +1,805 @@
+<div class="clearfix">
+	<ul class="breadcrumb pull-left">
+		<li>wifi管理</li>
+		<li class="active">设备监控</li>
+	</ul>
+	<div class="pull-right">
+		<a ui-sref="wifi.storeModel"><i class="iconfont icon-nb-w10"></i>门店模式</a>
+		<!--<a ui-sref="wifi.devMonitor"><i class="iconfont icon-nb-w12"></i>设备模式</a>-->
+	</div>
+</div>
+<div class="mainContent" ng-controller="DevMonitorCtrl as devM">
+	<div class="table-head form-inline">
+		<form>
+      <div class="form-group">
+        <prov-select province='devM.searchData.province'></prov-select>
+        <city-select province='devM.searchData.province' city='devM.searchData.city'></city-select>
+        <county-select city='devM.searchData.city' county='devM.searchData.county'></county-select>
+      </div>
+			<div class="form-group">
+				<select class="form-control" ng-options="dishes.dataCode as dishes.dataName for dishes in devM.modelLists" ng-model="devM.searchData.model">
+					<option value="">按设备型号</option>
+				</select>
+				<select class="form-control" ng-options="status.dataCode as status.dataName for status in devM.statusLists" ng-model="devM.searchData.status">
+					<option value="">按设备状态</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<div class="input-group date-form">
+					<input type="text" class="form-control" placeholder="开始时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="devM.searchData.beginTime" is-open="devM.beginIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+					<span class="input-group-btn">
+	                    <button type="button" class="btn btn-default" ng-click="devM.beginIsopen=!devM.beginIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+	                </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<span class="dateText">-</span>
+			</div>
+			<div class="form-group">
+				<div class="input-group date-form">
+					<input type="text" class="form-control" placeholder="结束时间" uib-datepicker-popup="yyyy-MM-dd" uib-datepicker-popup ng-model="devM.searchData.endTime" is-open="devM.endIsopen" on-open-focus='false' current-text="今天" clear-text="清除" close-text="关闭" />
+					<span class="input-group-btn">
+	                    <button type="button" class="btn btn-default" ng-click="devM.endIsopen=!devM.endIsopen"><i class="iconfont icon-CombinedShape1"></i></button>
+	                </span>
+				</div>
+			</div>
+			<div class="form-group">
+				<input type="text" name="" value="" class="form-control cusSearch-input" placeholder="按门店、编号、品牌、人员搜索..." ng-model="devM.searchData.searchWord">
+			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-white" ng-click="devM.searchList()">搜索</button>
+			</div>
+		</form>
+	</div>
+	<div class="content-box">
+		<div class="table-overflow">
+			<table class="table table-hover table-theadbg table-customer">
+				<thead>
+					<tr>
+						<th width="84">
+							<div>状态</div>
+						</th>
+						<th>
+							<div>名称</div>
+						</th>
+						<th>
+							<div>型号</div>
+						</th>
+						<th>
+							<div>序列号</div>
+						</th>
+						<th>
+							<div>mac</div>
+						</th>
+						<th>
+							<div>所属部门</div>
+						</th>
+						<th>
+							<div>最后上报时间</div>
+						</th>
+						<th>
+							<div>尝试连接（次）</div>
+						</th>
+						<th>
+							<div>出protal（次）</div>
+						</th>
+						<th>
+							<div>成功认证（次）</div>
+						</th>
+						<th>
+							<div>上传流量（G）</div>
+						</th>
+						<th>
+							<div>下载流量（G）</div>
+						</th>
+						<th>
+							<div>内存（G）</div>
+						</th>
+						<th>
+							<div>操作</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody ng-if="devM.devsList.length==0">
+					<tr>
+						<td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr ng-repeat="dev in devM.devsList">
+						<td class="text-center">
+							<label class="checkbox-inline">
+				                <input type="checkbox" name="Subordinate"  ng-model="dev.sigleCheck" ng-checked="devM.allCheck" ng-change="dev.sigleCheck==false? devM.allCheck=false: return" ng-click="devM.chk(dev.gatewayMAC,dev.sigleCheck, devM.devsList)" ><i class="iconfont"></i>
+				            </label>
+							<i class="iconfont icon-wifi-on" ng-class="{'text-success':dev.status=='NORMAL','text-danger':dev.status=='ABNORMAL','text-muted':dev.status=='NO_NETWORK'|| !dev.status}"></i>
+						</td>
+						<td class="text-overflow">
+							{{dev.name||'暂无'}}
+						</td>
+						<td>
+							{{dev.model||'暂无'}}
+						</td>
+						<td>
+							{{dev.serialNum||'暂无'}}
+						</td>
+						<td>
+							{{dev.gatewayMAC||'暂无'}}
+						</td>
+						<td>
+							{{dev.storeName||'暂无'}}
+						</td>
+						<td>
+							{{dev.lastReportTime||'暂无'}}
+						</td>
+						<td>
+							{{dev.attemptConnect||'暂无'}}
+						</td>
+						<td>
+							{{dev.curOutPortal||'暂无'}}
+						</td>
+						<td class="text-overflow">
+							{{dev.certSuccess||'暂无'}}
+						</td>
+						<td>
+							{{dev.curUploadRate||'暂无'}}
+						</td>
+						<td>
+							{{dev.curDownloadRate||'暂无'}}
+						</td>
+						<td>
+							<div>总：{{dev.totalMemory||'暂无'}}G</div>
+							<div>剩：{{dev.freeMemory||'暂无'}}G</div>
+						</td>
+						<td>
+							<button type="button" class="btn btn-link btn-link-success" ng-click="devM.devDetail(dev.id)">详情</button>
+							<button type="button" class="btn btn-link btn-link-info" ng-click="devM.devConfig(dev.id)">配置</button>
+							<button type="button" class="btn btn-link btn-link-p" ng-click="devM.sinUnbindDev(dev.gatewayMAC)">解绑</button>
+							<button type="button" class="btn btn-link btn-link-danger" ng-click="devM.sinRebootDev(dev.gatewayMAC)">重启</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="form-group">
+				<label class="checkbox-inline">
+	                <input type="checkbox" name="Subordinate"  ng-model="devM.allCheck"  ng-click="devM.all(devM.allCheck,devM.devsList)"><i class="iconfont"></i>全选
+	            </label>
+				<button type="button" class="btn btn-default" ng-disabled="devM.choseArr.length==0" ng-click="devM.configDevList(dev.gatewayMAC)">批量设置</button>
+				<button type="button" class="btn btn-default" ng-disabled="devM.choseArr.length==0" ng-click="devM.exportDevList(dev.gatewayMAC)">批量导出</button>
+				<button type="button" class="btn btn-default" ng-disabled="devM.choseArr.length==0" ng-click="devM.deleteDevList(dev.gatewayMAC)">批量解绑</button>
+				<button type="button" class="btn btn-default" ng-disabled="devM.choseArr.length==0" ng-click="devM.rebootDevList(dev.gatewayMAC)">批量重启</button>
+			</div>
+		</div>
+		<p class="text-right cus_icon">
+			<i class="iconfont icon-wifi-on text-success"></i>设备正常
+			<i class="iconfont icon-wifi-on text-danger"></i>有设备离线
+			<i class="iconfont icon-wifi-on text-muted"></i>设备未安装
+		</p>
+		<div>
+			<button type="button" class="btn btn-primary" ng-click="devM.addDev()">添加设备</button>
+			<ul uib-pagination total-items="devM.totalItems" items-per-page="10" previous-text="<" next-text=">" max-size="5" boundary-link-numbers="true" ng-model="devM.currentPage" ng-change="devM.pageChanged()" class="pull-right"></ul>
+			<b class="pagination-text pull-right" ng-if="devM.totalItems>10">共{{devM.totalItems}}条</b>	
+		</div>
+	</div>
+</div>
+<!--列表操作弹窗开始-->
+<script type="text/ng-template" id="rebootDev.html">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-title">设备{{$ctrl.title}}</h4>
+		<i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+	</div>
+	<div class="modal-body devModel" id="modal-body">
+		<p>确定要{{$ctrl.title}}以下设备吗？
+			<ul>
+				<li ng-repeat="mac in $ctrl.gatewayMACList track by $index">{{mac}}</li>
+			</ul>
+		</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+		<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">确 定</button>
+	</div>
+</script>
+<!--列表操作弹窗结束-->
+<!--添加设备弹窗开始-->
+<script type="text/ng-template" id="addDev.html">
+	<form class="form-horizontal" role="form" name="addDev" id="addDev"> 
+		<div class="modal-header">
+			<h4 class="modal-title" id="modal-title">添加设备</h4>
+			<i class="iconfont icon-shanchu-copy" ng-click="$ctrl.cancel()"></i>
+		</div>
+		<div class="modal-body addDevModel" id="modal-body">
+			
+				<div class="form-group"  ng-class="{'has-success':addDev.name.$valid && addDev.name.$dirty,'has-error':addDev.name.$invalid && addDev.name.$dirty}">
+					<label for="name" class="col-sm-3 control-label">名称：</label>
+					 <div class="col-sm-9">
+						<input class="form-control"  name="name"  type="text" placeholder="输入设备名称" ng-model="$ctrl.dev.name" required />				 	
+					 </div>
+				</div>
+				<div class="form-group"  ng-class="{'has-success':addDev.model.$valid && addDev.model.$dirty,'has-error':addDev.model.$invalid && addDev.model.$dirty}">
+					<label for="model"  class="col-sm-3 control-label">型号：</label>
+					<div class="col-sm-9">
+						<input class="form-control"  name="model"  type="text" placeholder="输入设备型号" ng-model="$ctrl.dev.model"  required />
+					</div>
+				</div>
+				<div class="form-group"  ng-class="{'has-success':addDev.serialNum.$valid && addDev.serialNum.$dirty,'has-error':addDev.serialNum.$invalid && addDev.serialNum.$dirty}">
+					<label for="serialNum"  class="col-sm-3 control-label">序列号：</label>
+					<div class="col-sm-9">
+						<input class="form-control"  name="serialNum"  type="text" placeholder="输入设备序列号" ng-model="$ctrl.dev.serialNum"  required />
+					</div>
+				</div>
+				<div class="form-group"  ng-class="{'has-success':addDev.gatewayMAC.$valid && addDev.gatewayMAC.$dirty,'has-error':addDev.gatewayMAC.$invalid && addDev.gatewayMAC.$dirty}">
+					<label for="gatewayMAC"  class="col-sm-3 control-label">MAC：</label>
+					<div class="col-sm-9">
+						<input class="form-control" name="gatewayMAC"  type="text" placeholder="输入设备MAC" ng-model="$ctrl.dev.gatewayMAC" required />			
+					</div>
+				</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-gray" type="button" ng-click="$ctrl.cancel()">取消</button>
+			<button class="btn btn-primary" ng-disabled="addDev.$invalid" type="button" ng-click="$ctrl.ok()">确 定</button>
+		</div>
+	</form>
+</script>
+<!--添加设备弹窗结束-->
+<!--设备详情开始-->
+<script type="text/ng-template" id="devModelContent.html">
+	<div class="modal-header">
+		<h3 class="modal-title">设备详情</h3>
+	</div>
+	<div class="modal-body">
+		<uib-tabset type="pills">
+			<uib-tab index="0" heading="配置信息">
+				<!--配置信息开始-->
+				<table class="table table-striped table-hover table-noborder text-left">
+					<tbody ng-if="devM.devList.length==0">
+						<tr>
+							<td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr>
+							<td class="text-center">
+								场所名：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.storeName}}
+							</td>
+							<td>
+								安装位置:
+							</td>
+							<td>
+								{{$ctrl.configInfo.installPosition}}
+							</td>
+							<td>
+								备注:
+							</td>
+							<td>
+
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								镜像开关：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.image}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								设备编码：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.serialNum}}
+							</td>
+							<td>
+								MAC地址：
+							</td>
+							<td>
+								{{$ctrl.configInfo.gatewayMAC}}
+							</td>
+							<td>
+								设备型号：
+							</td>
+							<td>
+								{{$ctrl.configInfo.model}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								设备模式：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.netmode}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								固件版本：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.firmwareVer}}
+							</td>
+							<td>
+								在线人数：
+							</td>
+							<td>
+								{{$ctrl.configInfo.onlineNum}}
+							</td>
+							<td>
+								剩余内存：
+							</td>
+							<td>
+								{{$ctrl.configInfo.freeMemory}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								信号名称：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.ssid}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								SSH：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.ssh}}
+							</td>
+							<td>
+								MTU：
+							</td>
+							<td>
+								{{$ctrl.configInfo.mtu}}
+							</td>
+							<td>
+								自动DNS：
+							</td>
+							<td>
+								{{$ctrl.configInfo.autoDns}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								路由管理密码：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.pwd}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								最后上报时间：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.lastReportTime}}
+							</td>
+							<td>
+								公网IP：
+							</td>
+							<td>
+								{{$ctrl.configInfo.ip}}
+							</td>
+							<td>
+								网监设备类型：
+							</td>
+							<td>
+								{{$ctrl.configInfo.auditCrop}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-center">
+								网络状态：
+							</td>
+							<td class="text-overflow">
+								{{$ctrl.configInfo.autitStatus}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!--配置信息结束-->
+			</uib-tab>
+			<uib-tab index="1" heading="连接用户">
+				<!--连接用户开始-->
+				<table class="table table-hover table-theadbg table-customer">
+					<thead>
+						<tr>
+							<th width="84">
+								<div>日期</div>
+							</th>
+							<th>
+								<div>手机号</div>
+							</th>
+							<th>
+								<div>MAC地址</div>
+							</th>
+							<th>
+								<div>下载流量（M）</div>
+							</th>
+							<th>
+								<div>上传流量（M）</div>
+							</th>
+							<th>
+								<div>认证次数</div>
+							</th>
+							<th>
+								<div>累计上网时长（分钟）</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody ng-if="devM.devsList.length==0">
+						<tr>
+							<td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr ng-repeat="user in $ctrl.connUserList">
+							<td class="text-overflow">
+								{{user.connectDate||'暂无'}}
+							</td>
+							<td>
+								{{user.mobilePhone||'暂无'}}
+							</td>
+							<td>
+								{{user.userMAC||'暂无'}}
+							</td>
+							<td>
+								{{user.gatewayMAC||'暂无'}}
+							</td>
+							<td>
+								{{user.uploadRate||'暂无'}}
+							</td>
+							<td>
+								{{user.authNum||'暂无'}}
+							</td>
+							<td>
+								{{user.onlineTime||'暂无'}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!--连接用户结束-->
+			</uib-tab>
+			<uib-tab index="2" heading="设备日志">
+				<!--设备日志开始-->
+				<table class="table table-hover text-left">
+					<thead>
+						<tr>
+							<th>
+								<div>时间</div>
+							</th>
+							<th>
+								<div>状态</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody ng-if="devM.devsList.length==0">
+						<tr>
+							<td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr ng-repeat="log in $ctrl.LogList">
+							<td class="text-overflow">
+								{{log.eventTime||'暂无'}}
+							</td>
+							<td>
+								{{log.eventType||'暂无'}}
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+				<!--设备日志结束-->
+			</uib-tab>
+		</uib-tabset>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="$ctrl.cancel()">
+       		 关闭
+        </button>
+		
+	</div>
+</script>
+<!--设备详情结束-->
+<!--设备配置开始-->
+<script type="text/ng-template" id="devModelConfig.html">
+	<form class="form-inline" role="form" name="devconfig" id="devconfig">
+	<div class="modal-header">
+		<h3 class="modal-title">设备配置</h3>
+	</div>
+	<div class="modal-body">
+		<uib-tabset type="pills">
+			<uib-tab index="0" heading="配置模式">
+				<!--配置模式开始-->
+				
+					<table class="table table-hover table-noborder text-left">
+						<tbody>
+							<tr>
+								<td class="text-overflow">
+									<div class="form-group" ng-class="{'has-success':devconfig.netmode.$valid && devconfig.netmode.$dirty,'has-error':devconfig.netmode.$invalid && devconfig.netmode.$dirty}">
+										<label for="netmode">设备模式：</label>
+										<select class="form-control" name="netmode" ng-options="deviceModel.code as deviceModel.name for deviceModel in $ctrl.devconfigOption.deviceModel" ng-model="$ctrl.devconfig.deviceModel" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.image.$valid && devconfig.image.$dirty,'has-error':devconfig.image.$invalid && devconfig.image.$dirty}">
+										<label for="image">镜像：</label>
+										<select class="form-control" name="image" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.image" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.ssh.$valid && devconfig.ssh.$dirty,'has-error':devconfig.ssh.$invalid && devconfig.ssh.$dirty}">
+										<label for="ssh">SSH：</label>
+										<select class="form-control" name="ssh" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.ssh" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.mtu.$valid && devconfig.mtu.$dirty,'has-error':devconfig.mtu.$invalid && devconfig.mtu.$dirty}">
+										<label for="mtu">MTU：</label>
+										<select class="form-control" name="mtu" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.mtu" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group">
+
+										<span ng-class="{'has-success':devconfig.autoDns.$valid && devconfig.autoDns.$dirty,'has-error':devconfig.autoDns.$invalid && devconfig.autoDns.$dirty }">
+											<label for="autoDns">自动DNS：</label>
+											<select class="form-control" name="autoDns" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.autoDns" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										<span ng-class="{'has-success':devconfig.dns.$valid && devconfig.dns.$dirty,'has-error': devconfig.dns.$invalid && devconfig.dns.$dirty}">
+					                        <input type="text" class="form-control" name="dns" placeholder="输入DNS服务器IP地址" ng-model="$ctrl.devconfig.dns" ng-pattern='/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/' required> 
+					                    </span>
+										<button class="btn btn-link  btn-link-success" ng-click="addDns()">添加</button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group">
+										<label for="">功率级别：</label>
+										<span ng-class="{'has-success':devconfig.txpower2g.$valid  && devconfig.txpower2g.$dirty ,'has-error':devconfig.txpower2g.$invalid && devconfig.txpower2g.$dirty }">
+											<label for="txpower2g">2G</label>
+											<select class="form-control" name="txpower2g" ng-options="txpower2g.code as txpower2g.name for txpower2g in $ctrl.devconfigOption.txpower2g" ng-model="$ctrl.devconfig.txpower2g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										<span ng-class="{'has-success':devconfig.txpower5g.$valid  && devconfig.txpower5g.$dirty,'has-error': devconfig.txpower5g.$invalid && devconfig.txpower5g.$dirty}">
+											<label for="txpower5g">5G</label>
+											<select class="form-control" name="txpower5g" ng-options="txpower5g.code as txpower5g.name for txpower5g in $ctrl.devconfigOption.txpower5g" ng-model="$ctrl.devconfig.txpower5g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group">
+										<label for="">无线 模式：</label>
+										<span ng-class="{'has-success':devconfig.hwmode2g.$valid  && devconfig.hwmode2g.$dirty,'has-error':devconfig.hwmode2g.$invalid && devconfig.hwmode2g.$dirty}">
+											<label for="hwmode2g">2G</label>
+											<select class="form-control" name="hwmode2g" ng-options="hwmode2g.code as hwmode2g.name for hwmode2g in $ctrl.devconfigOption.hwmode2g" ng-model="$ctrl.devconfig.hwmode2g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										<span ng-class="{'has-success': devconfig.hwmode5g.$valid && devconfig.hwmode5g.$dirty,'has-error': devconfig.hwmode5g.$invalid && devconfig.hwmode5g.$dirty}">
+											<label for="hwmode5g">5G</label>
+											<select class="form-control" name="hwmode5g" ng-options="hwmode5g.code as hwmode5g.name for hwmode5g in $ctrl.devconfigOption.hwmode5g" ng-model="$ctrl.devconfig.hwmode5g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group">
+										<label for="">信道：</label>
+										<span ng-class="{'has-success':devconfig.channel2g.$valid && devconfig.channel2g.$dirty,'has-error':devconfig.channel2g.$invalid && devconfig.channel2g.$dirty}">
+											<label for="channel2g">2G</label>
+											<select class="form-control" name="channel2g" ng-options="channel2g.code as channel2g.name for channel2g in $ctrl.devconfigOption.channel2g" ng-model="$ctrl.devconfig.channel2g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										<span ng-class="{'has-success': devconfig.channel5g.$valid && devconfig.channel5g.$dirty,'has-error':devconfig.channel5g.$invalid && devconfig.channel5g.$dirty}">
+											<label for="channel5g">5G</label>
+											<select class="form-control" name="channel5g" ng-change="$ctrl.change5g($ctrl.devconfig.channel5g)"  ng-options="channel5g.code as channel5g.name for channel5g in $ctrl.devconfigOption.channel5g" ng-model="$ctrl.devconfig.channel5g" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										<span ng-if="$ctrl.Is5g20" ng-class="{'has-success':devconfig.channel5gVal.$valid && devconfig.channel5gVal.$dirty ,'has-error':devconfig.channel5gVal.$invalid && devconfig.channel5gVal.$dirty}">
+											<select class="form-control" name="channel5gVal" ng-options="channel5g20.code as channel5g20.name for channel5g20 in $ctrl.devconfigOption.channel5g20" ng-model="$ctrl.devconfig.channel5gVal" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+										
+										<span  ng-if="$ctrl.Is5g40" ng-class="{'has-success':devconfig.channel5gVal.$valid && devconfig.channel5gVal.$dirty ,'has-error':devconfig.channel5gVal.$invalid && devconfig.channel5gVal.$dirty}">
+											<select class="form-control" name="channel5gVal" ng-options="channel5g40.code as channel5g40.name for channel5g40 in $ctrl.devconfigOption.channel5g40" ng-model="$ctrl.devconfig.channel5gVal" required>
+												<option value="">请选择</option>
+											</select>
+										</span>
+
+									</div>
+									<div class="form-group">
+										<label for="">频宽配置：</label>
+										<span ng-class="{'has-success':devconfig.htmode2g.$valid && devconfig.htmode2g.$dirty  ,'has-error':devconfig.htmode2g.$invalid && devconfig.htmode2g.$dirty}">
+								       	 <label for="htmode2g">2G</label>
+									      <select class="form-control" name="htmode2g" ng-options="htmode2g.code as htmode2g.name for htmode2g in $ctrl.devconfigOption.htmode2g" ng-model="$ctrl.devconfig.htmode2g" required>
+					                        <option value="">请选择</option>
+					                      </select>
+							    	    </span>
+										<span ng-class="{'has-success':devconfig.htmode5g.$valid && devconfig.htmode5g.$dirty  ,'has-error':devconfig.htmode5g.$invalid && devconfig.htmode5g.$dirty}">
+					                      <label for="htmode5g">5G</label>
+					                      <select class="form-control" name="htmode5g" ng-options="htmode5g.code as htmode5g.name for htmode5g in $ctrl.devconfigOption.htmode5g" ng-model="$ctrl.devconfig.htmode5g" required>
+					                        <option value="">请选择</option>
+				                     	 </select>
+	                     			    </span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.rebootOff.$valid && devconfig.rebootOff.$dirty,'has-error':devconfig.rebootOff.$invalid && devconfig.rebootOff.$dirty}">
+										<label for="rebootOff">定时重启功能：</label>
+										<select class="form-control" name="rebootOff" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.rebootOff" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.rebootTime.$valid && devconfig.rebootTime.$dirty,'has-error':devconfig.rebootTime.$invalid && devconfig.rebootTime.$dirty}">
+										<label for="rebootTime">定时重启时间：</label>
+										<select class="form-control" name="rebootTime" ng-options="rebootTime.code as rebootTime.name for rebootTime in $ctrl.devconfigOption.rebootTime" ng-model="$ctrl.devconfig.rebootTime" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.rebootDay.$valid && devconfig.rebootDay.$dirty,'has-error':devconfig.rebootDay.$invalid && devconfig.rebootDay.$dirty}">
+										<label for="rebootDay">重启频率：</label>
+										<select class="form-control" name="rebootDay" ng-options="rebootDay.code as rebootDay.name for rebootDay in $ctrl.devconfigOption.rebootDay" ng-model="$ctrl.devconfig.rebootDay" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.auditOff.$valid && devconfig.auditOff.$dirty,'has-error':devconfig.auditOff.$invalid && devconfig.auditOff.$dirty}">
+										<label for="auditOff">网监：</label>
+										<select class="form-control" name="auditOff" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.auditOff" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.auditCrop.$valid && devconfig.auditCrop.$dirty,'has-error':devconfig.auditCrop.$invalid && devconfig.auditCrop.$dirty}">
+										<label for="auditCrop">网监平台：</label>
+										<select class="form-control" name="auditCrop" ng-options="auditCrop.code as auditCrop.name for auditCrop in $ctrl.devconfigOption.auditCrop" ng-model="$ctrl.devconfig.auditCrop" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.auditPath.$valid && devconfig.auditPath.$dirty,'has-error':devconfig.auditPath.$invalid && devconfig.auditPath.$dirty}">
+										<label for="auditPath">上报服务器IP：</label>
+										<input type="text" class="form-control" name="dns" placeholder="输入DNS服务器IP地址" ng-model="$ctrl.devconfig.auditPath" ng-pattern='/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/' required>
+									</div>
+									<!--<div class="form-group" ng-class="{'has-success':devconfig.ssh.$valid && devconfig.ssh.$dirty,'has-error':devconfig.ssh.$invalid && devconfig.ssh.$dirty}">
+							      <label for="ssh">端口：</label>
+							      <select class="form-control" name="ssh" ng-options="brand.id as brand.name for brand in ads.brandList" ng-model="$ctrl.devconfig.ssh" required>
+			                        <option value="">请选择</option>
+			                      </select>
+							  </div>-->
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.probe.$valid && devconfig.probe.$dirty,'has-error':devconfig.probe.$invalid && devconfig.probe.$dirty}">
+										<label for="probe">探针：</label>
+										<select class="form-control" name="probe" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.probe" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.probeInterval.$valid && devconfig.probeInterval.$dirty,'has-error':devconfig.probeInterval.$invalid && devconfig.probeInterval.$dirty}">
+										<label for="probeInterval">探针上报频率：</label>
+										<input type="number" class="form-control" name="probeInterval" placeholder="" ng-model="$ctrl.devconfig.probeInterval" required> 秒
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.dataPath.$valid && devconfig.dataPath.$dirty,'has-error':devconfig.dataPath.$invalid && devconfig.dataPath.$dirty}">
+										<label for="">数据上报：</label>
+										<label for="dataPath">URL</label>
+										<select class="form-control" name="dataPath" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.dataPath" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.ssh.$valid && devconfig.ssh.$dirty,'has-error':devconfig.ssh.$invalid && devconfig.ssh.$dirty}">
+										<label for="ssh">虚拟身份：</label>
+										<select class="form-control" name="ssh" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.ssh" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.ssh.$valid && devconfig.ssh.$dirty,'has-error':devconfig.ssh.$invalid && devconfig.ssh.$dirty}">
+										<label for="ssh">用户上下线：</label>
+										<select class="form-control" name="ssh" ng-options="onOff.code as onOff.name for onOff in $ctrl.devconfigOption.onOff" ng-model="$ctrl.devconfig.ssh" required>
+											<option value="">请选择</option>
+										</select>
+									</div>
+									<div class="form-group" ng-class="{'has-success':devconfig.dataInterval.$valid && devconfig.dataInterval.$dirty,'has-error':devconfig.dataInterval.$invalid && devconfig.dataInterval.$dirty}">
+										<label for="ssh">数据频率：</label>
+										<input type="number" class="form-control" name="dataInterval" placeholder="" ng-model="$ctrl.devconfig.dataInterval" required> 秒
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-group" ng-class="{'has-success':devconfig.pwd.$valid && devconfig.pwd.$dirty,'has-error':devconfig.pwd.$invalid && devconfig.pwd.$dirty}">
+										<label for="pwd">路由管理密码：</label>
+										<input type="text" name="pwd" class="form-control" placeholder="8~16位字母加数字" ng-model="$ctrl.devconfig.pwd" ng-maxlength="16" ng-minLength="8" ng-pattern='/^[a-zA-Z0-9]{6,10}$/' required>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				
+				<!--配置模式结束-->
+			</uib-tab>
+			<uib-tab index="1" heading="配置记录">
+				<!--配置记录开始-->
+				<table class="table table-hover table-theadbg table-customer">
+					<thead>
+						<tr>
+							<th width="84">
+								<div>时间</div>
+							</th>
+							<th>
+								<div>人员</div>
+							</th>
+							<th>
+								<div>操作内容</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody ng-if="devM.devsList.length==0">
+						<tr>
+							<td colspan="14" class="empty-box">没有找到您查询的结果！</td>
+						</tr>
+					</tbody>
+					<tbody>
+						<tr ng-repeat="user in $ctrl.connUserList">
+							<td class="text-overflow">
+								{{user.connectDate||'暂无'}}
+							</td>
+							<td>
+								{{user.mobilePhone||'暂无'}}
+							</td>
+							<td>
+								{{user.userMAC||'暂无'}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<!--配置记录结束-->
+			</uib-tab>
+		</uib-tabset>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-gray" ng-click="$ctrl.cancel()">
+        	取消
+        </button>
+        <button class="btn btn-primary" ng-disabled="devconfig.$invalid" ng-click="$ctrl.ok()">
+       		 确认
+        </button>
+	</div>
+	</form>
+</script>
+<!--设备配置结束-->
